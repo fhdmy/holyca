@@ -8,8 +8,8 @@
         <DxSimpleItem data-field="input_pwd" :editor-options="pwdOptions">
           <DxLabel text="站内密码"/>
         </DxSimpleItem>
-        <DxSimpleItem data-field="input_confirm_pwd" :editor-options="cfmPwdOptions">
-          <DxLabel text="确认密码"/>
+        <DxSimpleItem data-field="input_new_pwd" :editor-options="cfmPwdOptions">
+          <DxLabel text="新密码"/>
         </DxSimpleItem>
       </DxGroupItem>
       <DxGroupItem>
@@ -53,7 +53,7 @@ export default {
         return {
           nickname: "",
           input_pwd: "",
-          input_confirm_pwd: "",
+          input_new_pwd: "",
           auth:"",
           repstats_acc: "",
           repstats_pwd:"",

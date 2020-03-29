@@ -1,4 +1,5 @@
 import requests
+# from bs4 import BeautifulSoup
 
 class API:
     auth="b858c001e8961049919f500f84ff87f39a3ff7de;842e1835db42cc0044151199a5fc24be83ac4c6c;1584627749"
@@ -9,13 +10,17 @@ class API:
         login_url=self.url+"Account/signin"
         req_data={
             "email":"1256623447@qq.com",
-            "password":"jch199669"
+            "password":"HolyHolyCA"
         }
         req_header={
             "Authorization":self.auth
         }
         res=requests.post(login_url,data=req_data,headers=req_header)
-        print(res.text)
+        # print(res.text)
+        if "Failed to login, please try your email and password again." in res.text:
+            print("failed")
+        else:
+            print("success")
 
 def main():
     api=API()

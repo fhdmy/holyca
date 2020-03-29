@@ -260,6 +260,9 @@ export default {
   },
 
   data: () => ({
+    token:localStorage.getItem("token") == null
+        ? ""
+        : "Token " + localStorage.getItem("token"),
     active_score:153,
     active_max_value:200,
     active_palette:"Pastel",
@@ -505,11 +508,24 @@ export default {
         })
     },
     sign_in(){
-      const type = 'success';
-      const text ="签到成功!";
-      // const type = 'error';
-      // const text ="不能重复签到!";
-      notify(text, type, 1500);
+      this.$http({
+        method: "post",
+        url: "/api/account/teammates/signin/",
+        headers: {
+          "Authorization": this.token
+        },
+      })
+        .then(res => {
+          console.log(res);
+          notify("签到成功!", "success", 1500);
+        })
+        .catch(error => {
+          console.log(error.response);
+          if(error.response.data=="User has signined today")
+            notify("不能重复签到!", "error", 1500);
+          else
+            notify("请检查你的网络!", "error", 1500);
+        });
     }
   }
 };

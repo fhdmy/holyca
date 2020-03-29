@@ -6,7 +6,7 @@ class Teammate(models.Model):
     score=models.IntegerField(default=0)
     auth=models.CharField(max_length=200,default='')
     has_signin=models.BooleanField(default=False)
-    repstats_acc=models.CharField(max_length=100,default='holyca@126.com')
+    repstats_acc=models.CharField(max_length=100,default='')
     repstats_pwd=models.CharField(max_length=100,default='')
     user = models.OneToOneField(
         to=User,

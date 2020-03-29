@@ -305,7 +305,7 @@ export default {
     player_info: {
       nickname: "",
       input_pwd: "",
-      input_confirm_pwd: "",
+      input_new_pwd: "",
       auth:"",
       repstats_acc: "",
       repstats_pwd: "",
@@ -378,11 +378,12 @@ export default {
             ? ""
             : "Token " + localStorage.getItem("token");
         this.has_login=true;
+        notify("登录成功！", "success", 1500);
         this.refresh_all();
       })
       .catch(error => {
         console.log(error.response);
-        if (error.response.data == "Account verification failed") {
+        if (error.response.data == "Serializer is invalid") {
           const text = "账号或密码错误!";
           const type = "error";
           notify(text, type, 1500);
@@ -408,16 +409,20 @@ export default {
         })
         .catch(error => {
           console.log(error.response);
+          notify("获取信息失败!", "error", 1500);
           this.has_login=false;
         });
     },
     refresh_all(){
+      this.reset_player_info();
       this.get_player_info();
     },
     click_to_signup(){
+      this.reset_signup_info();
       this.signup_flag=true;
     },
     click_to_login_view(){
+      this.reset_login_info();
       this.signup_flag=false;
     },
     click_to_logout(){
@@ -431,15 +436,25 @@ export default {
     reset_all(){
       this.reset_player_info();
       this.reset_login_info();
+      this.reset_signup_info();
     },
     reset_login_info(){
       this.login_info.nickname="";
       this.login_info.input_pwd="";
     },
+    reset_signup_info(){
+      this.signup_info.nickname="";
+      this.signup_info.input_pwd= "";
+      this.signup_info.input_confirm_pwd= "";
+      this.signup_info.auth="";
+      this.signup_info.repstats_acc= "";
+      this.signup_info.repstats_pwd="";
+      this.signup_info.score=0;
+    },
     reset_player_info(){
       this.player_info.nickname= "";
       this.player_info.input_pwd= "";
-      this.player_info.input_confirm_pwd="";
+      this.player_info.input_new_pwd="";
       this.player_info.auth="";
       this.player_info.repstats_acc= "";
       this.player_info.repstats_pwd= "";
@@ -469,21 +484,58 @@ export default {
         notify("RepStats信息不全!", "error", 1500);
         return;
       }
+
+      this.$http({
+        method: "post",
+        url: "/api/account/sign_up/",
+        data:{
+          nickname:this.signup_info.nickname,
+          password:this.Base64.encode(this.signup_info.input_pwd),
+          auth:this.signup_info.auth,
+          repstats_acc:this.signup_info.repstats_acc,
+          repstats_pwd:this.Base64.encode(this.signup_info.repstats_pwd)
+        }
+      })
+        .then(res => {
+          console.log(res);
+          localStorage.clear();
+          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("user_id", res.data.user_id);
+          localStorage.setItem("profile_id", res.data.profile_id);
+          this.token =
+            localStorage.getItem("token") == null
+              ? ""
+              : "Token " + localStorage.getItem("token");
+          this.has_login=true;
+          notify("注册成功！", "success", 1500);
+          this.refresh_all();
+        })
+        .catch(error => {
+          console.log(error.response);
+          if(error.response.data == "RepStats verification is invalid"){
+            notify("RepStats核对错误!", "error", 1500);
+          }
+          else if(error.response.data == "Username already exisits"){
+            notify("用户名已被使用!", "error", 1500);
+          }
+          else if(error.response.data == "Serializer is invalid"){
+            notify("注册信息有误!", "error", 1500);
+          }
+        });
     },
     alter_info(){
       if(this.player_info.nickname==""){
         notify("昵称为空!", "error", 1500);
         return;
       }
-      if(this.player_info.input_pwd!="" || this.player_info.input_confirm_pwd!=""){
-        if(this.player_info.input_pwd!=this.player_info.input_confirm_pwd){
-          notify("密码不符!", "error", 1500);
-          return;
-        }
-        if(this.player_info.input_pwd.length<6 || this.player_info.input_pwd.length>20){
-          notify("密码长度不符合要求!", "error", 1500);
-          return;
-        }
+      if(this.player_info.input_pwd.length<6 || this.player_info.input_pwd.length>20){
+        notify("原密码为空或不符合要求!", "error", 1500);
+        return;
+      }
+      if(this.player_info.input_new_pwd!="" && (this.player_info.input_new_pwd.length<6 || this.player_info.input_new_pwd.length>20))
+      {
+        notify("新密码长度不符合要求!", "error", 1500);
+        return;
       }
       if((this.player_info.repstats_acc=="" ||
       this.player_info.repstats_pwd=="" ||
@@ -494,6 +546,44 @@ export default {
         notify("RepStats信息不全!", "error", 1500);
         return;
       }
+
+      this.$http({
+        method: "post",
+        url: "/api/account/teammates/alert_info/",
+        data:{
+          nickname: this.player_info.nickname,
+          password: this.Base64.encode(this.player_info.input_pwd),
+          new_password: this.Base64.encode(this.player_info.input_new_pwd),
+          auth:this.player_info.auth,
+          repstats_acc: this.player_info.repstats_acc,
+          repstats_pwd: this.Base64.encode(this.player_info.repstats_pwd),
+        },
+        headers: {
+          "Authorization": this.token
+        },
+      })
+        .then(res => {
+          console.log(res)
+          if(res.data=="Alter Info OK"){
+            notify("修改成功!", "success", 1500);
+          }
+          this.refresh_all();
+        })
+        .catch(error => {
+          console.log(error.response);
+          if(error.response.data=="Password does not match"){
+            notify("原密码错误!", "error", 1500);
+          }
+          if(error.response.data=="Username already exisits"){
+            notify("用户名已被使用!", "error", 1500);
+          }
+          if(error.response.data=="RepStats verification is invalid"){
+            notify("RepStats核对错误!", "error", 1500);
+          }
+          if(error.response.data=="Serializer is invalid"){
+            notify("修改信息有误!", "error", 1500);
+          }
+        });
     }
   }
 };

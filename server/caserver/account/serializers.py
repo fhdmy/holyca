@@ -16,9 +16,9 @@ class TeammateSerializer(serializers.ModelSerializer):
         model = account.models.Teammate
         fields = '__all__'
 
-class ChangePwdSerializer(serializers.Serializer):
-    old_pwd = serializers.CharField()
-    new_pwd = serializers.CharField()
+class AlertInfoSerializer(serializers.Serializer):
+    nickname = serializers.CharField()
+    password= serializers.CharField()
 
 class LoginSerializer(AuthTokenSerializer):
     def validate(self, attrs):
@@ -42,5 +42,5 @@ class TeammateHomepageSerializer(serializers.ModelSerializer):
         fields = ['nickname','score','auth','repstats_acc','repstats_pwd']
 
 class SignUpSerializer(serializers.Serializer):
-    username = serializers.CharField()
-    password = serializers.CharField()
+    nickname=serializers.CharField()
+    password=serializers.CharField()
