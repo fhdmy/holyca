@@ -10,6 +10,11 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
+    
+class RepStatsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = account.models.RepStats
+        fields = '__all__'
 
 class TeammateSerializer(serializers.ModelSerializer):
     class Meta:
@@ -37,9 +42,15 @@ class LoginSerializer(AuthTokenSerializer):
         return super().validate(attrs)
 
 class TeammateHomepageSerializer(serializers.ModelSerializer):
+    class RepStatsSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = account.models.RepStats
+            fields = ['repstats_acc', 'repstats_pwd', 'auth']
+
+    repstats = RepStatsSerializer(read_only=True)
     class Meta:
         model = account.models.Teammate
-        fields = ['nickname','score','auth','repstats_acc','repstats_pwd']
+        fields = ['nickname','score','repstats']
 
 class SignUpSerializer(serializers.Serializer):
     nickname=serializers.CharField()

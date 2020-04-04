@@ -48,7 +48,7 @@
                           <template #default>
                             <div>
                               <div class="explain-content">查看本周上传REP的总数，右边展示了较活跃的玩家上传的REP数量。</div>
-                              <label class="active-score">{{active_score}}</label>
+                              <label class="active-score">{{active_score_show}}</label>
                             </div>
                           </template>
                         </DxItem>
@@ -105,7 +105,7 @@
                           <template #default>
                             <div>
                               <div class="explain-content">查看站内玩家平均MMR值，右图所示为玩家的MMR变化趋势。</div>
-                              <label class="mmr-score">{{mmr_score}}</label>
+                              <label class="mmr-score">{{mmr_score_show}}</label>
                             </div>
                           </template>
                         </DxItem>
@@ -263,238 +263,51 @@ export default {
     token:localStorage.getItem("token") == null
         ? ""
         : "Token " + localStorage.getItem("token"),
-    active_score:153,
+    active_timer:"",
+    imba_timer:"",
+    mmr_timer:"",
+    active_score_show:0,
+    active_score:0,
     active_max_value:200,
     active_palette:"Pastel",
-    active_graph : [{
-      teammate: 'Xnick',
-      reps: 40
-    }, {
-      teammate: '星之所在',
-      reps: 10
-    }, {
-      teammate: 'Fungal',
-      reps: 3
-    }, {
-      teammate: 'Almee',
-      reps: 120
-    }],
-    mmr_score:4436,
+    active_graph:[],
+    mmr_score:0,
+    mmr_score_show:0,
     mmr_max_value:6000,
     mmr_palette:"Violet",
-    mmr_players : ['fungal','Xnick','送饭人族','星之所在','SHKStarlight'],
-    mmr_players_mmr : [
-    {
-        month:1,
-        fungal: 4200,
-        Xnick: 5000,
-        送饭人族: 4400,
-        星之所在: 5300,
-        SHKStarlight:4600
-    },
-    {
-        month:2,
-        fungal: 4150,
-        Xnick: 5100,
-        送饭人族: 4400,
-        星之所在: 4900,
-        SHKStarlight:4650
-    },
-    {
-        month:3,
-        fungal: 4330,
-        Xnick: 5010,
-        送饭人族: 4400,
-        星之所在: 4830,
-        SHKStarlight:4610
-    },
-    {
-        month:4,
-        fungal: 4420,
-        Xnick: 5100,
-        送饭人族: 4420,
-        星之所在: 3800,
-        SHKStarlight:4700
-    },
-    {
-        month:5,
-        fungal: 4220,
-        Xnick: 5200,
-        送饭人族: 4420,
-        星之所在: 3300,
-        SHKStarlight:4730
-    },
-    {
-        month:6,
-        fungal: 4000,
-        Xnick: 5100,
-        送饭人族: 4450,
-        星之所在: 3500,
-        SHKStarlight:4800
-    },
-    {
-        month:7,
-        fungal: 4050,
-        Xnick: 4950,
-        送饭人族: 4450,
-        星之所在: 4500,
-        SHKStarlight:4700
-    },
-    {
-        month:8,
-        fungal: 4150,
-        Xnick: 4850,
-        送饭人族: 4450,
-        星之所在: 4200,
-        SHKStarlight:4750
-    },
-    {
-        month:9,
-        fungal: 4150,
-        Xnick: 5000,
-        送饭人族: 4430,
-        星之所在: 4800,
-        SHKStarlight:4800
-    },
-    {
-        month:10,
-        fungal: 4060,
-        Xnick: 5010,
-        送饭人族: 4450,
-        星之所在: 4700,
-        SHKStarlight:4900
-    },
-    {
-        month:11,
-        fungal: 4000,
-        Xnick: 4950,
-        送饭人族: 4500,
-        星之所在: 4800,
-        SHKStarlight:4800
-    },
-    {
-        month:12,
-        fungal: 4150,
-        Xnick: 4950,
-        送饭人族: 4500,
-        星之所在: 4700,
-        SHKStarlight:4950
-    }],
+    mmr_players : [],
+    mmr_players_mmr : [],
     imba_most:"P",
     imba_vs:['TVP','PVZ','ZVT'],
-    imba_rate:[
-      {
-        month:1,
-        TVP: 41.4,
-        PVZ: 46.2,
-        ZVT: 58.1,
-      },
-      {
-        month:2,
-        TVP: 42.2,
-        PVZ: 42.8,
-        ZVT: 53.1,
-      },
-      {
-        month:3,
-        TVP: 38.2,
-        PVZ: 40.8,
-        ZVT: 61.1,
-      },
-      {
-        month:4,
-        TVP: 41.2,
-        PVZ: 42.8,
-        ZVT: 55.1,
-      },
-      {
-        month:5,
-        TVP: 45.4,
-        PVZ: 48.5,
-        ZVT: 57.6,
-      },
-      {
-        month:6,
-        TVP: 44.5,
-        PVZ: 42.2,
-        ZVT: 53.4,
-      },
-      {
-        month:7,
-        TVP: 44.1,
-        PVZ: 51.2,
-        ZVT: 52.5,
-      },
-      {
-        month:8,
-        TVP: 42.2,
-        PVZ: 49.8,
-        ZVT: 52.1,
-      },
-      {
-        month:9,
-        TVP: 49.2,
-        PVZ: 51.1,
-        ZVT: 50.9,
-      },
-      {
-        month:10,
-        TVP: 45.2,
-        PVZ: 42.1,
-        ZVT: 49.6,
-      },
-      {
-        month:11,
-        TVP: 43.1,
-        PVZ: 55.2,
-        ZVT: 55.5,
-      },
-      {
-        month:12,
-        TVP: 47.7,
-        PVZ: 51.1,
-        ZVT: 51.6,
-      },
-    ],
+    imba_rate:[],
     imba_palette:"Soft Blue",
     imba_sums:[
       {
         race: "P",
-        sum: 120
+        sum: 0
       },
       {
         race: "Z",
-        sum: 50
+        sum: 0
       },
       {
         race: "T",
-        sum: 95
+        sum: 0
       }
     ],
-    reps:[
-      {
-        player: "Xnick",
-        play_MMR: 4800,
-        player_race: "T",
-        opponent: "蛇口",
-        opponent_MMR: 4900,
-        opponent_race: "Z",
-        game_length: "39:10",
-        winner: "Xnick"
-      },
-      {
-        player: "SHKstarlght",
-        play_MMR: 4900,
-        player_race: "T",
-        opponent: "Drima",
-        opponent_MMR: 4900,
-        opponent_race: "T",
-        game_length: "21:25",
-        winner: "SHKstarlght"
-      }],
+    reps:[]
   }),
-  mounted() {
-    
+  created() {
+    this.active_statistics();
+    this.replay_statistics();
+    this.racesum_statistics();
+    this.raceimba_statistics();
+    this.mmr_statistics();
+  },
+  beforeDestroy() {
+    clearInterval(this.active_timer);
+    clearInterval(this.imba_timer);
+    clearInterval(this.mmr_timer);
   },
   methods: {
     switchPage(a){
@@ -526,7 +339,220 @@ export default {
           else
             notify("请检查你的网络!", "error", 1500);
         });
-    }
+    },
+    active_statistics(){
+      this.$http({
+        method: "get",
+        url: "/api/match/active_statistics/",
+        headers: {
+          "Authorization": this.token
+        },
+      })
+        .then(res => {
+          console.log(res);
+          let sum=0;
+          // 取盘数非0的账号
+          let acc_not_zero=0;
+          for(let k=0;k<res.data.length;k++){
+            sum+=res.data[k].sum;
+            if(res.data[k].sum!=0)
+              acc_not_zero+=1;
+          }
+          let old_val=this.active_score;
+          if(this.active_score_show != sum)
+            this.active_timer=setInterval(()=>{
+              this.active_score_show=this.active_score_show+parseInt((sum-old_val+50)/50);
+              if(this.active_score_show >= sum){
+                this.active_score_show = sum;
+                clearInterval(this.active_timer);
+              }
+            },10)
+          this.active_score=sum;
+          if(acc_not_zero*200>sum)
+            this.active_max_value=acc_not_zero*200;
+          else
+            this.active_max_value=sum;
+          //排序，取前8
+          for(let i=0;i<res.data.length-1;i++){
+            for(let j=0;j<i;j++){
+              if(res.data[j].sum<res.data[j+1].sum){
+                let temp=res.data[j].sum;
+                res.data[j].sum=res.data[j+1].sum;
+                res.data[j+1].sum=temp;
+              }
+            }
+          }
+          for(let k=0;k<(res.data.length<8?res.data.length:8);k++){
+            this.$set(this.active_graph,k,{
+              teammate: res.data[k].account,
+              reps: res.data[k].sum
+            });
+          }
+        })
+        .catch(error => {
+          console.log(error.response);
+          notify("请检查你的网络!", "error", 1500);
+        });
+    },
+    replay_statistics(){
+      this.$http({
+        method: "get",
+        url: "/api/match/replay_statistics/",
+        headers: {
+          "Authorization": this.token
+        },
+      })
+        .then(res => {
+          console.log(res);
+          for(let k=0;k<res.data.length;k++){
+            let game_map;
+            game_map=res.data[k].game_map.split("-天梯版")[0];
+            this.$set(this.reps,k,{
+              player:res.data[k].player1.battlenet_name,
+              play_MMR: res.data[k].player1_mmr,
+              player_race: res.data[k].vs_race.split("v")[0],
+              opponent: res.data[k].player2.battlenet_name,
+              opponent_MMR: res.data[k].player2_mmr,
+              opponent_race: res.data[k].vs_race.split("v")[1],
+              game_length: res.data[k].game_length,
+              winner: res.data[k].winner,
+              map:game_map,
+              date:res.data[k].date,
+              rep_id:res.data[k].rep_id
+            });
+          }
+        })
+        .catch(error => {
+          console.log(error.response);
+          notify("请检查你的网络!", "error", 1500);
+        });
+    },
+    racesum_statistics(){
+      this.$http({
+        method: "get",
+        url: "/api/match/racesum_statistics/",
+        headers: {
+          "Authorization": this.token
+        },
+      })
+        .then(res => {
+          console.log(res);
+          this.$set(this.imba_sums,0,{
+            race:"P",
+            sum:res.data[0].sum
+          });
+          this.$set(this.imba_sums,1,{
+            race:"Z",
+            sum:res.data[1].sum
+          });
+          this.$set(this.imba_sums,2,{
+            race:"T",
+            sum:res.data[2].sum
+          });
+        })
+        .catch(error => {
+          console.log(error.response);
+          notify("请检查你的网络!", "error", 1500);
+        });
+    },
+    raceimba_statistics(){
+      this.$http({
+        method: "get",
+        url: "/api/match/race_winrate_statistics/",
+        headers: {
+          "Authorization": this.token
+        },
+      })
+        .then(res => {
+          console.log(res);
+          for(let k=0;k<res.data.length;k++){
+            this.$set(this.imba_rate,k,{
+              date:res.data[k].date,
+              TVP:res.data[k].TVP,
+              PVZ:res.data[k].PVZ,
+              ZVT:res.data[k].ZVT,
+              index:k+1
+            })
+          }
+          let T=res.data[res.data.length-1].TVP+(100-res.data[res.data.length-1].ZVT);
+          let P=res.data[res.data.length-1].PVZ+(100-res.data[res.data.length-1].TVP);
+          let Z=res.data[res.data.length-1].ZVT+(100-res.data[res.data.length-1].PVZ);
+          let max_rate=0;
+          let IMBA="P";
+          if(T>P){
+            IMBA="T";
+            max_rate=T;
+          }else{
+            IMBA="P";
+            max_rate=P;
+          }
+          if(Z>max_rate){
+            IMBA="Z";
+            max_rate=Z;
+          }
+          let i=0;
+          this.imba_timer=setInterval(()=>{
+            let temp;
+            if(i%3==0)
+              temp="P"
+            else if(i%3==1)
+              temp="Z"
+            else if(i%3==2)
+              temp="T"
+            this.imba_most=temp;
+            i+=1;
+            if(i == 10){
+              clearInterval(this.imba_timer);
+              this.imba_most=IMBA;
+            }
+          },60)
+        })
+        .catch(error => {
+          console.log(error.response);
+          notify("请检查你的网络!", "error", 1500);
+        });
+    },
+    mmr_statistics(){
+      this.$http({
+        method: "get",
+        url: "/api/match/mmr_statistics/",
+        headers: {
+          "Authorization": this.token
+        },
+      })
+        .then(res => {
+          console.log(res);
+          for(let m=0;m<res.data[0].length;m++){
+            this.$set(this.mmr_players,m,res.data[0][m].name);
+          }
+          for(let m=0;m<res.data.length;m++){
+            this.$set(this.mmr_players_mmr,m,{});
+            for(let n=0;n<res.data[m].length;n++){
+              this.$set(this.mmr_players_mmr[m],res.data[m][n].name,res.data[m][n].mmr);
+            }
+            this.$set(this.mmr_players_mmr[m],"index",m);
+          }
+          let mmr_sum=0;
+          for(let k=0;k<res.data[11].length;k++){
+            mmr_sum+=res.data[11][k].mmr;
+          }
+          let avg_mmr=parseInt(mmr_sum/res.data[11].length);
+          let old_val=this.mmr_score;
+          if(this.mmr_score_show != avg_mmr)
+            this.mmr_timer=setInterval(()=>{
+              this.mmr_score_show=this.mmr_score_show+parseInt((avg_mmr-old_val+100)/100);
+              if(this.mmr_score_show >= avg_mmr){
+                this.mmr_score_show = avg_mmr;
+                clearInterval(this.mmr_timer);
+              }
+            },5)
+          this.mmr_score=avg_mmr;
+        })
+        .catch(error => {
+          console.log(error.response);
+          notify("请检查你的网络!", "error", 1500);
+        });
+    },
   }
 };
 </script>

@@ -25,12 +25,14 @@ SECRET_KEY = '@s2a(cokl9b^))rxcq)m=%=vpjuu884yv-2lgf6h#)!$9li6u0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = []
 
 # Application definition
 
 INSTALLED_APPS = [
     'account.apps.AccountConfig',
+    'match.apps.MatchConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -126,7 +128,7 @@ STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,
+    'PAGE_SIZE': 1000,
     'DEFAULT_AUTHENTICATION_CLASSES': (
             'caserver.authentication.ExpiringTokenAuthentication',
         ),

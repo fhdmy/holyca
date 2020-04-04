@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" /><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={xpid:"VQUBWVVSCRABXVJXAwgCVg==",licenseKey:"00bdaa1b27",applicationID:"19354950"};window.NREUM||(NREUM={}),__nr_require=function(t,n,e){function r(e){if(!n[e]){var o=n[e]={exports:{}};t[e][0].call(o.exports,function(n){var o=t[e][1][n];return r(o||n)},o,o.exports)}return n[e].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<e.length;o++)r(e[o]);return r}({1:[function(t,n,e){function r(t){try{s.console&&console.log(t)}catch(n){}}var o,i=t("ee"),a=t(21),s={};try{o=localStorage.getItem("__nr_flags").split(","),console&&"function"==typeof console.log&&(s.console=!0,o.indexOf("dev")!==-1&&(s.dev=!0),o.indexOf("nr_dev")!==-1&&(s.nrDev=!0))}catch(c){}s.nrDev&&i.on("internal-error",function(t){r(t.stack)}),s.dev&&i.on("fn-err",function(t,n,e){r(e.stack)}),s.dev&&(r("NR AGENT IN DEVELOPMENT MODE"),r("flags: "+a(s,function(t,n){return t}).join(", ")))},{}],2:[function(t,n,e){function r(t,n,e,r,s){try{p?p-=1:o(s||new UncaughtException(t,n,e),!0)}catch(f){try{i("ierr",[f,c.now(),!0])}catch(d){}}return"function"==typeof u&&u.apply(this,a(arguments))}function UncaughtException(t,n,e){this.message=t||"Uncaught error with no additional information",this.sourceURL=n,this.line=e}function o(t,n){var e=n?null:c.now();i("err",[t,e])}var i=t("handle"),a=t(22),s=t("ee"),c=t("loader"),f=t("gos"),u=window.onerror,d=!1,l="nr@seenError",p=0;c.features.err=!0,t(1),window.onerror=r;try{throw new Error}catch(h){"stack"in h&&(t(9),t(8),"addEventListener"in window&&t(5),c.xhrWrappable&&t(10),d=!0)}s.on("fn-start",function(t,n,e){d&&(p+=1)}),s.on("fn-err",function(t,n,e){d&&!e[l]&&(f(e,l,function(){return!0}),this.thrown=!0,o(e))}),s.on("fn-end",function(){d&&!this.thrown&&p>0&&(p-=1)}),s.on("internal-error",function(t){i("ierr",[t,c.now(),!0])})},{}],3:[function(t,n,e){t("loader").features.ins=!0},{}],4:[function(t,n,e){function r(t){}if(window.performance&&window.performance.timing&&window.performance.getEntriesByType){var o=t("ee"),i=t("handle"),a=t(9),s=t(8),c="learResourceTimings",f="addEventListener",u="resourcetimingbufferfull",d="bstResource",l="resource",p="-start",h="-end",m="fn"+p,w="fn"+h,v="bstTimer",g="pushState",y=t("loader");y.features.stn=!0,t(7),"addEventListener"in window&&t(5);var x=NREUM.o.EV;o.on(m,function(t,n){var e=t[0];e instanceof x&&(this.bstStart=y.now())}),o.on(w,function(t,n){var e=t[0];e instanceof x&&i("bst",[e,n,this.bstStart,y.now()])}),a.on(m,function(t,n,e){this.bstStart=y.now(),this.bstType=e}),a.on(w,function(t,n){i(v,[n,this.bstStart,y.now(),this.bstType])}),s.on(m,function(){this.bstStart=y.now()}),s.on(w,function(t,n){i(v,[n,this.bstStart,y.now(),"requestAnimationFrame"])}),o.on(g+p,function(t){this.time=y.now(),this.startPath=location.pathname+location.hash}),o.on(g+h,function(t){i("bstHist",[location.pathname+location.hash,this.startPath,this.time])}),f in window.performance&&(window.performance["c"+c]?window.performance[f](u,function(t){i(d,[window.performance.getEntriesByType(l)]),window.performance["c"+c]()},!1):window.performance[f]("webkit"+u,function(t){i(d,[window.performance.getEntriesByType(l)]),window.performance["webkitC"+c]()},!1)),document[f]("scroll",r,{passive:!0}),document[f]("keypress",r,!1),document[f]("click",r,!1)}},{}],5:[function(t,n,e){function r(t){for(var n=t;n&&!n.hasOwnProperty(u);)n=Object.getPrototypeOf(n);n&&o(n)}function o(t){s.inPlace(t,[u,d],"-",i)}function i(t,n){return t[1]}var a=t("ee").get("events"),s=t("wrap-function")(a,!0),c=t("gos"),f=XMLHttpRequest,u="addEventListener",d="removeEventListener";n.exports=a,"getPrototypeOf"in Object?(r(document),r(window),r(f.prototype)):f.prototype.hasOwnProperty(u)&&(o(window),o(f.prototype)),a.on(u+"-start",function(t,n){var e=t[1],r=c(e,"nr@wrapped",function(){function t(){if("function"==typeof e.handleEvent)return e.handleEvent.apply(e,arguments)}var n={object:t,"function":e}[typeof e];return n?s(n,"fn-",null,n.name||"anonymous"):e});this.wrapped=t[1]=r}),a.on(d+"-start",function(t){t[1]=this.wrapped||t[1]})},{}],6:[function(t,n,e){function r(t,n,e){var r=t[n];"function"==typeof r&&(t[n]=function(){var t=i(arguments),n={};o.emit(e+"before-start",[t],n);var a;n[m]&&n[m].dt&&(a=n[m].dt);var s=r.apply(this,t);return o.emit(e+"start",[t,a],s),s.then(function(t){return o.emit(e+"end",[null,t],s),t},function(t){throw o.emit(e+"end",[t],s),t})})}var o=t("ee").get("fetch"),i=t(22),a=t(21);n.exports=o;var s=window,c="fetch-",f=c+"body-",u=["arrayBuffer","blob","json","text","formData"],d=s.Request,l=s.Response,p=s.fetch,h="prototype",m="nr@context";d&&l&&p&&(a(u,function(t,n){r(d[h],n,f),r(l[h],n,f)}),r(s,"fetch",c),o.on(c+"end",function(t,n){var e=this;if(n){var r=n.headers.get("content-length");null!==r&&(e.rxSize=r),o.emit(c+"done",[null,n],e)}else o.emit(c+"done",[t],e)}))},{}],7:[function(t,n,e){var r=t("ee").get("history"),o=t("wrap-function")(r);n.exports=r;var i=window.history&&window.history.constructor&&window.history.constructor.prototype,a=window.history;i&&i.pushState&&i.replaceState&&(a=i),o.inPlace(a,["pushState","replaceState"],"-")},{}],8:[function(t,n,e){var r=t("ee").get("raf"),o=t("wrap-function")(r),i="equestAnimationFrame";n.exports=r,o.inPlace(window,["r"+i,"mozR"+i,"webkitR"+i,"msR"+i],"raf-"),r.on("raf-start",function(t){t[0]=o(t[0],"fn-")})},{}],9:[function(t,n,e){function r(t,n,e){t[0]=a(t[0],"fn-",null,e)}function o(t,n,e){this.method=e,this.timerDuration=isNaN(t[1])?0:+t[1],t[0]=a(t[0],"fn-",this,e)}var i=t("ee").get("timer"),a=t("wrap-function")(i),s="setTimeout",c="setInterval",f="clearTimeout",u="-start",d="-";n.exports=i,a.inPlace(window,[s,"setImmediate"],s+d),a.inPlace(window,[c],c+d),a.inPlace(window,[f,"clearImmediate"],f+d),i.on(c+u,r),i.on(s+u,o)},{}],10:[function(t,n,e){function r(t,n){d.inPlace(n,["onreadystatechange"],"fn-",s)}function o(){var t=this,n=u.context(t);t.readyState>3&&!n.resolved&&(n.resolved=!0,u.emit("xhr-resolved",[],t)),d.inPlace(t,g,"fn-",s)}function i(t){y.push(t),h&&(b?b.then(a):w?w(a):(E=-E,O.data=E))}function a(){for(var t=0;t<y.length;t++)r([],y[t]);y.length&&(y=[])}function s(t,n){return n}function c(t,n){for(var e in t)n[e]=t[e];return n}t(5);var f=t("ee"),u=f.get("xhr"),d=t("wrap-function")(u),l=NREUM.o,p=l.XHR,h=l.MO,m=l.PR,w=l.SI,v="readystatechange",g=["onload","onerror","onabort","onloadstart","onloadend","onprogress","ontimeout"],y=[];n.exports=u;var x=window.XMLHttpRequest=function(t){var n=new p(t);try{u.emit("new-xhr",[n],n),n.addEventListener(v,o,!1)}catch(e){try{u.emit("internal-error",[e])}catch(r){}}return n};if(c(p,x),x.prototype=p.prototype,d.inPlace(x.prototype,["open","send"],"-xhr-",s),u.on("send-xhr-start",function(t,n){r(t,n),i(n)}),u.on("open-xhr-start",r),h){var b=m&&m.resolve();if(!w&&!m){var E=1,O=document.createTextNode(E);new h(a).observe(O,{characterData:!0})}}else f.on("fn-end",function(t){t[0]&&t[0].type===v||a()})},{}],11:[function(t,n,e){function r(t){if(!i(t))return null;var n=window.NREUM;if(!n.loader_config)return null;var e=(n.loader_config.accountID||"").toString()||null,r=(n.loader_config.agentID||"").toString()||null,s=(n.loader_config.trustKey||"").toString()||null;if(!e||!r)return null;var c=a.generateCatId(),f=a.generateCatId(),u=Date.now(),d=o(c,f,u,e,r,s);return{header:d,guid:c,traceId:f,timestamp:u}}function o(t,n,e,r,o,i){var a="btoa"in window&&"function"==typeof window.btoa;if(!a)return null;var s={v:[0,1],d:{ty:"Browser",ac:r,ap:o,id:t,tr:n,ti:e}};return i&&r!==i&&(s.d.tk=i),btoa(JSON.stringify(s))}function i(t){var n=!1,e=!1,r={};if("init"in NREUM&&"distributed_tracing"in NREUM.init&&(r=NREUM.init.distributed_tracing,e=!!r.enabled),e)if(t.sameOrigin)n=!0;else if(r.allowed_origins instanceof Array)for(var o=0;o<r.allowed_origins.length;o++){var i=s(r.allowed_origins[o]);if(t.hostname===i.hostname&&t.protocol===i.protocol&&t.port===i.port){n=!0;break}}return e&&n}var a=t(19),s=t(13);n.exports={generateTracePayload:r,shouldGenerateTrace:i}},{}],12:[function(t,n,e){function r(t){var n=this.params,e=this.metrics;if(!this.ended){this.ended=!0;for(var r=0;r<l;r++)t.removeEventListener(d[r],this.listener,!1);n.aborted||(e.duration=a.now()-this.startTime,this.loadCaptureCalled||4!==t.readyState?null==n.status&&(n.status=0):i(this,t),e.cbTime=this.cbTime,u.emit("xhr-done",[t],t),s("xhr",[n,e,this.startTime]))}}function o(t,n){var e=c(n),r=t.params;r.host=e.hostname+":"+e.port,r.pathname=e.pathname,t.parsedOrigin=c(n),t.sameOrigin=t.parsedOrigin.sameOrigin}function i(t,n){t.params.status=n.status;var e=w(n,t.lastSize);if(e&&(t.metrics.rxSize=e),t.sameOrigin){var r=n.getResponseHeader("X-NewRelic-App-Data");r&&(t.params.cat=r.split(", ").pop())}t.loadCaptureCalled=!0}var a=t("loader");if(a.xhrWrappable){var s=t("handle"),c=t(13),f=t(11).generateTracePayload,u=t("ee"),d=["load","error","abort","timeout"],l=d.length,p=t("id"),h=t(17),m=t(16),w=t(14),v=window.XMLHttpRequest;a.features.xhr=!0,t(10),t(6),u.on("new-xhr",function(t){var n=this;n.totalCbs=0,n.called=0,n.cbTime=0,n.end=r,n.ended=!1,n.xhrGuids={},n.lastSize=null,n.loadCaptureCalled=!1,t.addEventListener("load",function(e){i(n,t)},!1),h&&(h>34||h<10)||window.opera||t.addEventListener("progress",function(t){n.lastSize=t.loaded},!1)}),u.on("open-xhr-start",function(t){this.params={method:t[0]},o(this,t[1]),this.metrics={}}),u.on("open-xhr-end",function(t,n){"loader_config"in NREUM&&"xpid"in NREUM.loader_config&&this.sameOrigin&&n.setRequestHeader("X-NewRelic-ID",NREUM.loader_config.xpid);var e=f(this.parsedOrigin);e&&e.header&&(n.setRequestHeader("newrelic",e.header),this.dt=e)}),u.on("send-xhr-start",function(t,n){var e=this.metrics,r=t[0],o=this;if(e&&r){var i=m(r);i&&(e.txSize=i)}this.startTime=a.now(),this.listener=function(t){try{"abort"!==t.type||o.loadCaptureCalled||(o.params.aborted=!0),("load"!==t.type||o.called===o.totalCbs&&(o.onloadCalled||"function"!=typeof n.onload))&&o.end(n)}catch(e){try{u.emit("internal-error",[e])}catch(r){}}};for(var s=0;s<l;s++)n.addEventListener(d[s],this.listener,!1)}),u.on("xhr-cb-time",function(t,n,e){this.cbTime+=t,n?this.onloadCalled=!0:this.called+=1,this.called!==this.totalCbs||!this.onloadCalled&&"function"==typeof e.onload||this.end(e)}),u.on("xhr-load-added",function(t,n){var e=""+p(t)+!!n;this.xhrGuids&&!this.xhrGuids[e]&&(this.xhrGuids[e]=!0,this.totalCbs+=1)}),u.on("xhr-load-removed",function(t,n){var e=""+p(t)+!!n;this.xhrGuids&&this.xhrGuids[e]&&(delete this.xhrGuids[e],this.totalCbs-=1)}),u.on("addEventListener-end",function(t,n){n instanceof v&&"load"===t[0]&&u.emit("xhr-load-added",[t[1],t[2]],n)}),u.on("removeEventListener-end",function(t,n){n instanceof v&&"load"===t[0]&&u.emit("xhr-load-removed",[t[1],t[2]],n)}),u.on("fn-start",function(t,n,e){n instanceof v&&("onload"===e&&(this.onload=!0),("load"===(t[0]&&t[0].type)||this.onload)&&(this.xhrCbStart=a.now()))}),u.on("fn-end",function(t,n){this.xhrCbStart&&u.emit("xhr-cb-time",[a.now()-this.xhrCbStart,this.onload,n],n)}),u.on("fetch-before-start",function(t){var n,e=t[1]||{};"string"==typeof t[0]?n=t[0]:t[0]&&t[0].url&&(n=t[0].url),n&&(this.parsedOrigin=c(n),this.sameOrigin=this.parsedOrigin.sameOrigin);var r=f(this.parsedOrigin);if(r&&r.header){var o=r.header;if("string"==typeof t[0]){var i={};for(var a in e)i[a]=e[a];i.headers=new Headers(e.headers||{}),i.headers.set("newrelic",o),this.dt=r,t.length>1?t[1]=i:t.push(i)}else t[0]&&t[0].headers&&(t[0].headers.append("newrelic",o),this.dt=r)}})}},{}],13:[function(t,n,e){var r={};n.exports=function(t){if(t in r)return r[t];var n=document.createElement("a"),e=window.location,o={};n.href=t,o.port=n.port;var i=n.href.split("://");!o.port&&i[1]&&(o.port=i[1].split("/")[0].split("@").pop().split(":")[1]),o.port&&"0"!==o.port||(o.port="https"===i[0]?"443":"80"),o.hostname=n.hostname||e.hostname,o.pathname=n.pathname,o.protocol=i[0],"/"!==o.pathname.charAt(0)&&(o.pathname="/"+o.pathname);var a=!n.protocol||":"===n.protocol||n.protocol===e.protocol,s=n.hostname===document.domain&&n.port===e.port;return o.sameOrigin=a&&(!n.hostname||s),"/"===o.pathname&&(r[t]=o),o}},{}],14:[function(t,n,e){function r(t,n){var e=t.responseType;return"json"===e&&null!==n?n:"arraybuffer"===e||"blob"===e||"json"===e?o(t.response):"text"===e||"document"===e||""===e||void 0===e?o(t.responseText):void 0}var o=t(16);n.exports=r},{}],15:[function(t,n,e){function r(){}function o(t,n,e){return function(){return i(t,[f.now()].concat(s(arguments)),n?null:this,e),n?void 0:this}}var i=t("handle"),a=t(21),s=t(22),c=t("ee").get("tracer"),f=t("loader"),u=NREUM;"undefined"==typeof window.newrelic&&(newrelic=u);var d=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],l="api-",p=l+"ixn-";a(d,function(t,n){u[n]=o(l+n,!0,"api")}),u.addPageAction=o(l+"addPageAction",!0),u.setCurrentRouteName=o(l+"routeName",!0),n.exports=newrelic,u.interaction=function(){return(new r).get()};var h=r.prototype={createTracer:function(t,n){var e={},r=this,o="function"==typeof n;return i(p+"tracer",[f.now(),t,e],r),function(){if(c.emit((o?"":"no-")+"fn-start",[f.now(),r,o],e),o)try{return n.apply(this,arguments)}catch(t){throw c.emit("fn-err",[arguments,this,t],e),t}finally{c.emit("fn-end",[f.now()],e)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,n){h[n]=o(p+n)}),newrelic.noticeError=function(t,n){"string"==typeof t&&(t=new Error(t)),i("err",[t,f.now(),!1,n])}},{}],16:[function(t,n,e){n.exports=function(t){if("string"==typeof t&&t.length)return t.length;if("object"==typeof t){if("undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer&&t.byteLength)return t.byteLength;if("undefined"!=typeof Blob&&t instanceof Blob&&t.size)return t.size;if(!("undefined"!=typeof FormData&&t instanceof FormData))try{return JSON.stringify(t).length}catch(n){return}}}},{}],17:[function(t,n,e){var r=0,o=navigator.userAgent.match(/Firefox[\/\s](\d+\.\d+)/);o&&(r=+o[1]),n.exports=r},{}],18:[function(t,n,e){function r(t,n){var e=t.getEntries();e.forEach(function(t){"first-paint"===t.name?c("timing",["fp",Math.floor(t.startTime)]):"first-contentful-paint"===t.name&&c("timing",["fcp",Math.floor(t.startTime)])})}function o(t,n){var e=t.getEntries();e.length>0&&c("lcp",[e[e.length-1]])}function i(t){if(t instanceof u&&!l){var n,e=Math.round(t.timeStamp);n=e>1e12?Date.now()-e:f.now()-e,l=!0,c("timing",["fi",e,{type:t.type,fid:n}])}}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var a,s,c=t("handle"),f=t("loader"),u=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){a=new PerformanceObserver(r),s=new PerformanceObserver(o);try{a.observe({entryTypes:["paint"]}),s.observe({entryTypes:["largest-contentful-paint"]})}catch(d){}}if("addEventListener"in document){var l=!1,p=["click","keydown","mousedown","pointerdown","touchstart"];p.forEach(function(t){document.addEventListener(t,i,!1)})}}},{}],19:[function(t,n,e){function r(){function t(){return n?15&n[e++]:16*Math.random()|0}var n=null,e=0,r=window.crypto||window.msCrypto;r&&r.getRandomValues&&(n=r.getRandomValues(new Uint8Array(31)));for(var o,i="xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx",a="",s=0;s<i.length;s++)o=i[s],"x"===o?a+=t().toString(16):"y"===o?(o=3&t()|8,a+=o.toString(16)):a+=o;return a}function o(){function t(){return n?15&n[e++]:16*Math.random()|0}var n=null,e=0,r=window.crypto||window.msCrypto;r&&r.getRandomValues&&Uint8Array&&(n=r.getRandomValues(new Uint8Array(31)));for(var o=[],i=0;i<16;i++)o.push(t().toString(16));return o.join("")}n.exports={generateUuid:r,generateCatId:o}},{}],20:[function(t,n,e){function r(t,n){if(!o)return!1;if(t!==o)return!1;if(!n)return!0;if(!i)return!1;for(var e=i.split("."),r=n.split("."),a=0;a<r.length;a++)if(r[a]!==e[a])return!1;return!0}var o=null,i=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var s=navigator.userAgent,c=s.match(a);c&&s.indexOf("Chrome")===-1&&s.indexOf("Chromium")===-1&&(o="Safari",i=c[1])}n.exports={agent:o,version:i,match:r}},{}],21:[function(t,n,e){function r(t,n){var e=[],r="",i=0;for(r in t)o.call(t,r)&&(e[i]=n(r,t[r]),i+=1);return e}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],22:[function(t,n,e){function r(t,n,e){n||(n=0),"undefined"==typeof e&&(e=t?t.length:0);for(var r=-1,o=e-n||0,i=Array(o<0?0:o);++r<o;)i[r]=t[n+r];return i}n.exports=r},{}],23:[function(t,n,e){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(t,n,e){function r(){}function o(t){function n(t){return t&&t instanceof r?t:t?c(t,s,i):i()}function e(e,r,o,i){if(!l.aborted||i){t&&t(e,r,o);for(var a=n(o),s=m(e),c=s.length,f=0;f<c;f++)s[f].apply(a,r);var d=u[y[e]];return d&&d.push([x,e,r,a]),a}}function p(t,n){g[t]=m(t).concat(n)}function h(t,n){var e=g[t];if(e)for(var r=0;r<e.length;r++)e[r]===n&&e.splice(r,1)}function m(t){return g[t]||[]}function w(t){return d[t]=d[t]||o(e)}function v(t,n){f(t,function(t,e){n=n||"feature",y[e]=n,n in u||(u[n]=[])})}var g={},y={},x={on:p,addEventListener:p,removeEventListener:h,emit:e,get:w,listeners:m,context:n,buffer:v,abort:a,aborted:!1};return x}function i(){return new r}function a(){(u.api||u.feature)&&(l.aborted=!0,u=l.backlog={})}var s="nr@context",c=t("gos"),f=t(21),u={},d={},l=n.exports=o();l.backlog=u},{}],gos:[function(t,n,e){function r(t,n,e){if(o.call(t,n))return t[n];var r=e();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,n,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return t[n]=r,r}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(t,n,e){function r(t,n,e,r){o.buffer([t],r),o.emit(t,n,e)}var o=t("ee").get("handle");n.exports=r,r.ee=o},{}],id:[function(t,n,e){function r(t){var n=typeof t;return!t||"object"!==n&&"function"!==n?-1:t===window?0:a(t,i,function(){return o++})}var o=1,i="nr@id",a=t("gos");n.exports=r},{}],loader:[function(t,n,e){function r(){if(!E++){var t=b.info=NREUM.info,n=p.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(t&&t.licenseKey&&t.applicationID&&n))return u.abort();f(y,function(n,e){t[n]||(t[n]=e)}),c("mark",["onload",a()+b.offset],null,"api");var e=p.createElement("script");e.src="https://"+t.agent,n.parentNode.insertBefore(e,n)}}function o(){"complete"===p.readyState&&i()}function i(){c("mark",["domContent",a()+b.offset],null,"api")}function a(){return O.exists&&performance.now?Math.round(performance.now()):(s=Math.max((new Date).getTime(),s))-b.offset}var s=(new Date).getTime(),c=t("handle"),f=t(21),u=t("ee"),d=t(20),l=window,p=l.document,h="addEventListener",m="attachEvent",w=l.XMLHttpRequest,v=w&&w.prototype;NREUM.o={ST:setTimeout,SI:l.setImmediate,CT:clearTimeout,XHR:w,REQ:l.Request,EV:l.Event,PR:l.Promise,MO:l.MutationObserver};var g=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1167.min.js"},x=w&&v&&v[h]&&!/CriOS/.test(navigator.userAgent),b=n.exports={offset:s,now:a,origin:g,features:{},xhrWrappable:x,userAgent:d};t(15),t(18),p[h]?(p[h]("DOMContentLoaded",i,!1),l[h]("load",r,!1)):(p[m]("onreadystatechange",o),l[m]("onload",r)),c("mark",["firstbyte",s],null,"api");var E=0,O=t(23)},{}],"wrap-function":[function(t,n,e){function r(t){return!(t&&t instanceof Function&&t.apply&&!t[a])}var o=t("ee"),i=t(22),a="nr@original",s=Object.prototype.hasOwnProperty,c=!1;n.exports=function(t,n){function e(t,n,e,o){function nrWrapper(){var r,a,s,c;try{a=this,r=i(arguments),s="function"==typeof e?e(r,a):e||{}}catch(f){l([f,"",[r,a,o],s])}u(n+"start",[r,a,o],s);try{return c=t.apply(a,r)}catch(d){throw u(n+"err",[r,a,d],s),d}finally{u(n+"end",[r,a,c],s)}}return r(t)?t:(n||(n=""),nrWrapper[a]=t,d(t,nrWrapper),nrWrapper)}function f(t,n,o,i){o||(o="");var a,s,c,f="-"===o.charAt(0);for(c=0;c<n.length;c++)s=n[c],a=t[s],r(a)||(t[s]=e(a,f?s+o:o,i,s))}function u(e,r,o){if(!c||n){var i=c;c=!0;try{t.emit(e,r,o,n)}catch(a){l([a,e,r,o])}c=i}}function d(t,n){if(Object.defineProperty&&Object.keys)try{var e=Object.keys(t);return e.forEach(function(e){Object.defineProperty(n,e,{get:function(){return t[e]},set:function(n){return t[e]=n,n}})}),n}catch(r){l([r])}for(var o in t)s.call(t,o)&&(n[o]=t[o]);return n}function l(n){try{t.emit("internal-error",n)}catch(e){}}return t||(t=o),e.inPlace=f,e.flag=a,e}},{}]},{},["loader",2,12,4,3]);</script>
+		<title>Sc2ReplayStats - Starcraft 2 Replay Hosting Stats Parser - Sc2ReplayStats.com</title>		<meta name="keywords" content="SC2&#x20;Replay,&#x20;Starcraft&#x20;2&#x20;Replay,&#x20;Starcraft&#x20;2&#x20;Replay&#x20;Hosting,&#x20;SC2&#x20;Replay&#x20;Parser,Starcraft&#x20;2,&#x20;SC2&#x20;Replay&#x20;Hosting,SC2&#x20;Replay&#x20;Stats">
+<meta name="description" content="Sc2ReplayStats&#x20;is&#x20;a&#x20;unique&#x20;Starcraft&#x20;2&#x20;Replay&#x20;Hosting&#x20;system&#x20;with&#x20;Custom&#x20;Stats,&#x20;and&#x20;SC2&#x20;Replay&#x20;Parser">
+<meta property="og&#x3A;title" content="Sc2ReplayStats&#x20;-&#x20;Starcraft&#x20;2&#x20;Replay&#x20;Hosting&#x20;Stats&#x20;Parser">
+<meta property="og&#x3A;description" content="Sc2ReplayStats&#x20;is&#x20;a&#x20;unique&#x20;Starcraft&#x20;2&#x20;Replay&#x20;Hosting&#x20;system&#x20;with&#x20;Custom&#x20;Stats,&#x20;and&#x20;SC2&#x20;Replay&#x20;Parser">
+<meta property="og&#x3A;url" content="https&#x3A;&#x2F;&#x2F;sc2replaystats.com&#x2F;account&#x2F;display&#x2F;53113">
+<meta property="og&#x3A;image" content="https&#x3A;&#x2F;&#x2F;sc2replaystats.com&#x2F;images&#x2F;maps&#x2F;large&#x2F;missing_image.jpg">		<link href="/images/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">  
+		
+		<meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
+
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800" rel="stylesheet" type="text/css" />
+
+		<!-- CORE CSS -->
+		<link href="/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+		<link href="/assets/css/font-awesome.css" rel="stylesheet" type="text/css" />
+		<link href="/assets/css/animate.css" rel="stylesheet" type="text/css" />
+
+		<!-- REVOLUTION SLIDER -->
+		<link href="/assets/plugins/revolution-slider/css/settings.css" rel="stylesheet" type="text/css" />
+
+		<!-- THEME CSS -->
+		<link href="/assets/css/essentials.css?v=1.4" rel="stylesheet" type="text/css" />
+		<link href="/assets/css/layout.css" rel="stylesheet" type="text/css" />
+		<link href="/assets/css/layout-responsive.css" rel="stylesheet" type="text/css" />
+		<link href="/assets/css/color_scheme/darkblue.css" rel="stylesheet" type="text/css" title="blue" />
+		<script type="text/javascript" src="/assets/plugins/jquery-2.0.3.min.js"></script>
+		
+		
+		<script type="text/javascript" src="/assets/plugins/jquery.easing.1.3.js"></script>
+		<script type="text/javascript" src="/assets/plugins/jquery.appear.js"></script>
+
+		<script type="text/javascript" src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+		
+		<!-- REVOLUTION SLIDER -->
+		<script type="text/javascript" src="/assets/plugins/revolution-slider/js/jquery.themepunch.plugins.min.js"></script>
+		<script type="text/javascript" src="/assets/plugins/revolution-slider/js/jquery.themepunch.revolution.min.js"></script>
+		<script type="text/javascript" src="/assets/js/slider_revolution.js"></script>
+
+
+		<script type="text/javascript" src="/assets/js/scripts.js"></script>
+		
+		<script type="text&#x2F;javascript" src="https&#x3A;&#x2F;&#x2F;sc2replaystats.com&#x2F;js&#x2F;highcharts6.2&#x2F;highcharts.js"></script>
+<script type="text&#x2F;javascript" src="https&#x3A;&#x2F;&#x2F;sc2replaystats.com&#x2F;js&#x2F;highcharts5&#x2F;highcharts-3d.js"></script>
+<script type="text&#x2F;javascript" src="https&#x3A;&#x2F;&#x2F;sc2replaystats.com&#x2F;assets&#x2F;js&#x2F;bootstrap-multiselect.js"></script>		<link href="https&#x3A;&#x2F;&#x2F;sc2replaystats.com&#x2F;assets&#x2F;css&#x2F;bootstrap-multiselect.css" media="screen" rel="stylesheet" type="text&#x2F;css">		
+		<!-- <link id="css_dark_skin" href="/assets/css/layout-dark.css" rel="stylesheet" type="text/css" /> -->
+
+		<!-- Morenizr -->
+		<script type="text/javascript" src="/assets/plugins/modernizr.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+        <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+        <script>
+            window.addEventListener("load", function(){
+                window.cookieconsent.initialise({
+                    "palette": {
+                        "popup": {
+                            "background": "#252e39"
+                        },
+                        "button": {
+                            "background": "#14a7d0"
+                        }
+                    },
+                    "content": {
+                        "href": "/account/privacyPolicy"
+                    }
+                })});
+        </script>
+	</head>
+
+    </head>
+    <body>
+
+<header id="topHead" class="color">
+			<div class="container">
+				<div class="pull-right socials">
+					<a href="https://discord.gg/FnBCzPn" class="pull-left social discord" target="_BLANK"><img src="/images/Discord-Logo-White.png" style="height:25px;"/></a>
+					<a href="https://www.facebook.com/Sc2replaystats" class="pull-left social fa fa-facebook" target="_BLANK"></a>
+					<a href="https://twitter.com/sc2replaystats" class="pull-left social fa fa-twitter" target="_BLANK"></a>
+				</div>
+				
+				<div class="pull-right nav signin-dd">
+				<a href="/Account/logout"><i class="fa fa-users"></i><span class="hidden-xs"> Sign Out</span></a>		
+				</div>
+				<div class="pull-right nav">
+					<span class="fa fa-trophy"></span>
+					<a href="/ladder/index"><strong>Global Ladder Rankings</strong></a>
+				</div>
+			</div>
+		</header>
+
+		<!-- TOP NAV -->
+		<header id="topNav" class="topHead" style="height:60px;">
+			<div class="container">
+
+				<!-- Mobile Menu Button -->
+				<button class="btn btn-mobile" data-toggle="collapse" data-target=".nav-main-collapse">
+					<i class="fa fa-bars"></i>
+				</button>
+
+				<!-- Logo text or image -->
+								<a class="logo" href="/account/display/53113">
+					<img src="/images/logo.png" alt="Sc2ReplayStats" />
+				</a>
+
+				<!-- Top Nav -->
+				   
+<!-- Top Nav -->
+				<div class="navbar-collapse nav-main-collapse collapse pull-right">
+					<nav class="nav-main mega-menu">
+						<ul class="nav nav-pills nav-main scroll-menu" id="topMain">
+														<li class="dropdown">
+								<a class="dropdown-toggle" href="#">
+									My Account <i class="fa fa-angle-down"></i>
+								</a>
+								<ul class="dropdown-menu">
+									<li><span class="sub-title">General Features</span></li>
+									<li><a href="/account/display/53113">My Profile</a></li>
+									<li><a href="/account/upload/53113">Upload Replays</a></li>
+									<li><a href="/account/download">Download Application</a></li>
+									<li><a href="/account/settings/53113">Settings</a></li>
+									<li><a href="/Account/logout">Sign out</a></li>
+									<li class="divider"></li>
+									<li><span class="sub-title">Elite Features</span></li>
+									<li><a href="/stats/eliteAnalytics" target="_blank">Account Reporting</a></li>
+                                    <li><a href="/search" target="_blank">Search</a></li>
+									<li><a href="/TrainingCenter/display/53113" target="_blank">Training Center</a></li>
+								</ul>
+							</li>
+							
+							<li><a href="/account/upload/53113" >Upload Replays</a></li><li><a href="/account/elite/53113" class="bold">Elite Account</a></li>							 <li class="dropdown">
+								<a class="dropdown-toggle" href="#">
+									Statistics <i class="fa fa-angle-down"></i>
+								</a>
+								<ul class="dropdown-menu">
+									<!-- <li><a href="/">Rankings</a></li>
+									<li><a href="/">Daily Games</a></li>
+									<li><a href="/">League Avg Play Style</a></li>
+									 -->
+									 <!--<li><a href="/events">Events</a></li>-->
+									 <li><a href="/ladder/index">Global Ladder Rankings</a></li>
+                                    <li><a href="/stats/hero-units">Hero Units</a></li>
+                                    <li><a href="/stats/analytics">Global Replays Reporting</a></li>
+								</ul>
+							</li> 
+							<!--<li class="dropdown">
+								<a class="dropdown-toggle" href="#">
+									<b>Challenges</b> <i class="fa fa-angle-down"></i>
+								</a>
+								<ul class="dropdown-menu">
+									<li><a href="/challenges/15">2018 Season 2 1v1 Ladder Challenge</a></li>
+									<!-- <li><a href="/">Clans Challenge</a></li> -->
+									<!-- <li><a href="/">Replay Challenge</a></li> -->
+                            <!--</ul>
+                            </li>-->
+							 
+							
+							<li class="dropdown">
+								<a class="dropdown-toggle" href="#">
+									More Info <i class="fa fa-angle-down"></i>
+								</a>
+								<ul class="dropdown-menu">
+									<li><span class="sub-title">Blog</span></li>
+									<li><a href="/blog">Blog Home</a></li>
+									<li><a href="/blog/archives/category/new-features">New Features</a></li>
+									<!--<li><a href="/blog/archives/category/1v1-ladder-challenge">1v1 Ladder Challenge</a></li>-->
+									
+									<li><span class="sub-title">Help</span></li>
+									<li><a href="/account/faq">FAQ</a></li>
+									<li><a href="/account/partners">Partners</a></li>
+									<li><a href="http://sc2replaystats.uservoice.com/">UserVoice</a></li>
+									<li><a href="/account/contactus">Contact Us</a></li>
+									
+								</ul>
+							</li>
+							
+                        <!-- 
+							
+							<li class="search">
+								<form method="get" action="#" class="input-group pull-right">
+									<input type="text" class="form-control" name="k" id="k" value="" placeholder="Search">
+									<span class="input-group-btn">
+										<button class="btn btn-primary notransition"><i class="fa fa-search"></i></button>
+									</span>
+								</form>
+						
+							</li>
+							 -->
+					
+
+						</ul>
+					</nav>
+				</div>
+				<!-- /Top Nav -->
+				<!-- /Top Nav -->
+
+			</div>
+		</header>
+		<!-- /TOP NAV -->
+		<div id="wrapper">
+		
+    
+    
+         	 
+
+			
+			<header id="page-title"> <!-- style="background-image:url('assets/images/demo/parallax_bg.jpg')" -->
+				<!--
+					Enable only if bright background image used
+					<span class="overlay"></span>
+				-->
+
+				<div class="container" style="padding-top:10px;">
+					<!-- <h1>My Account</h1> -->
+                    <div class="row">
+                        <div class="col-sm-3" style="padding-right:0px;">
+                                <select class="form-control pointer" id="account_name" multiple="multiple">
+        					        						
+        						<option value="1843683" >Kurukihme (CN)</option><option value="2275521" >llllllllllll (KR)</option><option value="2811645" >Rival (CN)</option><option value="2860039" SELECTED>SHKstarlight (KR)</option><option value="2633556" >Xnick (CN)</option><option value="2859519" >砰砰砰 (CN)</option>        					</select>
+                        </div>
+                        <div class="col-sm-1" style="padding:0px;">
+                            <select class="form-control pointer" id="race">
+                                <option Value="">Race</option>
+                                <option value="P" >Protoss</option>
+                                <option value="T" >Terran</option>
+                                <option value="Z" >Zerg</option>
+                                <option value="All" >All</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-1" style="padding:0px;">
+                            <select class="form-control pointer" id="format">
+        						<option Value="">Format</option>
+        						<option value="1v1" SELECTED>1v1</option>
+        						<option value="2v2" >2v2</option>
+        						<option value="3v3" >3v3</option>
+        						<option value="4v4" >4v4</option>
+    					   </select>
+                        </div>
+                        <div class="col-sm-2" style="padding:0px;">
+                            <select class="form-control pointer" id="game_type" onchange="gameTypeChange(this)">
+            					<option value="">Game Type</option>
+            					<option value="AutoMM" SELECTED>AutoMM</option>
+            					<option value="Private" >Private</option>
+            					<option value="AutoMM_AI" >AutoMM A.I.</option>
+            					<option value="AutoMM_Archon" >AutoMM Archon</option>
+            					<option value="All" >All</option>
+        				    </select>
+                        </div>
+
+                        <div class="col-sm-2" style="padding:0px;">
+                        <select class="form-control pointer" id="ranked_match" style="display:none;">
+            					<option value="">Ranked/Unranked</option>
+            					<option value="Ranked" >Ranked</option>
+            					<option value="UnRanked" >UnRanked</option>
+        				    </select>
+                            <select class="form-control pointer" id="seasons_id">
+    						<option value="43" SELECTED>Season 43</option><option value="42" >Season 42</option>    	
+    					</select>
+                        </div>
+					<div class="col-sm-2">
+					   <input type="button" value="Filter" class="btn btn-primary" onclick="filterReplays()" style="margin-top:2px;" />
+					</div>
+					</div>
+				</div>
+			</header>
+
+			<section class="container">
+				<div class="row">
+
+					<aside class="col-md-2">
+
+						<h3>Statistics</h3>
+						<ul class="nav nav-list"> 
+							<li class="active"><a href="/account/display/53113/0/2860039/1v1/AutoMM/43/"><i class="fa fa-circle-o"></i> Dashboard</a></li>
+							<!-- <li><a href="/account/graphs/53113/0/2860039/1v1/AutoMM/43"><i class="fa fa-circle-o"></i> Graphs</a></li>-->
+							<li ><a href="/account/division/53113/0/2860039/1v1/AutoMM/43/"><i class="fa fa-circle-o"></i> Division</a></li>
+							<li ><a href="/account/maps/53113/0/2860039/1v1/AutoMM/43/"><i class="fa fa-circle-o"></i> Map</a></li>
+							<li ><a href="/account/gamelength/53113/0/2860039/1v1/AutoMM/43/"><i class="fa fa-circle-o"></i> Game Length</a></li>
+							<li ><a href="/account/ability/53113/0/2860039/1v1/AutoMM/43/"><i class="fa fa-circle-o"></i> Ability</a></li>
+							<li ><a href="/account/units/53113/0/2860039/1v1/AutoMM/43/"><i class="fa fa-circle-o"></i> Unit Stats</a></li>
+							<li ><a href="/account/ladders/53113/0/2860039/1v1/AutoMM/43/"><i class="fa fa-circle-o"></i> Ladders</a></li>
+							<li ><a href="/account/clan/53113/0/2860039/1v1/AutoMM/43/"><i class="fa fa-circle-o"></i> Clan</a></li>
+							<li ><a href="/account/replays/53113/0/2860039/1v1/AutoMM/43/"><i class="fa fa-circle-o"></i> Replays</a></li>
+							<li ><a href="/account/opponents/53113/0/2860039/1v1/AutoMM/43/"><i class="fa fa-circle-o"></i> Opponents</a></li>
+                            <li ><a href="/account/weeks/53113/0/2860039/1v1/AutoMM/43/"><i class="fa fa-circle-o"></i> Weeks</a></li>
+							
+						</ul>
+						<br>
+						
+						
+						<ul class="nav nav-list"><li>
+						  
+						  <div class="promo_box">
+								<span style="font-size:20px; display:inline-block; color:white;">PLAY AT A </span>
+								<span style="font-size: 20px; display:inline-block; font-weight:bold; color:white;">WHOLE NEW LEVEL</span>
+								<span style="font-size: 15px; display:inline-block; font-weight:bold; color:white; margin-top:20px;">Use the Training Center included with our <span style="text-decoration:underline;">Elite Accounts!</span></span>
+								<a href="/account/elite/53113" class="btn  btn-warning " style="width:85%; font-weight:bold; font-size:12px; margin-top:10px;">SIGN UP TODAY</a>
+							</div> 
+							
+							<!-- <div class="promo_box" style="background: linear-gradient(to bottom, #750009 25%,#460100 70%);">
+								<span style="font-size:20px; display:inline-block; color:white;">Cyber Monday </span>
+								<span style="font-size: 20px; display:inline-block; font-weight:bold; color:white;">Elite Membership Sale</span>
+								<span style="font-size: 15px; display:inline-block; font-weight:bold; color:white; margin-top:20px;">25% off <span style="text-decoration:underline;">Yearly Membership!</span></span>
+								<a href="/account/elite/53113" class="btn  btn-warning " style="width:85%; font-weight:bold; font-size:12px; margin-top:10px;">SIGN UP TODAY</a>
+							</div>-->
+						  </li></ul><br>						
+						
+						
+						<h3>Elite Options</h3>
+						<ul class="nav nav-list">
+                            <li><a href="/stats/eliteAnalytics"><i class="fa fa-circle-o"></i> Account Reporting</a></li>
+						    <li><a href="/TrainingCenter/display/53113"><i class="fa fa-circle-o"></i> Training Center</a></li>
+						    <li><a href="/search"><i class="fa fa-circle-o"></i> Search</a></li>
+						  
+						</ul>
+
+						<!-- <h4>Training Center</h4>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.</p>
+						
+						<h4>1v1 Challenge</h4>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.</p>
+						 -->
+					</aside>
+
+					<div class="col-md-10">
+
+
+                    						    
+ 
+<h2>24 Hours <strong>Quick</strong> Statistics</h2>
+	<section>
+	
+	No games have been played	</section>
+	
+	<div class="divider"><!-- divider -->
+						</div><h2>Season <strong>43</strong> Quick Statistics</h2>
+
+	<section>
+			<div class="row text-center countTo">
+				<div class="col-md-2">
+					<strong>17</strong>
+					<label>Games</label>
+				</div>
+				<div class="col-md-2">
+					<strong>12-5</strong>
+					<label>Wins-losses</label>
+				</div>
+				<div class="col-md-2">
+					<strong>71%</strong>
+					<label>Win %</label>
+				</div>
+				<div class="col-md-2">
+					<strong>111</strong>
+					<label>Avg SQ</label>
+				</div>
+				<div class="col-md-2">
+					<strong>62</strong>
+					<label>Avg Workers Created</label>
+				</div>
+				<div class="col-md-2">
+					<strong>35s</strong>
+					<label>Avg Time Supply Blocked</label>
+				</div>
+			</div>
+			
+		<h2>Season <strong>Race </strong> Statistics</h2>
+		<div class="row text-center countTo">
+		<div class="col-md-2">
+				<strong>4 - 1</strong>
+				<label>TvP</label>
+			</div><div class="col-md-2">
+				<strong>4 - 2</strong>
+				<label>TvT</label>
+			</div><div class="col-md-2">
+				<strong>4 - 2</strong>
+				<label>TvZ</label>
+			</div>            
+		</div>
+
+        <h2>Season <strong>MMR </strong> Statistics</h2>
+        <div class="row text-center countTo">
+            <div class="col-md-2">
+                <strong>4718</strong>
+                <label>Avg MMR</label>
+            </div>
+            <div class="col-md-2">
+                <strong>4837</strong>
+                <label>Max MMR</label>
+            </div>
+            <div class="col-md-2">
+                <strong>4597</strong>
+                <label>Min MMR</label>
+            </div>
+            <div class="col-md-2">
+                <strong>5150</strong>
+                <label>Opp Max MMR</label>
+            </div>
+            <div class="col-md-2">
+                <strong>4592</strong>
+                <label>Opp Avg MMR</label>
+            </div>
+        </div>
+		
+	
+		</section>
+<div class="divider"><!-- divider -->
+						</div>
+<h2>Last <strong>Replay</strong> Statistics - 29 Mar, 2020 9:54 pm</h2>
+				
+						<h4>FFninetyone <strong>vs</strong> SHKstarlight on <strong>工业与净化-天梯版</strong></h4>
+						
+						<table class="table table-striped table-condensed">
+						<thead>
+							<tr>
+								<th>Player</th>
+								<th>Team</th>
+                                <th>MMR</th>
+								<th>Workers</th>
+								<th>SQ</th>
+								<th>Structures</th>
+								<th>Resource Collection</th>
+								<th>Avg Unspent Resources</th>
+								<th>Units Produced</th>
+								<th>Units Killed</th>
+							</tr>
+						</thead>
+						<tbody>
+						<tr>
+                                    <td><span class="races protoss size-16" style="display:inline-block;"></span> <span style="display:inline-block;" class="leagues league-diamond-4 size-16"></span> <a href="/player/1668397" target="_BLANK">FFninetyone</a></td>
+                                    <td>1</td>
+                                    <td>4491</td>
+                                    <td>82 <span class="fa fa-check-square-o"></span></td>
+                                    <td>147 <span class="fa fa-check-square-o"></span></td>
+                                    <td>55 <span class="fa fa-check-square-o"></span></td>
+                                    <td>2623 <span class="fa fa-check-square-o"></span></td>
+                                    <td>525 <span class="fa fa-check-square-o"></span></td>
+                                    <td>181 </td>
+                                    <td>104 <span class="fa fa-check-square-o"></span></td>
+                                  </tr><tr>
+                                    <td><span class="races terran size-16" style="display:inline-block;"></span> <span style="display:inline-block;" class="leagues league-master-4 size-16"></span> <a href="/player/2860039" target="_BLANK">SHKstarlight</a></td>
+                                    <td>2</td>
+                                    <td>4837</td>
+                                    <td>65 </td>
+                                    <td>117 </td>
+                                    <td>51 </td>
+                                    <td>2151 </td>
+                                    <td>634 </td>
+                                    <td>201 <span class="fa fa-check-square-o"></span></td>
+                                    <td>96 </td>
+                                  </tr>							</tbody>
+						</table>
+						
+						<div class="bs-callout text-center styleBackground" style="padding:10px 0px;">
+							<h3>Last <strong>Replay</strong>
+
+                                <a href="/replay/13709130" target="_blank" class="btn btn-primary btn-md">View Replay</a>
+                            <a href="/TrainingCenter/replay/53113/13709130/2860039" target="_blank" class="btn btn-primary btn-md">View Training Center</a>                            </h3>
+
+
+						</div>
+												
+						<div class="divider"><!-- divider -->
+						</div><h2>My <strong>Clan</strong> Statistics</h2>
+						
+						<table class="table table-striped table-condensed">
+						<thead>
+							<tr>
+								<th>Clan Rank</th>
+                                <th>MMR</th>
+								<th>Player</th>
+								<th>League Rank</th>
+								<th>Points</th>
+								<th class="hidden-xs">Server Rank</th>
+								<th class="hidden-xs">Global Rank</th>
+								<th>Wins</th>
+								<th>Losses</th>
+								<th class="hidden-xs">Last Change</th>
+							</tr>
+						</thead>
+						<tbody>
+						<tr class="info">
+                                    <td>1</td>
+                                    <td>4,788</td>
+                                    <td><div class="leagues league-master-2 size-16" style="display:inline-block;"></div>3 <div class="races terran size-16" style="display:inline-block;"></div> SHKstarlight</td>
+                                    <td>20</td>
+								    <td>286</td>
+                                    <td class="hidden-xs">916</td>
+                                    <td class="hidden-xs">4,086</td>
+                                    
+                                    <td>30</td>
+                                    <td>7</td>
+						            <td class="hidden-xs">4 days ago</td>
+                                  </tr>						
+							
+							</tbody>
+						</table>
+						
+						<div class="bs-callout text-center styleBackground" style="padding:10px 0px;">
+							<h3>Clan <strong> Center</strong> <a href="/account/clan/53113/0/2860039/1v1/AutoMM/43" target="_blank" class="btn btn-primary btn-md">View Clan</a></h3>
+						</div>
+						
+						<div class="divider"><!-- divider -->
+						</div>
+					</div>
+
+				</div>
+
+
+			</section>
+		
+<script>
+
+$(document).ready(function() {
+    $('#account_name').multiselect({
+        buttonContainer: '<div class="btn-group" style="width:100%;" />',
+        buttonWidth:'100%',
+        includeSelectAllOption: true,
+        buttonClass: 'multiselect dropdown-toggle btn btn-default btn-multiselect',
+    	buttonText: function(options, select) {
+    		if (options.length == 1) 
+            {
+    			var labels = [];
+                options.each(function() {
+                    if ($(this).attr('label') !== undefined) {
+                        labels.push($(this).attr('label'));
+                    }
+                    else {
+                        labels.push($(this).html());
+                    }
+                });
+                return labels.join(', ') + '';
+        	}
+            if (options.length > 1) 
+                {
+                return 'Multiple Accounts Selected';
+            	}
+    	}
+        	});
+});
+                    
+			function gameTypeChange(element)
+			{
+				if($(element).val() == 'AutoMM_Archon')
+				{
+					$('#format').val('2v2');
+				}
+			}
+
+                    
+			function filterReplays()
+			{		
+				var page = 'display';
+				var url_pieces = (window.location.href).split("/");
+
+				if(url_pieces[4]) {
+					page = url_pieces[4];
+				}
+				
+				window.location = "/account/"+page+"/"+53113+"/0/"+$("#account_name").val().join('-')+"/"+$("#format").val()+"/"+$("#game_type").val()+"/"+$("#seasons_id").val()+"/"+$("#race").val();
+			}
+</script>
+	 
+
+        </div>
+
+        <!-- FOOTER -->
+		<footer>
+
+			<!-- copyright , scrollTo Top -->
+			<div class="footer-bar">
+				<div class="container">
+                    <div class="row">
+                    </div>
+                    <span class="copyright">Copyright &copy; Sc2ReplayStats, LLC . All Rights Reserved. | <a href="/account/termsAndConditions" style="font-size:12px; color:#87919F;">terms & conditions</a> | <a href="/account/privacyPolicy" style="font-size:12px; color:#87919F; ">Privacy Policy</a></span>
+					<a class="toTop" href="#topNav">BACK TO TOP <i class="fa fa-arrow-circle-up"></i></a>
+				</div>
+			</div>
+			<!-- copyright , scrollTo Top -->
+
+
+			
+
+		</footer>
+		<!-- /FOOTER -->
+
+
+
+
+
+		<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-37065511-1', 'auto');  // Replace with your property ID.
+ga('require', 'displayfeatures');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+<script>
+// Include the UserVoice JavaScript SDK (only needed once on a page)
+UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/VKO6BuRq8gU0xKVHXwprrg.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
+
+//
+// UserVoice Javascript SDK developer documentation:
+// https://www.uservoice.com/o/javascript-sdk
+UserVoice.push(['set', {
+  accent_color: '#448dd6',
+  trigger_color: 'white',
+  trigger_background_color: '#1980B6'
+}]);
+
+UserVoice.push(['identify', {
+	email: 'holyca@126.com',
+	          type: 'free',
+              id: '53113'}]);
+
+// Add default trigger to the bottom-right corner of the window:
+UserVoice.push(['addTrigger', { mode: 'contact', trigger_position: 'bottom-right' }]);
+
+UserVoice.push(['autoprompt', {}]);
+</script>
+       
+
+	<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"00bdaa1b27","applicationID":"19354950","transactionName":"NldVZERUV0JZBURfWA8ddlNCXFZfFwdTVVgUXEM=","queueTime":0,"applicationTime":104,"atts":"GhBWEgxOREw=","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+</html>
+
+

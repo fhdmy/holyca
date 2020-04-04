@@ -350,9 +350,7 @@ export default {
       });
     },
     empty_input() {
-      const text = "输入项为空!";
-      const type = "error";
-      notify(text, type, 1500);
+      notify("输入项为空!", "error", 1500);
     },
     login() {
       if (this.login_info.nickname == "" || this.login_info.input_pwd == "") {
@@ -384,9 +382,7 @@ export default {
       .catch(error => {
         console.log(error.response);
         if (error.response.data == "Serializer is invalid") {
-          const text = "账号或密码错误!";
-          const type = "error";
-          notify(text, type, 1500);
+          notify("账号或密码错误", "error", 1500);
         }
       });
     },
@@ -402,9 +398,9 @@ export default {
           console.log(res);
           this.player_info.nickname=res.data.nickname;
           this.player_info.score=res.data.score;
-          this.player_info.auth=res.data.auth;
-          this.player_info.repstats_acc=res.data.repstats_acc;
-          this.player_info.repstats_pwd=res.data.repstats_pwd;
+          this.player_info.auth=res.data.repstats.auth;
+          this.player_info.repstats_acc=res.data.repstats.repstats_acc;
+          this.player_info.repstats_pwd=res.data.repstats.repstats_pwd;
           this.has_login=true;
         })
         .catch(error => {
@@ -429,6 +425,7 @@ export default {
       if(confirm("确定要注销？")){
         localStorage.clear();
         this.has_login=false;
+        this.signup_flag=false;
         this.token="";
         this.reset_all();
       }
@@ -521,6 +518,9 @@ export default {
           else if(error.response.data == "Serializer is invalid"){
             notify("注册信息有误!", "error", 1500);
           }
+          else if(error.response.data == "RepStats already used"){
+            notify("RepStats账号已被使用!", "error", 1500);
+          }
         });
     },
     alter_info(){
@@ -574,14 +574,17 @@ export default {
           if(error.response.data=="Password does not match"){
             notify("原密码错误!", "error", 1500);
           }
-          if(error.response.data=="Username already exisits"){
+          else if(error.response.data=="Username already exisits"){
             notify("用户名已被使用!", "error", 1500);
           }
-          if(error.response.data=="RepStats verification is invalid"){
+          else if(error.response.data=="RepStats verification is invalid"){
             notify("RepStats核对错误!", "error", 1500);
           }
-          if(error.response.data=="Serializer is invalid"){
+          else if(error.response.data=="Serializer is invalid"){
             notify("修改信息有误!", "error", 1500);
+          }
+          else if(error.response.data == "RepStats already used"){
+            notify("RepStats账号已被使用!", "error", 1500);
           }
         });
     }
@@ -624,7 +627,7 @@ DxItem {
   height: 10px;
   border-bottom: 1px solid #6b7289;
   position: relative;
-  bottom: 45%;
+  bottom: 55%;
 }
 .right-icon {
   background: white;

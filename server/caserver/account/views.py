@@ -23,12 +23,14 @@ try:
     # 'cron'方式循环，周一到周五，每天9:30:10执行,id为工作ID作为标记
     # day_of_week='mon-fri', hour='9', minute='30', second='10'
     # ('scheduler',"interval", seconds=1)  #用interval方式循环，每一秒执行一次
-    @register_job(scheduler, 'cron', day_of_week='0-6',hour='3',minute='0',second='0',id='task_time')
+    # @register_job(scheduler, 'interval', seconds=1,id='test')
+    @register_job(scheduler, 'cron', day_of_week='0-6',hour='3',minute='0',second='0',id='update_signin')
     def signin_update():
         teammates = account.models.Teammate.objects.all()
         for tm in teammates:
             tm.has_signin=False
             tm.save()
+        # print(test)
 
     # 监控任务
     register_events(scheduler)
@@ -43,6 +45,12 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.all()
     serializer_class = account.serializers.UserSerializer
     filter_fields = ['username']
+    ordering_fields = '__all__'
+
+class RepStatsViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = account.models.RepStats.objects.all()
+    serializer_class = account.serializers.RepStatsSerializer
+    filter_fields = ['repstats_id']
     ordering_fields = '__all__'
 
 class TeammateViewSet(viewsets.ModelViewSet):
@@ -80,13 +88,19 @@ class TeammateViewSet(viewsets.ModelViewSet):
             
             #如果有RepStats信息，则更改
             if request.data['repstats_acc']!="" or request.data['repstats_pwd']!="" or request.data['auth']!="":
-                r_acc=user.teammate.repstats_acc
-                r_pwd=user.teammate.repstats_pwd
-                r_auth=user.teammate.auth
+                r_acc=user.teammate.repstats.repstats_acc
+                r_pwd=user.teammate.repstats.repstats_pwd
+                r_auth=user.teammate.repstats.auth
                 rp = request.data['repstats_pwd']
                 rp = str(base64.decodebytes(bytes(rp, 'utf-8')), 'utf-8')
                 #如果发生改动
                 if r_acc!=request.data['repstats_acc'] or r_pwd!=rp or r_auth!=request.data['auth']:
+                    # 如果其他账号有此repstats号
+                    rs=account.models.RepStats.objects.all()
+                    for r in rs:
+                        if r.repstats_acc==request.data['repstats_acc'] and r.teammate!=request.data['nickname']:
+                            return Response('RepStats already used', 400)
+
                     repstats_login_flag=True
                     #登录账号
                     login_url="https://sc2replaystats.com/Account/signin"
@@ -106,9 +120,9 @@ class TeammateViewSet(viewsets.ModelViewSet):
 
                     if not repstats_login_flag:
                         return Response('RepStats verification is invalid', 400)
-                    user.teammate.repstats_acc=request.data['repstats_acc']
-                    user.teammate.repstats_pwd=rp
-                    user.teammate.auth=request.data['auth']
+                    user.teammate.repstats.repstats_acc=request.data['repstats_acc']
+                    user.teammate.repstats.repstats_pwd=rp
+                    user.teammate.repstats.auth=request.data['auth']
                     user.teammate.save()
             
             #更改密码
@@ -181,6 +195,12 @@ class SignUp(views.APIView):
             #test repstats
             repstats_login_flag=True
             if request.data['repstats_acc']!="":
+                # 如果其他账号有此repstats号
+                rs=account.models.RepStats.objects.all()
+                for r in rs:
+                    if r.repstats_acc==request.data['repstats_acc'] and r.teammate!=request.data['nickname']:
+                        return Response('RepStats already used', 400)
+
                 #登录账号
                 login_url="https://sc2replaystats.com/Account/signin"
                 req_data={
@@ -217,12 +237,15 @@ class SignUp(views.APIView):
                 pass
 
             token, created = Token.objects.get_or_create(user=new_user)
-            account.models.Teammate.objects.create(
-                user=new_user,
-                nickname=request.data['nickname'],
+            new_repstats=account.models.RepStats.objects.create(
                 auth=request.data['auth'],
                 repstats_acc=request.data['repstats_acc'],
                 repstats_pwd=rp
+            )
+            account.models.Teammate.objects.create(
+                user=new_user,
+                nickname=request.data['nickname'],
+                repstats=new_repstats
             )
             user_id = str(new_user.id)
             profile_id = str(new_user.teammate.id)

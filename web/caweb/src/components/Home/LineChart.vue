@@ -6,13 +6,13 @@
     @legend-click="legendClickHandler($event)"
     @series-click="seriesClickHandler($event)"
   >
-    <DxCommonSeriesSettings type="spline" argument-field="month"/>
+    <DxCommonSeriesSettings type="spline" argument-field="index"/>
     <DxCommonAxisSettings>
       <DxGrid color="#515873" :visible="true"/>
       <DxLabel :font="{color:'#8e93a7'}"/>
       <DxTick color="#515873"/>
     </DxCommonAxisSettings>
-    <DxSeries v-for="player in players" :key="player" :value-field="player" :name="player">
+    <DxSeries v-for="(player,index) in players" :key="index" :value-field="player" :name="player">
       <DxPoint :size="6"/>
     </DxSeries>
     <DxValueAxis color="#515873"/>

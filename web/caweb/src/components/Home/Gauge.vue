@@ -9,7 +9,7 @@
       <DxRangeContainer :palette="palette">
         <DxRange :start-value="0" :end-value="interval"/>
         <DxRange :start-value="interval" :end-value="interval*3"/>
-        <DxRange :start-value="interval*3" :end-value="200"/>
+        <DxRange :start-value="interval*3" :end-value="max_value"/>
       </DxRangeContainer>
     </DxCircularGauge>
   </div>
