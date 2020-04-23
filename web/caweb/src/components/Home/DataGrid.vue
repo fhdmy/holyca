@@ -63,7 +63,7 @@
             <div
               class="cell-wrapper"
               v-for="(item,index) in dataSource"
-              :key="item.rep_id"
+              :key="index"
               :class="{'darker':(index%2==1)}"
             >
               <DxBox :height="40" direction="row" width="100%">

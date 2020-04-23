@@ -9,7 +9,11 @@ import account.models
 import account.serializers
 import base64
 import requests
+import match.models
 from caserver.authentication import has_expired
+from datetime import timedelta
+from datetime import datetime
+from match.apis import API
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from django_apscheduler.jobstores import DjangoJobStore, register_events, register_job
@@ -30,6 +34,7 @@ try:
         for tm in teammates:
             tm.has_signin=False
             tm.save()
+        print(str(datetime.now())+": signin_updated")
         # print(test)
 
     # 监控任务
@@ -75,7 +80,7 @@ class TeammateViewSet(viewsets.ModelViewSet):
                 return Response('Password does not match', 400)
            
             #如果更改了昵称，判断昵称是否可用
-            if user.teammate.nickname!=request.data['nickname']:
+            if str(user.teammate.nickname)!=request.data['nickname']:
                 try:
                     findTeammate = account.models.Teammate.objects.get(
                         nickname=request.data['nickname'],
@@ -94,11 +99,11 @@ class TeammateViewSet(viewsets.ModelViewSet):
                 rp = request.data['repstats_pwd']
                 rp = str(base64.decodebytes(bytes(rp, 'utf-8')), 'utf-8')
                 #如果发生改动
-                if r_acc!=request.data['repstats_acc'] or r_pwd!=rp or r_auth!=request.data['auth']:
+                if str(r_acc)!=request.data['repstats_acc'] or str(r_pwd)!=rp or str(r_auth)!=request.data['auth']:
                     # 如果其他账号有此repstats号
                     rs=account.models.RepStats.objects.all()
                     for r in rs:
-                        if r.repstats_acc==request.data['repstats_acc'] and r.teammate!=request.data['nickname']:
+                        if str(r.repstats_acc)==request.data['repstats_acc'] and str(r.teammate)!=request.data['nickname']:
                             return Response('RepStats already used', 400)
 
                     repstats_login_flag=True
@@ -123,7 +128,7 @@ class TeammateViewSet(viewsets.ModelViewSet):
                     user.teammate.repstats.repstats_acc=request.data['repstats_acc']
                     user.teammate.repstats.repstats_pwd=rp
                     user.teammate.repstats.auth=request.data['auth']
-                    user.teammate.save()
+                    user.teammate.repstats.save()
             
             #更改密码
             if request.data['new_password']!="":
@@ -175,6 +180,216 @@ class TeammateViewSet(viewsets.ModelViewSet):
             user.teammate.save()
             return Response("Signin OK")
         return Response("User has signined today",400)
+    
+    @action(methods=['get'],detail=False,permission_classes=[permissions.IsAuthenticated])
+    def mmr_statistics(self, request, *args, **kwargs):
+        user = request.user
+        day_long=4
+        today = datetime.today()
+        info=[]
+        mmr_record=[]
+        for i in range(12,0,-1):
+            players=[]
+            mmr_record.append({})
+            info.append([])
+            for bn in user.teammate.repstats.battlenet_acc.all():
+                if bn in players:
+                    continue
+                mmrs=match.models.MMR.objects.filter(
+                    date__range=(today-timedelta(days=day_long*(i+1)),today-timedelta(days=day_long*i)),
+                    battlenet_acc=bn
+                )
+                mmr_sum=0
+                mmr_num=0
+                for mmr in mmrs:
+                    if mmr!=0:
+                        mmr_sum+=mmr.mmr
+                        mmr_num+=1
+                mmr_avg=0
+                # 向前寻找mmr非0的点并赋值
+                if mmr_sum==0:
+                    k=0
+                    while k<12:
+                        # 先从mmr_record查找
+                        if i<12:
+                            if mmr_record[12-i-1][bn.battlenet_name]!=0:
+                                # 替换
+                                mmr_avg=(int)(mmr_record[12-i-1][bn.battlenet_name])
+                                break
+                        former_mmrs=match.models.MMR.objects.filter(
+                            date__range=(today-timedelta(days=day_long*(i+1+k)),today-timedelta(days=day_long*(i+k))),
+                            battlenet_acc=bn
+                        )
+                        temp_sum=0
+                        temp_num=0
+                        for former_mmr in former_mmrs:
+                            if former_mmr!=0:
+                                temp_sum+=former_mmr.mmr
+                                temp_num+=1
+                        # 替换
+                        if temp_sum!=0:
+                            mmr_avg=(int)(temp_sum/temp_num)
+                            break
+                        k+=1
+
+                else:
+                    mmr_avg=(int)(mmr_sum/mmr_num)
+                
+                info[12-i].append({
+                    "name":bn.battlenet_name,
+                    "mmr":mmr_avg,
+                    "date":today-timedelta(days=day_long*i+day_long/2),
+                })
+                mmr_record[12-i][bn.battlenet_name]=mmr_avg
+                players.append(bn)
+        
+        return Response(info)
+
+    @action(methods=['get'],detail=False,permission_classes=[permissions.IsAuthenticated])
+    def racesum_statistics(self, request, *args, **kwargs):
+        user = request.user
+        #获得最近一个月每个账号rep对手的种族
+        today = datetime.today()
+        reps=match.models.Replay.objects.filter(
+            date__range=(today-timedelta(days=30),today),
+            repstats_acc=user.teammate.repstats
+        )
+        p_sum=0
+        z_sum=0
+        t_sum=0
+        for r in reps:
+            player1,player2=r.player1,r.player2
+            player1_race,player2_race=r.vs_race.split("v")[0],r.vs_race.split("v")[1]
+            if player1 in user.teammate.repstats.battlenet_acc.all():
+                if player2_race=="T":
+                    t_sum+=1
+                elif player2_race=="P":
+                    p_sum+=1
+                elif player2_race=="Z":
+                    z_sum+=1
+            elif player2 in user.teammate.repstats.battlenet_acc.all():
+                if player1_race=="T":
+                    t_sum+=1
+                elif player1_race=="P":
+                    p_sum+=1
+                elif player1_race=="Z":
+                    z_sum+=1
+
+        rtn=[
+            {
+                "race":"P",
+                "sum":p_sum
+            },
+            {
+                "race":"Z",
+                "sum":z_sum
+            },
+            {
+                "race":"T",
+                "sum":t_sum
+            }
+        ]
+        return Response(rtn)
+    
+    @action(methods=['get'],detail=False,permission_classes=[permissions.IsAuthenticated])
+    def racewinrate_statistics(self, request, *args, **kwargs):
+        user = request.user
+        day_long=4
+        today = datetime.today()
+        rtn=[]
+        for i in range(12,0,-1):
+            reps=match.models.Replay.objects.filter(
+                date__range=(today-timedelta(days=day_long*(i+1)),today-timedelta(days=day_long*i)),
+                repstats_acc=user.teammate.repstats
+            )
+            
+            tvp_sum=0
+            pvz_sum=0
+            zvt_sum=0
+            tvp_win=0
+            pvz_win=0
+            zvt_win=0
+            for r in reps:
+                if r.vs_race=="TvP" or r.vs_race=="PvT":
+                    tvp_sum+=1
+                    if r.winner==r.player1.battlenet_name and r.vs_race=="TvP":
+                        tvp_win+=1
+                    elif r.winner==r.player2.battlenet_name and r.vs_race=="PvT":
+                        tvp_win+=1
+                elif r.vs_race=="PvZ" or r.vs_race=="ZvP":
+                    pvz_sum+=1
+                    if r.winner==r.player1.battlenet_name and r.vs_race=="PvZ":
+                        pvz_win+=1
+                    elif r.winner==r.player2.battlenet_name and r.vs_race=="ZvP":
+                        pvz_win+=1
+                elif r.vs_race=="ZvT" or r.vs_race=="TvZ":
+                    zvt_sum+=1
+                    if r.winner==r.player1.battlenet_name and r.vs_race=="ZvT":
+                        zvt_win+=1
+                    elif r.winner==r.player2.battlenet_name and r.vs_race=="TvZ":
+                        zvt_win+=1
+            
+            if tvp_sum==0:
+                tvp_winrate=50
+            else:
+                tvp_winrate=round(tvp_win*100/tvp_sum,1)
+            if pvz_sum==0:
+                pvz_winrate=50
+            else:
+                pvz_winrate=round(pvz_win*100/pvz_sum,1)
+            if zvt_sum==0:
+                zvt_winrate=50
+            else:
+                zvt_winrate=round(zvt_win*100/zvt_sum,1)
+
+            rtn.append({
+                "date":today-timedelta(days=day_long*i+day_long/2),
+                "TVP":tvp_winrate,
+                "PVZ":pvz_winrate,
+                "ZVT":zvt_winrate
+            })
+        return Response(rtn)
+
+    @action(methods=['get'],detail=False,permission_classes=[permissions.IsAuthenticated])
+    def active_statistics(self, request, *args, **kwargs):
+        user = request.user
+        #filter in 7days
+        today = datetime.today()
+        reps=match.models.Replay.objects.filter(       
+            date__range=(today-timedelta(days=7),today),
+            repstats_acc=user.teammate.repstats
+        )
+        return Response(len(reps))
+    
+    @action(methods=['get'],detail=False,permission_classes=[permissions.IsAuthenticated])
+    def get_map_winrate(self, request, *args, **kwargs):
+        user = request.user
+        repstats=user.teammate.repstats
+        battlenets_accs=repstats.battlenet_acc.all()
+        map_winrates=[]
+        for bn in battlenets_accs:
+            mw=eval(bn.map_winrate)
+            map_winrates.append({
+                'account':bn.battlenet_name,
+                'winrate':mw
+            })
+        return Response(map_winrates)
+    
+    @action(methods=['get'],detail=False,permission_classes=[permissions.IsAuthenticated])
+    def get_basic_statistics(self, request, *args, **kwargs):
+        user = request.user
+        repstats=user.teammate.repstats
+        battlenets_accs=repstats.battlenet_acc.all()
+        bs=[]
+        for bn in battlenets_accs:
+            if bn.basic_accomplishment=="":
+                continue
+            mw=eval(bn.basic_accomplishment)
+            bs.append({
+                'account':bn.battlenet_name,
+                'basic':mw
+            })
+        return Response(bs)
 
 class SignUp(views.APIView):
     permission_classes = [permissions.AllowAny, ]
@@ -198,7 +413,7 @@ class SignUp(views.APIView):
                 # 如果其他账号有此repstats号
                 rs=account.models.RepStats.objects.all()
                 for r in rs:
-                    if r.repstats_acc==request.data['repstats_acc'] and r.teammate!=request.data['nickname']:
+                    if str(r.repstats_acc)==request.data['repstats_acc'] and str(r.teammate)!=request.data['nickname']:
                         return Response('RepStats already used', 400)
 
                 #登录账号

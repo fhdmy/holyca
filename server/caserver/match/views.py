@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from collections import defaultdict
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework import generics, permissions, views, viewsets
@@ -29,67 +30,151 @@ try:
         # print("***start***")
         teammates = account.models.Teammate.objects.all()
         for tm in teammates:
-            # print("***********")
-            repstats=tm.repstats
-            if repstats=="":
-                continue
-            api=API(email=repstats.repstats_acc,password=repstats.repstats_pwd,auth=repstats.auth)
-            # print("login...")
-            repstats_id,battlenet_info=api.login()
-            repstats.repstats_id=repstats_id
-            for bn in battlenet_info:
-                #如果没有BattlenetAccount则创建
-                bn_acc,created=match.models.BattlenetAccount.objects.get_or_create(
-                    battlenet_name=bn["name"],
-                    battlenet_id=bn["id"],
-                )
-                repstats.battlenet_acc.add(bn_acc)
-            # print("get_rep...")
-            repstats.save()
-            reps=api.get_rep()
-            for r in reps:
-                #如果没有BattlenetAccount则创建
-                player_1,created=match.models.BattlenetAccount.objects.get_or_create(
-                    battlenet_name=r["player1"],
-                    battlenet_id=r["player1_id"]
-                )
-                # print("created player1: "+str(player_1.battlenet_name)+"-"+str(player_1.battlenet_id))
-                player_2,created=match.models.BattlenetAccount.objects.get_or_create(
-                    battlenet_name=r["player2"],
-                    battlenet_id=r["player2_id"]
-                )
-                # print("created player2: "+str(player_2.battlenet_name)+"-"+str(player_2.battlenet_id))
-                # 新增replay
-                replay,created=match.models.Replay.objects.get_or_create(
-                    rep_id=r["rep_id"],
-                    player1_mmr=r["player1_mmr"],
-                    player2_mmr=r["player2_mmr"],
-                    winner=r["winner"],
-                    date=r["date"],
-                    vs_race=r["vs_race"],
-                    game_length=r["game_length"],
-                    game_map=r["rep_map"],
-                    player1=player_1,
-                    player2=player_2
-                )
-                # print("new replay: "+str(r["rep_id"])+" "+str(r["rep_map"])+" "+str(r["game_length"])+" "+str(r["vs_race"])+" "+str(r["winner"]))
-                # MMR
-                match.models.MMR.objects.get_or_create(
-                    replay=replay,
-                    battlenet_acc=player_1,
-                    mmr=r["player1_mmr"],
-                    date=r["date"]
-                )
-                # print("new MMR: "+str(player_1.battlenet_name)+" "+str(r["player1_mmr"])+" "+str(r["date"]))
-                match.models.MMR.objects.get_or_create(
-                    replay=replay,
-                    battlenet_acc=player_2,
-                    mmr=r["player2_mmr"],
-                    date=r["date"]
-                )
-                # print("new MMR: "+str(player_2.battlenet_name)+" "+str(r["player2_mmr"])+" "+str(r["date"]))
-                replay.repstats_acc.add(repstats)
+            try:
+                # print("***********")
+                repstats=tm.repstats
+                if repstats=="":
+                    continue
+                api=API(email=repstats.repstats_acc,password=repstats.repstats_pwd,auth=repstats.auth)
+                # print("login...")
+                repstats_id,battlenet_info=api.login()
+                # 登录失败
+                if repstats_id==-1:
+                    continue
+                repstats.repstats_id=repstats_id
+                for name,nid in battlenet_info.items():
+                    #如果没有BattlenetAccount则创建
+                    bn_acc,created=match.models.BattlenetAccount.objects.get_or_create(
+                        battlenet_name=name,
+                        battlenet_id=nid,
+                    )
+                    repstats.battlenet_acc.add(bn_acc)
+                for bn in repstats.battlenet_acc.all():
+                    if str(bn.battlenet_id) not in battlenet_info.values():
+                        bn.repstats_acc.remove(repstats)
+
+                # print("get_rep...")
                 repstats.save()
+                reps=api.get_rep()
+                for r in reps:
+                    try:
+                        #如果没有BattlenetAccount则创建
+                        player_1,created=match.models.BattlenetAccount.objects.get_or_create(
+                            battlenet_name=r["player1"],
+                            battlenet_id=r["player1_id"]
+                        )
+                        # print("created player1: "+str(player_1.battlenet_name)+"-"+str(player_1.battlenet_id))
+                        player_2,created=match.models.BattlenetAccount.objects.get_or_create(
+                            battlenet_name=r["player2"],
+                            battlenet_id=r["player2_id"]
+                        )
+                        # print("created player2: "+str(player_2.battlenet_name)+"-"+str(player_2.battlenet_id))
+                        # 新增replay
+                        replay,created=match.models.Replay.objects.get_or_create(
+                            rep_id=r["rep_id"],
+                            player1_mmr=r["player1_mmr"],
+                            player2_mmr=r["player2_mmr"],
+                            winner=r["winner"],
+                            date=r["date"],
+                            vs_race=r["vs_race"],
+                            game_length=r["game_length"],
+                            game_map=r["rep_map"],
+                            player1=player_1,
+                            player2=player_2
+                        )
+                        # print("new replay: "+str(r["rep_id"])+" "+str(r["rep_map"])+" "+str(r["game_length"])+" "+str(r["vs_race"])+" "+str(r["winner"]))
+                        # MMR
+                        match.models.MMR.objects.get_or_create(
+                            replay=replay,
+                            battlenet_acc=player_1,
+                            mmr=r["player1_mmr"],
+                            date=r["date"]
+                        )
+                        # print("new MMR: "+str(player_1.battlenet_name)+" "+str(r["player1_mmr"])+" "+str(r["date"]))
+                        match.models.MMR.objects.get_or_create(
+                            replay=replay,
+                            battlenet_acc=player_2,
+                            mmr=r["player2_mmr"],
+                            date=r["date"]
+                        )
+                        # print("new MMR: "+str(player_2.battlenet_name)+" "+str(r["player2_mmr"])+" "+str(r["date"]))
+                        replay.repstats_acc.add(repstats)
+                        repstats.save()
+                    except:
+                        pass
+            except:
+                pass
+
+    @register_job(scheduler, 'interval', minutes=60,id='replay_update')
+    def replay_update():
+        replays=match.models.Replay.objects.all()
+        for rep in replays:
+            try:
+                if str(rep.kills)!='':
+                    continue
+                repstats=rep.repstats_acc.all()[0]
+                api=API(email=repstats.repstats_acc,password=repstats.repstats_pwd,auth=repstats.auth)
+                repstats_id,battlenet_info=api.login()
+                # 登录失败
+                if repstats_id==-1:
+                    continue
+            
+                # 更新kills
+                rep.kills=str(api.get_repinfo(rep.rep_id))
+                rep.save()
+            except:
+                pass
+
+    #设置地图胜率和基本素养
+    @register_job(scheduler, 'interval', minutes=60,id='basic_update')
+    def basic_update():
+        teammates = account.models.Teammate.objects.all()
+        for tm in teammates:
+            try:
+                repstats=tm.repstats
+                if repstats=="":
+                    continue
+                api=API(email=repstats.repstats_acc,password=repstats.repstats_pwd,auth=repstats.auth)
+                repstats_id,battlenet_info=api.login()
+                # 登录失败
+                if repstats_id==-1:
+                    continue
+                for bn in repstats.battlenet_acc.all():
+                    try:
+                        # 地图胜率
+                        map_wr=api.get_map_winrate(bn.battlenet_id)
+                        bn.map_winrate=str(map_wr)
+                        #基本素养
+                        attack,operation,game_length,variance=api.get_style(bn.battlenet_id)
+                        today = datetime.today()
+                        reps=match.models.Replay.objects.filter(
+                            date__range=(today-timedelta(days=90),today),
+                            repstats_acc=repstats
+                        )
+                        kills=0
+                        kill_sum=1
+                        for r in reps:
+                            if not (r.player1==bn or r.player2==bn):
+                                continue
+                            ks=eval(r.kills)
+                            kills+=ks[" "+bn.battlenet_name]
+                            kill_sum+=1
+                        avg_kill=round(kills/kill_sum,1)
+                        basic_accomplishment={
+                            'attack':attack,
+                            'operation':operation,
+                            'game_length':game_length,
+                            'variance':variance,
+                            'kill':avg_kill
+                        }
+                        # print("basic_accomplishment:",basic_accomplishment)
+                        bn.basic_accomplishment=str(basic_accomplishment)
+                        bn.save()
+
+                    except:
+                        pass
+            except:
+                pass
 
     # 监控任务
     register_events(scheduler)
@@ -119,6 +204,7 @@ class BattlenetAccountViewSet(viewsets.ReadOnlyModelViewSet):
     ordering_fields = '__all__'
 
 class ActiveStatistics(views.APIView):
+    authentication_classes=[]
     permission_classes = [permissions.AllowAny, ]
 
     def get(self, request, *args, **kwargs):
@@ -143,6 +229,7 @@ class ActiveStatistics(views.APIView):
         return Response(rtn)
 
 class MMRStatistics(views.APIView):
+    authentication_classes=[]
     permission_classes = [permissions.AllowAny, ]
 
     def get(self, request, *args, **kwargs):
@@ -164,8 +251,11 @@ class MMRStatistics(views.APIView):
                         battlenet_acc=bn
                     )
                     mmr_sum=0
+                    mmr_num=0
                     for mmr in mmrs:
-                        mmr_sum+=mmr.mmr
+                        if mmr!=0:
+                            mmr_sum+=mmr.mmr
+                            mmr_num+=1
                     mmr_avg=0
                     # 向前寻找mmr非0的点并赋值
                     if mmr_sum==0:
@@ -182,20 +272,24 @@ class MMRStatistics(views.APIView):
                                 battlenet_acc=bn
                             )
                             temp_sum=0
+                            temp_num=0
                             for former_mmr in former_mmrs:
-                                temp_sum+=former_mmr.mmr
+                                if former_mmr!=0:
+                                    temp_sum+=former_mmr.mmr
+                                    temp_num+=1
                             # 替换
                             if temp_sum!=0:
-                                mmr_avg=(int)(temp_sum/len(former_mmrs))
+                                mmr_avg=(int)(temp_sum/temp_num)
                                 break
                             k+=1
 
                     else:
-                        mmr_avg=(int)(mmr_sum/len(mmrs))
+                        mmr_avg=(int)(mmr_sum/mmr_num)
                     
                     info[12-i].append({
                         "name":bn.battlenet_name,
-                        "mmr":mmr_avg
+                        "mmr":mmr_avg,
+                        "date":today-timedelta(days=day_long*i+day_long/2),
                     })
                     mmr_record[12-i][bn.battlenet_name]=mmr_avg
                     players.append(bn)
@@ -203,6 +297,7 @@ class MMRStatistics(views.APIView):
         return Response(info)
 
 class RaceSumStatistics(views.APIView):
+    authentication_classes=[]
     permission_classes = [permissions.AllowAny, ]
 
     def get(self, request, *args, **kwargs):
@@ -251,6 +346,7 @@ class RaceSumStatistics(views.APIView):
         return Response(rtn)
 
 class RaceWinrateStatistics(views.APIView):
+    authentication_classes=[]
     permission_classes = [permissions.AllowAny, ]
 
     def get(self, request, *args, **kwargs):
@@ -289,15 +385,15 @@ class RaceWinrateStatistics(views.APIView):
                         zvt_win+=1
             
             if tvp_sum==0:
-                tvp_winrate=0
+                tvp_winrate=50
             else:
                 tvp_winrate=round(tvp_win*100/tvp_sum,1)
             if pvz_sum==0:
-                pvz_winrate=0
+                pvz_winrate=50
             else:
                 pvz_winrate=round(pvz_win*100/pvz_sum,1)
             if zvt_sum==0:
-                zvt_winrate=0
+                zvt_winrate=50
             else:
                 zvt_winrate=round(zvt_win*100/zvt_sum,1)
 
@@ -310,6 +406,7 @@ class RaceWinrateStatistics(views.APIView):
         return Response(rtn)
 
 class ReplayStatistics(views.APIView):
+    authentication_classes=[]
     permission_classes = [permissions.AllowAny, ]
 
     def get(self, request, *args, **kwargs):

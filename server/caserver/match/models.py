@@ -6,9 +6,12 @@ class BattlenetAccount(models.Model):
     battlenet_name=models.CharField(max_length=100,default='')
     battlenet_id=models.IntegerField(default=0,unique=True)
 
+    map_winrate=models.CharField(max_length=200,default='')
+    basic_accomplishment=models.CharField(max_length=200,default='')
+
     repstats_acc=models.ManyToManyField(
         to=account.models.RepStats,
-        related_name="battlenet_acc"
+        related_name="battlenet_acc",
     )
 
 class Replay(models.Model):
@@ -20,6 +23,8 @@ class Replay(models.Model):
     vs_race=models.CharField(max_length=100,default='')
     game_length=models.CharField(max_length=100,default='')
     game_map=models.CharField(max_length=100,default='')
+
+    kills=models.CharField(max_length=200,default='')
 
     player1=models.ForeignKey(
         to=BattlenetAccount,

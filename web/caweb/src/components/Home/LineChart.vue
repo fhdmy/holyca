@@ -1,12 +1,12 @@
 <template>
   <DxChart
     id="chart"
-    :data-source="players_mmr"
+    :data-source="dataSource"
     :palette="palette"
     @legend-click="legendClickHandler($event)"
     @series-click="seriesClickHandler($event)"
   >
-    <DxCommonSeriesSettings type="spline" argument-field="index"/>
+    <DxCommonSeriesSettings type="spline" argument-field="holyca_index"/>
     <DxCommonAxisSettings>
       <DxGrid color="#515873" :visible="true"/>
       <DxLabel :font="{color:'#8e93a7'}"/>
@@ -22,7 +22,7 @@
       </DxLabel>
     </DxArgumentAxis>
     <DxLegend vertical-alignment="bottom" horizontal-alignment="center" :font="{color:'#8e93a7'}"/>
-    <DxTooltip :enabled="true"/>
+    <DxTooltip :enabled="true" :customize-tooltip="customizeTooltip"/>
   </DxChart>
 </template>
 <script>
@@ -65,7 +65,7 @@ export default {
         return [];
       }
     },
-    players_mmr: {
+    dataSource: {
       type: Array,
       default: () => {
         return [];
@@ -87,6 +87,11 @@ export default {
     },
     toggleVisibility(item) {
         item.isVisible() ? item.hide() : item.show();
+    },
+    customizeTooltip(pointInfo){
+      return {
+        text: `${pointInfo.valueText}<br/>${this.dataSource[pointInfo.argument-1].holyca_date.split("T")[0]}`
+      };
     }
   }
 };

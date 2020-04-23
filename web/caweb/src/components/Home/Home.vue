@@ -121,7 +121,7 @@
                         <DxItem :ratio="7">
                           <template #default>
                             <lineChart :players="mmr_players" 
-                            :players_mmr="mmr_players_mmr"
+                            :dataSource="mmr_players_mmr"
                             :palette="mmr_palette"
                             ></lineChart>
                           </template>
@@ -179,7 +179,7 @@
                         <DxItem :ratio="7">
                           <template #default>
                             <lineChart :players="imba_vs" 
-                            :players_mmr="imba_rate"
+                            :dataSource="imba_rate"
                             :palette="imba_palette"
                             ></lineChart>
                           </template>
@@ -336,6 +336,9 @@ export default {
           console.log(error.response);
           if(error.response.data=="User has signined today")
             notify("不能重复签到!", "error", 1500);
+          else if(error.response.statusText=="Unauthorized"){
+            notify("账户未登录或登录状态错误!", "error", 1500);
+          }
           else
             notify("请检查你的网络!", "error", 1500);
         });
@@ -349,7 +352,7 @@ export default {
         },
       })
         .then(res => {
-          console.log(res);
+          // console.log(res);
           let sum=0;
           // 取盘数非0的账号
           let acc_not_zero=0;
@@ -403,7 +406,7 @@ export default {
         },
       })
         .then(res => {
-          console.log(res);
+          // console.log(res);
           for(let k=0;k<res.data.length;k++){
             let game_map;
             game_map=res.data[k].game_map.split("-天梯版")[0];
@@ -436,7 +439,7 @@ export default {
         },
       })
         .then(res => {
-          console.log(res);
+          // console.log(res);
           this.$set(this.imba_sums,0,{
             race:"P",
             sum:res.data[0].sum
@@ -464,14 +467,14 @@ export default {
         },
       })
         .then(res => {
-          console.log(res);
+          // console.log(res);
           for(let k=0;k<res.data.length;k++){
             this.$set(this.imba_rate,k,{
-              date:res.data[k].date,
+              holyca_date:res.data[k].date,
               TVP:res.data[k].TVP,
               PVZ:res.data[k].PVZ,
               ZVT:res.data[k].ZVT,
-              index:k+1
+              holyca_index:k+1
             })
           }
           let T=res.data[res.data.length-1].TVP+(100-res.data[res.data.length-1].ZVT);
@@ -521,7 +524,7 @@ export default {
         },
       })
         .then(res => {
-          console.log(res);
+          // console.log(res);
           for(let m=0;m<res.data[0].length;m++){
             this.$set(this.mmr_players,m,res.data[0][m].name);
           }
@@ -530,13 +533,18 @@ export default {
             for(let n=0;n<res.data[m].length;n++){
               this.$set(this.mmr_players_mmr[m],res.data[m][n].name,res.data[m][n].mmr);
             }
-            this.$set(this.mmr_players_mmr[m],"index",m);
+            this.$set(this.mmr_players_mmr[m],"holyca_index",m+1);
+            this.$set(this.mmr_players_mmr[m],"holyca_date",res.data[m][0].date);
           }
           let mmr_sum=0;
+          let mmr_num=0;
           for(let k=0;k<res.data[11].length;k++){
-            mmr_sum+=res.data[11][k].mmr;
+            if(res.data[11][k].mmr!=0){
+              mmr_sum+=res.data[11][k].mmr;
+              mmr_num+=1;
+            }
           }
-          let avg_mmr=parseInt(mmr_sum/res.data[11].length);
+          let avg_mmr=parseInt(mmr_sum/mmr_num);
           let old_val=this.mmr_score;
           if(this.mmr_score_show != avg_mmr)
             this.mmr_timer=setInterval(()=>{

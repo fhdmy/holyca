@@ -2,12 +2,12 @@
 <html lang="en">
     <head>
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" /><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={xpid:"VQUBWVVSCRABXVJXAwgCVg==",licenseKey:"00bdaa1b27",applicationID:"19354950"};window.NREUM||(NREUM={}),__nr_require=function(t,n,e){function r(e){if(!n[e]){var o=n[e]={exports:{}};t[e][0].call(o.exports,function(n){var o=t[e][1][n];return r(o||n)},o,o.exports)}return n[e].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<e.length;o++)r(e[o]);return r}({1:[function(t,n,e){function r(t){try{s.console&&console.log(t)}catch(n){}}var o,i=t("ee"),a=t(21),s={};try{o=localStorage.getItem("__nr_flags").split(","),console&&"function"==typeof console.log&&(s.console=!0,o.indexOf("dev")!==-1&&(s.dev=!0),o.indexOf("nr_dev")!==-1&&(s.nrDev=!0))}catch(c){}s.nrDev&&i.on("internal-error",function(t){r(t.stack)}),s.dev&&i.on("fn-err",function(t,n,e){r(e.stack)}),s.dev&&(r("NR AGENT IN DEVELOPMENT MODE"),r("flags: "+a(s,function(t,n){return t}).join(", ")))},{}],2:[function(t,n,e){function r(t,n,e,r,s){try{p?p-=1:o(s||new UncaughtException(t,n,e),!0)}catch(f){try{i("ierr",[f,c.now(),!0])}catch(d){}}return"function"==typeof u&&u.apply(this,a(arguments))}function UncaughtException(t,n,e){this.message=t||"Uncaught error with no additional information",this.sourceURL=n,this.line=e}function o(t,n){var e=n?null:c.now();i("err",[t,e])}var i=t("handle"),a=t(22),s=t("ee"),c=t("loader"),f=t("gos"),u=window.onerror,d=!1,l="nr@seenError",p=0;c.features.err=!0,t(1),window.onerror=r;try{throw new Error}catch(h){"stack"in h&&(t(9),t(8),"addEventListener"in window&&t(5),c.xhrWrappable&&t(10),d=!0)}s.on("fn-start",function(t,n,e){d&&(p+=1)}),s.on("fn-err",function(t,n,e){d&&!e[l]&&(f(e,l,function(){return!0}),this.thrown=!0,o(e))}),s.on("fn-end",function(){d&&!this.thrown&&p>0&&(p-=1)}),s.on("internal-error",function(t){i("ierr",[t,c.now(),!0])})},{}],3:[function(t,n,e){t("loader").features.ins=!0},{}],4:[function(t,n,e){function r(t){}if(window.performance&&window.performance.timing&&window.performance.getEntriesByType){var o=t("ee"),i=t("handle"),a=t(9),s=t(8),c="learResourceTimings",f="addEventListener",u="resourcetimingbufferfull",d="bstResource",l="resource",p="-start",h="-end",m="fn"+p,w="fn"+h,v="bstTimer",g="pushState",y=t("loader");y.features.stn=!0,t(7),"addEventListener"in window&&t(5);var x=NREUM.o.EV;o.on(m,function(t,n){var e=t[0];e instanceof x&&(this.bstStart=y.now())}),o.on(w,function(t,n){var e=t[0];e instanceof x&&i("bst",[e,n,this.bstStart,y.now()])}),a.on(m,function(t,n,e){this.bstStart=y.now(),this.bstType=e}),a.on(w,function(t,n){i(v,[n,this.bstStart,y.now(),this.bstType])}),s.on(m,function(){this.bstStart=y.now()}),s.on(w,function(t,n){i(v,[n,this.bstStart,y.now(),"requestAnimationFrame"])}),o.on(g+p,function(t){this.time=y.now(),this.startPath=location.pathname+location.hash}),o.on(g+h,function(t){i("bstHist",[location.pathname+location.hash,this.startPath,this.time])}),f in window.performance&&(window.performance["c"+c]?window.performance[f](u,function(t){i(d,[window.performance.getEntriesByType(l)]),window.performance["c"+c]()},!1):window.performance[f]("webkit"+u,function(t){i(d,[window.performance.getEntriesByType(l)]),window.performance["webkitC"+c]()},!1)),document[f]("scroll",r,{passive:!0}),document[f]("keypress",r,!1),document[f]("click",r,!1)}},{}],5:[function(t,n,e){function r(t){for(var n=t;n&&!n.hasOwnProperty(u);)n=Object.getPrototypeOf(n);n&&o(n)}function o(t){s.inPlace(t,[u,d],"-",i)}function i(t,n){return t[1]}var a=t("ee").get("events"),s=t("wrap-function")(a,!0),c=t("gos"),f=XMLHttpRequest,u="addEventListener",d="removeEventListener";n.exports=a,"getPrototypeOf"in Object?(r(document),r(window),r(f.prototype)):f.prototype.hasOwnProperty(u)&&(o(window),o(f.prototype)),a.on(u+"-start",function(t,n){var e=t[1],r=c(e,"nr@wrapped",function(){function t(){if("function"==typeof e.handleEvent)return e.handleEvent.apply(e,arguments)}var n={object:t,"function":e}[typeof e];return n?s(n,"fn-",null,n.name||"anonymous"):e});this.wrapped=t[1]=r}),a.on(d+"-start",function(t){t[1]=this.wrapped||t[1]})},{}],6:[function(t,n,e){function r(t,n,e){var r=t[n];"function"==typeof r&&(t[n]=function(){var t=i(arguments),n={};o.emit(e+"before-start",[t],n);var a;n[m]&&n[m].dt&&(a=n[m].dt);var s=r.apply(this,t);return o.emit(e+"start",[t,a],s),s.then(function(t){return o.emit(e+"end",[null,t],s),t},function(t){throw o.emit(e+"end",[t],s),t})})}var o=t("ee").get("fetch"),i=t(22),a=t(21);n.exports=o;var s=window,c="fetch-",f=c+"body-",u=["arrayBuffer","blob","json","text","formData"],d=s.Request,l=s.Response,p=s.fetch,h="prototype",m="nr@context";d&&l&&p&&(a(u,function(t,n){r(d[h],n,f),r(l[h],n,f)}),r(s,"fetch",c),o.on(c+"end",function(t,n){var e=this;if(n){var r=n.headers.get("content-length");null!==r&&(e.rxSize=r),o.emit(c+"done",[null,n],e)}else o.emit(c+"done",[t],e)}))},{}],7:[function(t,n,e){var r=t("ee").get("history"),o=t("wrap-function")(r);n.exports=r;var i=window.history&&window.history.constructor&&window.history.constructor.prototype,a=window.history;i&&i.pushState&&i.replaceState&&(a=i),o.inPlace(a,["pushState","replaceState"],"-")},{}],8:[function(t,n,e){var r=t("ee").get("raf"),o=t("wrap-function")(r),i="equestAnimationFrame";n.exports=r,o.inPlace(window,["r"+i,"mozR"+i,"webkitR"+i,"msR"+i],"raf-"),r.on("raf-start",function(t){t[0]=o(t[0],"fn-")})},{}],9:[function(t,n,e){function r(t,n,e){t[0]=a(t[0],"fn-",null,e)}function o(t,n,e){this.method=e,this.timerDuration=isNaN(t[1])?0:+t[1],t[0]=a(t[0],"fn-",this,e)}var i=t("ee").get("timer"),a=t("wrap-function")(i),s="setTimeout",c="setInterval",f="clearTimeout",u="-start",d="-";n.exports=i,a.inPlace(window,[s,"setImmediate"],s+d),a.inPlace(window,[c],c+d),a.inPlace(window,[f,"clearImmediate"],f+d),i.on(c+u,r),i.on(s+u,o)},{}],10:[function(t,n,e){function r(t,n){d.inPlace(n,["onreadystatechange"],"fn-",s)}function o(){var t=this,n=u.context(t);t.readyState>3&&!n.resolved&&(n.resolved=!0,u.emit("xhr-resolved",[],t)),d.inPlace(t,g,"fn-",s)}function i(t){y.push(t),h&&(b?b.then(a):w?w(a):(E=-E,O.data=E))}function a(){for(var t=0;t<y.length;t++)r([],y[t]);y.length&&(y=[])}function s(t,n){return n}function c(t,n){for(var e in t)n[e]=t[e];return n}t(5);var f=t("ee"),u=f.get("xhr"),d=t("wrap-function")(u),l=NREUM.o,p=l.XHR,h=l.MO,m=l.PR,w=l.SI,v="readystatechange",g=["onload","onerror","onabort","onloadstart","onloadend","onprogress","ontimeout"],y=[];n.exports=u;var x=window.XMLHttpRequest=function(t){var n=new p(t);try{u.emit("new-xhr",[n],n),n.addEventListener(v,o,!1)}catch(e){try{u.emit("internal-error",[e])}catch(r){}}return n};if(c(p,x),x.prototype=p.prototype,d.inPlace(x.prototype,["open","send"],"-xhr-",s),u.on("send-xhr-start",function(t,n){r(t,n),i(n)}),u.on("open-xhr-start",r),h){var b=m&&m.resolve();if(!w&&!m){var E=1,O=document.createTextNode(E);new h(a).observe(O,{characterData:!0})}}else f.on("fn-end",function(t){t[0]&&t[0].type===v||a()})},{}],11:[function(t,n,e){function r(t){if(!i(t))return null;var n=window.NREUM;if(!n.loader_config)return null;var e=(n.loader_config.accountID||"").toString()||null,r=(n.loader_config.agentID||"").toString()||null,s=(n.loader_config.trustKey||"").toString()||null;if(!e||!r)return null;var c=a.generateCatId(),f=a.generateCatId(),u=Date.now(),d=o(c,f,u,e,r,s);return{header:d,guid:c,traceId:f,timestamp:u}}function o(t,n,e,r,o,i){var a="btoa"in window&&"function"==typeof window.btoa;if(!a)return null;var s={v:[0,1],d:{ty:"Browser",ac:r,ap:o,id:t,tr:n,ti:e}};return i&&r!==i&&(s.d.tk=i),btoa(JSON.stringify(s))}function i(t){var n=!1,e=!1,r={};if("init"in NREUM&&"distributed_tracing"in NREUM.init&&(r=NREUM.init.distributed_tracing,e=!!r.enabled),e)if(t.sameOrigin)n=!0;else if(r.allowed_origins instanceof Array)for(var o=0;o<r.allowed_origins.length;o++){var i=s(r.allowed_origins[o]);if(t.hostname===i.hostname&&t.protocol===i.protocol&&t.port===i.port){n=!0;break}}return e&&n}var a=t(19),s=t(13);n.exports={generateTracePayload:r,shouldGenerateTrace:i}},{}],12:[function(t,n,e){function r(t){var n=this.params,e=this.metrics;if(!this.ended){this.ended=!0;for(var r=0;r<l;r++)t.removeEventListener(d[r],this.listener,!1);n.aborted||(e.duration=a.now()-this.startTime,this.loadCaptureCalled||4!==t.readyState?null==n.status&&(n.status=0):i(this,t),e.cbTime=this.cbTime,u.emit("xhr-done",[t],t),s("xhr",[n,e,this.startTime]))}}function o(t,n){var e=c(n),r=t.params;r.host=e.hostname+":"+e.port,r.pathname=e.pathname,t.parsedOrigin=c(n),t.sameOrigin=t.parsedOrigin.sameOrigin}function i(t,n){t.params.status=n.status;var e=w(n,t.lastSize);if(e&&(t.metrics.rxSize=e),t.sameOrigin){var r=n.getResponseHeader("X-NewRelic-App-Data");r&&(t.params.cat=r.split(", ").pop())}t.loadCaptureCalled=!0}var a=t("loader");if(a.xhrWrappable){var s=t("handle"),c=t(13),f=t(11).generateTracePayload,u=t("ee"),d=["load","error","abort","timeout"],l=d.length,p=t("id"),h=t(17),m=t(16),w=t(14),v=window.XMLHttpRequest;a.features.xhr=!0,t(10),t(6),u.on("new-xhr",function(t){var n=this;n.totalCbs=0,n.called=0,n.cbTime=0,n.end=r,n.ended=!1,n.xhrGuids={},n.lastSize=null,n.loadCaptureCalled=!1,t.addEventListener("load",function(e){i(n,t)},!1),h&&(h>34||h<10)||window.opera||t.addEventListener("progress",function(t){n.lastSize=t.loaded},!1)}),u.on("open-xhr-start",function(t){this.params={method:t[0]},o(this,t[1]),this.metrics={}}),u.on("open-xhr-end",function(t,n){"loader_config"in NREUM&&"xpid"in NREUM.loader_config&&this.sameOrigin&&n.setRequestHeader("X-NewRelic-ID",NREUM.loader_config.xpid);var e=f(this.parsedOrigin);e&&e.header&&(n.setRequestHeader("newrelic",e.header),this.dt=e)}),u.on("send-xhr-start",function(t,n){var e=this.metrics,r=t[0],o=this;if(e&&r){var i=m(r);i&&(e.txSize=i)}this.startTime=a.now(),this.listener=function(t){try{"abort"!==t.type||o.loadCaptureCalled||(o.params.aborted=!0),("load"!==t.type||o.called===o.totalCbs&&(o.onloadCalled||"function"!=typeof n.onload))&&o.end(n)}catch(e){try{u.emit("internal-error",[e])}catch(r){}}};for(var s=0;s<l;s++)n.addEventListener(d[s],this.listener,!1)}),u.on("xhr-cb-time",function(t,n,e){this.cbTime+=t,n?this.onloadCalled=!0:this.called+=1,this.called!==this.totalCbs||!this.onloadCalled&&"function"==typeof e.onload||this.end(e)}),u.on("xhr-load-added",function(t,n){var e=""+p(t)+!!n;this.xhrGuids&&!this.xhrGuids[e]&&(this.xhrGuids[e]=!0,this.totalCbs+=1)}),u.on("xhr-load-removed",function(t,n){var e=""+p(t)+!!n;this.xhrGuids&&this.xhrGuids[e]&&(delete this.xhrGuids[e],this.totalCbs-=1)}),u.on("addEventListener-end",function(t,n){n instanceof v&&"load"===t[0]&&u.emit("xhr-load-added",[t[1],t[2]],n)}),u.on("removeEventListener-end",function(t,n){n instanceof v&&"load"===t[0]&&u.emit("xhr-load-removed",[t[1],t[2]],n)}),u.on("fn-start",function(t,n,e){n instanceof v&&("onload"===e&&(this.onload=!0),("load"===(t[0]&&t[0].type)||this.onload)&&(this.xhrCbStart=a.now()))}),u.on("fn-end",function(t,n){this.xhrCbStart&&u.emit("xhr-cb-time",[a.now()-this.xhrCbStart,this.onload,n],n)}),u.on("fetch-before-start",function(t){var n,e=t[1]||{};"string"==typeof t[0]?n=t[0]:t[0]&&t[0].url&&(n=t[0].url),n&&(this.parsedOrigin=c(n),this.sameOrigin=this.parsedOrigin.sameOrigin);var r=f(this.parsedOrigin);if(r&&r.header){var o=r.header;if("string"==typeof t[0]){var i={};for(var a in e)i[a]=e[a];i.headers=new Headers(e.headers||{}),i.headers.set("newrelic",o),this.dt=r,t.length>1?t[1]=i:t.push(i)}else t[0]&&t[0].headers&&(t[0].headers.append("newrelic",o),this.dt=r)}})}},{}],13:[function(t,n,e){var r={};n.exports=function(t){if(t in r)return r[t];var n=document.createElement("a"),e=window.location,o={};n.href=t,o.port=n.port;var i=n.href.split("://");!o.port&&i[1]&&(o.port=i[1].split("/")[0].split("@").pop().split(":")[1]),o.port&&"0"!==o.port||(o.port="https"===i[0]?"443":"80"),o.hostname=n.hostname||e.hostname,o.pathname=n.pathname,o.protocol=i[0],"/"!==o.pathname.charAt(0)&&(o.pathname="/"+o.pathname);var a=!n.protocol||":"===n.protocol||n.protocol===e.protocol,s=n.hostname===document.domain&&n.port===e.port;return o.sameOrigin=a&&(!n.hostname||s),"/"===o.pathname&&(r[t]=o),o}},{}],14:[function(t,n,e){function r(t,n){var e=t.responseType;return"json"===e&&null!==n?n:"arraybuffer"===e||"blob"===e||"json"===e?o(t.response):"text"===e||"document"===e||""===e||void 0===e?o(t.responseText):void 0}var o=t(16);n.exports=r},{}],15:[function(t,n,e){function r(){}function o(t,n,e){return function(){return i(t,[f.now()].concat(s(arguments)),n?null:this,e),n?void 0:this}}var i=t("handle"),a=t(21),s=t(22),c=t("ee").get("tracer"),f=t("loader"),u=NREUM;"undefined"==typeof window.newrelic&&(newrelic=u);var d=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],l="api-",p=l+"ixn-";a(d,function(t,n){u[n]=o(l+n,!0,"api")}),u.addPageAction=o(l+"addPageAction",!0),u.setCurrentRouteName=o(l+"routeName",!0),n.exports=newrelic,u.interaction=function(){return(new r).get()};var h=r.prototype={createTracer:function(t,n){var e={},r=this,o="function"==typeof n;return i(p+"tracer",[f.now(),t,e],r),function(){if(c.emit((o?"":"no-")+"fn-start",[f.now(),r,o],e),o)try{return n.apply(this,arguments)}catch(t){throw c.emit("fn-err",[arguments,this,t],e),t}finally{c.emit("fn-end",[f.now()],e)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,n){h[n]=o(p+n)}),newrelic.noticeError=function(t,n){"string"==typeof t&&(t=new Error(t)),i("err",[t,f.now(),!1,n])}},{}],16:[function(t,n,e){n.exports=function(t){if("string"==typeof t&&t.length)return t.length;if("object"==typeof t){if("undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer&&t.byteLength)return t.byteLength;if("undefined"!=typeof Blob&&t instanceof Blob&&t.size)return t.size;if(!("undefined"!=typeof FormData&&t instanceof FormData))try{return JSON.stringify(t).length}catch(n){return}}}},{}],17:[function(t,n,e){var r=0,o=navigator.userAgent.match(/Firefox[\/\s](\d+\.\d+)/);o&&(r=+o[1]),n.exports=r},{}],18:[function(t,n,e){function r(t,n){var e=t.getEntries();e.forEach(function(t){"first-paint"===t.name?c("timing",["fp",Math.floor(t.startTime)]):"first-contentful-paint"===t.name&&c("timing",["fcp",Math.floor(t.startTime)])})}function o(t,n){var e=t.getEntries();e.length>0&&c("lcp",[e[e.length-1]])}function i(t){if(t instanceof u&&!l){var n,e=Math.round(t.timeStamp);n=e>1e12?Date.now()-e:f.now()-e,l=!0,c("timing",["fi",e,{type:t.type,fid:n}])}}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var a,s,c=t("handle"),f=t("loader"),u=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){a=new PerformanceObserver(r),s=new PerformanceObserver(o);try{a.observe({entryTypes:["paint"]}),s.observe({entryTypes:["largest-contentful-paint"]})}catch(d){}}if("addEventListener"in document){var l=!1,p=["click","keydown","mousedown","pointerdown","touchstart"];p.forEach(function(t){document.addEventListener(t,i,!1)})}}},{}],19:[function(t,n,e){function r(){function t(){return n?15&n[e++]:16*Math.random()|0}var n=null,e=0,r=window.crypto||window.msCrypto;r&&r.getRandomValues&&(n=r.getRandomValues(new Uint8Array(31)));for(var o,i="xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx",a="",s=0;s<i.length;s++)o=i[s],"x"===o?a+=t().toString(16):"y"===o?(o=3&t()|8,a+=o.toString(16)):a+=o;return a}function o(){function t(){return n?15&n[e++]:16*Math.random()|0}var n=null,e=0,r=window.crypto||window.msCrypto;r&&r.getRandomValues&&Uint8Array&&(n=r.getRandomValues(new Uint8Array(31)));for(var o=[],i=0;i<16;i++)o.push(t().toString(16));return o.join("")}n.exports={generateUuid:r,generateCatId:o}},{}],20:[function(t,n,e){function r(t,n){if(!o)return!1;if(t!==o)return!1;if(!n)return!0;if(!i)return!1;for(var e=i.split("."),r=n.split("."),a=0;a<r.length;a++)if(r[a]!==e[a])return!1;return!0}var o=null,i=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var s=navigator.userAgent,c=s.match(a);c&&s.indexOf("Chrome")===-1&&s.indexOf("Chromium")===-1&&(o="Safari",i=c[1])}n.exports={agent:o,version:i,match:r}},{}],21:[function(t,n,e){function r(t,n){var e=[],r="",i=0;for(r in t)o.call(t,r)&&(e[i]=n(r,t[r]),i+=1);return e}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],22:[function(t,n,e){function r(t,n,e){n||(n=0),"undefined"==typeof e&&(e=t?t.length:0);for(var r=-1,o=e-n||0,i=Array(o<0?0:o);++r<o;)i[r]=t[n+r];return i}n.exports=r},{}],23:[function(t,n,e){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(t,n,e){function r(){}function o(t){function n(t){return t&&t instanceof r?t:t?c(t,s,i):i()}function e(e,r,o,i){if(!l.aborted||i){t&&t(e,r,o);for(var a=n(o),s=m(e),c=s.length,f=0;f<c;f++)s[f].apply(a,r);var d=u[y[e]];return d&&d.push([x,e,r,a]),a}}function p(t,n){g[t]=m(t).concat(n)}function h(t,n){var e=g[t];if(e)for(var r=0;r<e.length;r++)e[r]===n&&e.splice(r,1)}function m(t){return g[t]||[]}function w(t){return d[t]=d[t]||o(e)}function v(t,n){f(t,function(t,e){n=n||"feature",y[e]=n,n in u||(u[n]=[])})}var g={},y={},x={on:p,addEventListener:p,removeEventListener:h,emit:e,get:w,listeners:m,context:n,buffer:v,abort:a,aborted:!1};return x}function i(){return new r}function a(){(u.api||u.feature)&&(l.aborted=!0,u=l.backlog={})}var s="nr@context",c=t("gos"),f=t(21),u={},d={},l=n.exports=o();l.backlog=u},{}],gos:[function(t,n,e){function r(t,n,e){if(o.call(t,n))return t[n];var r=e();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,n,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return t[n]=r,r}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(t,n,e){function r(t,n,e,r){o.buffer([t],r),o.emit(t,n,e)}var o=t("ee").get("handle");n.exports=r,r.ee=o},{}],id:[function(t,n,e){function r(t){var n=typeof t;return!t||"object"!==n&&"function"!==n?-1:t===window?0:a(t,i,function(){return o++})}var o=1,i="nr@id",a=t("gos");n.exports=r},{}],loader:[function(t,n,e){function r(){if(!E++){var t=b.info=NREUM.info,n=p.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(t&&t.licenseKey&&t.applicationID&&n))return u.abort();f(y,function(n,e){t[n]||(t[n]=e)}),c("mark",["onload",a()+b.offset],null,"api");var e=p.createElement("script");e.src="https://"+t.agent,n.parentNode.insertBefore(e,n)}}function o(){"complete"===p.readyState&&i()}function i(){c("mark",["domContent",a()+b.offset],null,"api")}function a(){return O.exists&&performance.now?Math.round(performance.now()):(s=Math.max((new Date).getTime(),s))-b.offset}var s=(new Date).getTime(),c=t("handle"),f=t(21),u=t("ee"),d=t(20),l=window,p=l.document,h="addEventListener",m="attachEvent",w=l.XMLHttpRequest,v=w&&w.prototype;NREUM.o={ST:setTimeout,SI:l.setImmediate,CT:clearTimeout,XHR:w,REQ:l.Request,EV:l.Event,PR:l.Promise,MO:l.MutationObserver};var g=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1167.min.js"},x=w&&v&&v[h]&&!/CriOS/.test(navigator.userAgent),b=n.exports={offset:s,now:a,origin:g,features:{},xhrWrappable:x,userAgent:d};t(15),t(18),p[h]?(p[h]("DOMContentLoaded",i,!1),l[h]("load",r,!1)):(p[m]("onreadystatechange",o),l[m]("onload",r)),c("mark",["firstbyte",s],null,"api");var E=0,O=t(23)},{}],"wrap-function":[function(t,n,e){function r(t){return!(t&&t instanceof Function&&t.apply&&!t[a])}var o=t("ee"),i=t(22),a="nr@original",s=Object.prototype.hasOwnProperty,c=!1;n.exports=function(t,n){function e(t,n,e,o){function nrWrapper(){var r,a,s,c;try{a=this,r=i(arguments),s="function"==typeof e?e(r,a):e||{}}catch(f){l([f,"",[r,a,o],s])}u(n+"start",[r,a,o],s);try{return c=t.apply(a,r)}catch(d){throw u(n+"err",[r,a,d],s),d}finally{u(n+"end",[r,a,c],s)}}return r(t)?t:(n||(n=""),nrWrapper[a]=t,d(t,nrWrapper),nrWrapper)}function f(t,n,o,i){o||(o="");var a,s,c,f="-"===o.charAt(0);for(c=0;c<n.length;c++)s=n[c],a=t[s],r(a)||(t[s]=e(a,f?s+o:o,i,s))}function u(e,r,o){if(!c||n){var i=c;c=!0;try{t.emit(e,r,o,n)}catch(a){l([a,e,r,o])}c=i}}function d(t,n){if(Object.defineProperty&&Object.keys)try{var e=Object.keys(t);return e.forEach(function(e){Object.defineProperty(n,e,{get:function(){return t[e]},set:function(n){return t[e]=n,n}})}),n}catch(r){l([r])}for(var o in t)s.call(t,o)&&(n[o]=t[o]);return n}function l(n){try{t.emit("internal-error",n)}catch(e){}}return t||(t=o),e.inPlace=f,e.flag=a,e}},{}]},{},["loader",2,12,4,3]);</script>
-		<title>Sc2ReplayStats - Starcraft 2 Replay Hosting Stats Parser - Sc2ReplayStats.com</title>		<meta name="keywords" content="SC2&#x20;Replay,&#x20;Starcraft&#x20;2&#x20;Replay,&#x20;Starcraft&#x20;2&#x20;Replay&#x20;Hosting,&#x20;SC2&#x20;Replay&#x20;Parser,Starcraft&#x20;2,&#x20;SC2&#x20;Replay&#x20;Hosting,SC2&#x20;Replay&#x20;Stats">
-<meta name="description" content="Sc2ReplayStats&#x20;is&#x20;a&#x20;unique&#x20;Starcraft&#x20;2&#x20;Replay&#x20;Hosting&#x20;system&#x20;with&#x20;Custom&#x20;Stats,&#x20;and&#x20;SC2&#x20;Replay&#x20;Parser">
-<meta property="og&#x3A;title" content="Sc2ReplayStats&#x20;-&#x20;Starcraft&#x20;2&#x20;Replay&#x20;Hosting&#x20;Stats&#x20;Parser">
-<meta property="og&#x3A;description" content="Sc2ReplayStats&#x20;is&#x20;a&#x20;unique&#x20;Starcraft&#x20;2&#x20;Replay&#x20;Hosting&#x20;system&#x20;with&#x20;Custom&#x20;Stats,&#x20;and&#x20;SC2&#x20;Replay&#x20;Parser">
-<meta property="og&#x3A;url" content="https&#x3A;&#x2F;&#x2F;sc2replaystats.com&#x2F;account&#x2F;display&#x2F;53113">
-<meta property="og&#x3A;image" content="https&#x3A;&#x2F;&#x2F;sc2replaystats.com&#x2F;images&#x2F;maps&#x2F;large&#x2F;missing_image.jpg">		<link href="/images/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">  
+		<title>Sc2ReplayStats.com - llllllllllll vs 邊緣人 09 Apr, 2020 9:59 pm - Sc2ReplayStats.com</title>		<meta name="keywords" content="Starcraft&#x20;2&#x20;Replay,Starcraft&#x20;2&#x20;llllllllllll&#x20;vs&#x20;&#x908A;&#x7DE3;&#x4EBA;&#x20;SC2&#x20;Replay&#x20;Parser,&#x20;SC2&#x20;Replay,Starcraft&#x20;2,&#x20;SC2&#x20;Replay&#x20;Hosting">
+<meta name="description" content="llllllllllll&#x20;vs&#x20;&#x908A;&#x7DE3;&#x4EBA;&#x20;Sc2ReplayStats.com&#x20;Replay.&#x20;A&#x20;unique&#x20;custom&#x20;stats&#x20;replay&#x20;hosting&#x20;site.">
+<meta property="og&#x3A;title" content="Sc2ReplayStats.com&#x20;-&#x20;llllllllllll&#x20;vs&#x20;&#x908A;&#x7DE3;&#x4EBA;&#x20;09&#x20;Apr,&#x20;2020&#x20;9&#x3A;59&#x20;pm">
+<meta property="og&#x3A;description" content="TvT&#x20;on&#x20;&#x9EC4;&#x91D1;&#x5899;-&#x5929;&#x68AF;&#x7248;,&#x20;Length&#x3A;&#x20;07&#x3A;30">
+<meta property="og&#x3A;url" content="https&#x3A;&#x2F;&#x2F;sc2replaystats.com&#x2F;replay&#x2F;13843563">
+<meta property="og&#x3A;image" content="https&#x3A;&#x2F;&#x2F;sc2replaystats.com&#x2F;images&#x2F;maps&#x2F;large&#x2F;Golden_Wall_LE.jpg">		<link href="/images/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">  
 		
 		<meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
 
@@ -42,9 +42,11 @@
 
 		<script type="text/javascript" src="/assets/js/scripts.js"></script>
 		
-		<script type="text&#x2F;javascript" src="https&#x3A;&#x2F;&#x2F;sc2replaystats.com&#x2F;js&#x2F;highcharts6.2&#x2F;highcharts.js"></script>
-<script type="text&#x2F;javascript" src="https&#x3A;&#x2F;&#x2F;sc2replaystats.com&#x2F;js&#x2F;highcharts5&#x2F;highcharts-3d.js"></script>
-<script type="text&#x2F;javascript" src="https&#x3A;&#x2F;&#x2F;sc2replaystats.com&#x2F;assets&#x2F;js&#x2F;bootstrap-multiselect.js"></script>		<link href="https&#x3A;&#x2F;&#x2F;sc2replaystats.com&#x2F;assets&#x2F;css&#x2F;bootstrap-multiselect.css" media="screen" rel="stylesheet" type="text&#x2F;css">		
+		<script type="text&#x2F;javascript" src="https&#x3A;&#x2F;&#x2F;sc2replaystats.com&#x2F;js&#x2F;highcharts7.2&#x2F;highcharts.js"></script>
+<script type="text&#x2F;javascript" src="https&#x3A;&#x2F;&#x2F;sc2replaystats.com&#x2F;js&#x2F;jquery-ui.js"></script>
+<script type="text&#x2F;javascript" src="https&#x3A;&#x2F;&#x2F;sc2replaystats.com&#x2F;assets&#x2F;js&#x2F;jssocials.min.js"></script>
+<script type="text&#x2F;javascript" src="https&#x3A;&#x2F;&#x2F;sc2replaystats.com&#x2F;js&#x2F;highcharts7.2&#x2F;modules&#x2F;exporting.js"></script>		<link href="https&#x3A;&#x2F;&#x2F;sc2replaystats.com&#x2F;assets&#x2F;css&#x2F;font-starcraft.css" media="screen" rel="stylesheet" type="text&#x2F;css">
+<link href="https&#x3A;&#x2F;&#x2F;sc2replaystats.com&#x2F;assets&#x2F;css&#x2F;jssocials-theme-classic.css" media="screen" rel="stylesheet" type="text&#x2F;css">		
 		<!-- <link id="css_dark_skin" href="/assets/css/layout-dark.css" rel="stylesheet" type="text/css" /> -->
 
 		<!-- Morenizr -->
@@ -203,367 +205,1923 @@
 		
     
     
-         	 
-
-			
-			<header id="page-title"> <!-- style="background-image:url('assets/images/demo/parallax_bg.jpg')" -->
-				<!--
-					Enable only if bright background image used
-					<span class="overlay"></span>
-				-->
-
-				<div class="container" style="padding-top:10px;">
-					<!-- <h1>My Account</h1> -->
-                    <div class="row">
-                        <div class="col-sm-3" style="padding-right:0px;">
-                                <select class="form-control pointer" id="account_name" multiple="multiple">
-        					        						
-        						<option value="1843683" >Kurukihme (CN)</option><option value="2275521" >llllllllllll (KR)</option><option value="2811645" >Rival (CN)</option><option value="2860039" SELECTED>SHKstarlight (KR)</option><option value="2633556" >Xnick (CN)</option><option value="2859519" >砰砰砰 (CN)</option>        					</select>
-                        </div>
-                        <div class="col-sm-1" style="padding:0px;">
-                            <select class="form-control pointer" id="race">
-                                <option Value="">Race</option>
-                                <option value="P" >Protoss</option>
-                                <option value="T" >Terran</option>
-                                <option value="Z" >Zerg</option>
-                                <option value="All" >All</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-1" style="padding:0px;">
-                            <select class="form-control pointer" id="format">
-        						<option Value="">Format</option>
-        						<option value="1v1" SELECTED>1v1</option>
-        						<option value="2v2" >2v2</option>
-        						<option value="3v3" >3v3</option>
-        						<option value="4v4" >4v4</option>
-    					   </select>
-                        </div>
-                        <div class="col-sm-2" style="padding:0px;">
-                            <select class="form-control pointer" id="game_type" onchange="gameTypeChange(this)">
-            					<option value="">Game Type</option>
-            					<option value="AutoMM" SELECTED>AutoMM</option>
-            					<option value="Private" >Private</option>
-            					<option value="AutoMM_AI" >AutoMM A.I.</option>
-            					<option value="AutoMM_Archon" >AutoMM Archon</option>
-            					<option value="All" >All</option>
-        				    </select>
-                        </div>
-
-                        <div class="col-sm-2" style="padding:0px;">
-                        <select class="form-control pointer" id="ranked_match" style="display:none;">
-            					<option value="">Ranked/Unranked</option>
-            					<option value="Ranked" >Ranked</option>
-            					<option value="UnRanked" >UnRanked</option>
-        				    </select>
-                            <select class="form-control pointer" id="seasons_id">
-    						<option value="43" SELECTED>Season 43</option><option value="42" >Season 42</option>    	
-    					</select>
-                        </div>
-					<div class="col-sm-2">
-					   <input type="button" value="Filter" class="btn btn-primary" onclick="filterReplays()" style="margin-top:2px;" />
-					</div>
-					</div>
-				</div>
-			</header>
-
-			<section class="container">
-				<div class="row">
-
-					<aside class="col-md-2">
-
-						<h3>Statistics</h3>
-						<ul class="nav nav-list"> 
-							<li class="active"><a href="/account/display/53113/0/2860039/1v1/AutoMM/43/"><i class="fa fa-circle-o"></i> Dashboard</a></li>
-							<!-- <li><a href="/account/graphs/53113/0/2860039/1v1/AutoMM/43"><i class="fa fa-circle-o"></i> Graphs</a></li>-->
-							<li ><a href="/account/division/53113/0/2860039/1v1/AutoMM/43/"><i class="fa fa-circle-o"></i> Division</a></li>
-							<li ><a href="/account/maps/53113/0/2860039/1v1/AutoMM/43/"><i class="fa fa-circle-o"></i> Map</a></li>
-							<li ><a href="/account/gamelength/53113/0/2860039/1v1/AutoMM/43/"><i class="fa fa-circle-o"></i> Game Length</a></li>
-							<li ><a href="/account/ability/53113/0/2860039/1v1/AutoMM/43/"><i class="fa fa-circle-o"></i> Ability</a></li>
-							<li ><a href="/account/units/53113/0/2860039/1v1/AutoMM/43/"><i class="fa fa-circle-o"></i> Unit Stats</a></li>
-							<li ><a href="/account/ladders/53113/0/2860039/1v1/AutoMM/43/"><i class="fa fa-circle-o"></i> Ladders</a></li>
-							<li ><a href="/account/clan/53113/0/2860039/1v1/AutoMM/43/"><i class="fa fa-circle-o"></i> Clan</a></li>
-							<li ><a href="/account/replays/53113/0/2860039/1v1/AutoMM/43/"><i class="fa fa-circle-o"></i> Replays</a></li>
-							<li ><a href="/account/opponents/53113/0/2860039/1v1/AutoMM/43/"><i class="fa fa-circle-o"></i> Opponents</a></li>
-                            <li ><a href="/account/weeks/53113/0/2860039/1v1/AutoMM/43/"><i class="fa fa-circle-o"></i> Weeks</a></li>
-							
-						</ul>
-						<br>
-						
-						
-						<ul class="nav nav-list"><li>
-						  
-						  <div class="promo_box">
-								<span style="font-size:20px; display:inline-block; color:white;">PLAY AT A </span>
-								<span style="font-size: 20px; display:inline-block; font-weight:bold; color:white;">WHOLE NEW LEVEL</span>
-								<span style="font-size: 15px; display:inline-block; font-weight:bold; color:white; margin-top:20px;">Use the Training Center included with our <span style="text-decoration:underline;">Elite Accounts!</span></span>
-								<a href="/account/elite/53113" class="btn  btn-warning " style="width:85%; font-weight:bold; font-size:12px; margin-top:10px;">SIGN UP TODAY</a>
-							</div> 
-							
-							<!-- <div class="promo_box" style="background: linear-gradient(to bottom, #750009 25%,#460100 70%);">
-								<span style="font-size:20px; display:inline-block; color:white;">Cyber Monday </span>
-								<span style="font-size: 20px; display:inline-block; font-weight:bold; color:white;">Elite Membership Sale</span>
-								<span style="font-size: 15px; display:inline-block; font-weight:bold; color:white; margin-top:20px;">25% off <span style="text-decoration:underline;">Yearly Membership!</span></span>
-								<a href="/account/elite/53113" class="btn  btn-warning " style="width:85%; font-weight:bold; font-size:12px; margin-top:10px;">SIGN UP TODAY</a>
-							</div>-->
-						  </li></ul><br>						
-						
-						
-						<h3>Elite Options</h3>
-						<ul class="nav nav-list">
-                            <li><a href="/stats/eliteAnalytics"><i class="fa fa-circle-o"></i> Account Reporting</a></li>
-						    <li><a href="/TrainingCenter/display/53113"><i class="fa fa-circle-o"></i> Training Center</a></li>
-						    <li><a href="/search"><i class="fa fa-circle-o"></i> Search</a></li>
-						  
-						</ul>
-
-						<!-- <h4>Training Center</h4>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.</p>
-						
-						<h4>1v1 Challenge</h4>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.</p>
-						 -->
-					</aside>
-
-					<div class="col-md-10">
+         	 <style>
 
 
-                    						    
- 
-<h2>24 Hours <strong>Quick</strong> Statistics</h2>
-	<section>
-	
-	No games have been played	</section>
-	
-	<div class="divider"><!-- divider -->
-						</div><h2>Season <strong>43</strong> Quick Statistics</h2>
+    .portrait_base {
+        position: absolute;
+        display: block;
+        top: 13px;
+        left: 26px;
+        background-repeat: no-repeat;
+    }
 
-	<section>
-			<div class="row text-center countTo">
-				<div class="col-md-2">
-					<strong>17</strong>
-					<label>Games</label>
-				</div>
-				<div class="col-md-2">
-					<strong>12-5</strong>
-					<label>Wins-losses</label>
-				</div>
-				<div class="col-md-2">
-					<strong>71%</strong>
-					<label>Win %</label>
-				</div>
-				<div class="col-md-2">
-					<strong>111</strong>
-					<label>Avg SQ</label>
-				</div>
-				<div class="col-md-2">
-					<strong>62</strong>
-					<label>Avg Workers Created</label>
-				</div>
-				<div class="col-md-2">
-					<strong>35s</strong>
-					<label>Avg Time Supply Blocked</label>
-				</div>
-			</div>
-			
-		<h2>Season <strong>Race </strong> Statistics</h2>
-		<div class="row text-center countTo">
-		<div class="col-md-2">
-				<strong>4 - 1</strong>
-				<label>TvP</label>
-			</div><div class="col-md-2">
-				<strong>4 - 2</strong>
-				<label>TvT</label>
-			</div><div class="col-md-2">
-				<strong>4 - 2</strong>
-				<label>TvZ</label>
-			</div>            
-		</div>
+    button {
+        width: 100%;
+    }
 
-        <h2>Season <strong>MMR </strong> Statistics</h2>
-        <div class="row text-center countTo">
-            <div class="col-md-2">
-                <strong>4718</strong>
-                <label>Avg MMR</label>
+    .spoiler {
+        background: #1980B6;
+        margin: 0 auto 10px;
+        border-radius: 5px;
+        padding: 5px 0px;
+        text-align: center;
+        font-size: 12px;
+        color: #fff;
+        width: 100%;
+    }
+
+    .blizzard_icons_single .units_killed:before {
+        position: absolute;
+        content: "";
+        bottom: 18px;
+        border-top: 3px solid;
+        color: red;
+
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        width: 40px;
+    }
+
+    .white_link {
+        color: white;
+    }
+    .white_link:hover {
+        color: white;
+    }
+
+</style>
+
+<header id="page-title"> <!-- style="background-image:url('assets/images/demo/parallax_bg.jpg')" -->
+    <!--
+        Enable only if bright background image used
+        <span class="overlay"></span>
+    -->
+
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><a href="/replay/13843563">Replay</a></li>
+            <li class="active">Overview</li>
+        </ul>
+    </div>
+</header>
+<div class="container">
+
+    <div class="container-fluid">
+    <div class="row">
+
+        <div class="bs-callout text-center styleBackground"
+             style="border-radius: 5px; padding:3px 0px; margin-top:0px; margin-bottom:0px;">
+            <div class="row">
+                <div class="col-md-7">
+                    <div style="position: relative; width: 100%;">
+                        <div style="background-image: url('/images/maps/large/Golden_Wall_LE.jpg'); background-position: left center; background-repeat: no-repeat; width:100%; height:65px; "></div>
+                        <h2 style="position: absolute; margin-left:5px; padding-right:5px; bottom:0px; text-align:left; min-width:150px; color:white; background: rgb(0, 0, 0); background: rgba(0, 0, 0, 0.7); padding:0; line-height:15px; font-size:16px; border-radius:5px; height:65px; text-shadow: 2px 2px #000;">
+                            <span style="padding-left:10px; padding-right:10px; font-size:16px; font-weight:bold; margin-bottom:2px; display:inline-block">黄金墙-天梯版</span><br><span style="padding-left:10px; font-size:12px;">LOTV AutoMM</span><br><span style="padding-left:10px; font-size:12px;">09 Apr, 2020 9:59 pm</span><br><span style="padding-left:10px; font-size:12px;">07 Min Game</span><br>
+                        </h2>
+                    </div>
+
+                </div>
+                <div class="col-md-5" style="padding-top:5px;">
+                    <div id="share" style="display:inline-block"></div>
+                    <script>
+                        jsSocials.shares.reddit_terran = {
+                                label: "Reddit-Terran",
+                                logo: "fa sc-terran",
+                                shareUrl: "//www.reddit.com/r/allthingsterran/submit?url={url}&title={text}&hashtags={hashtags}&selftext=false"
+                            };
+
+
+
+
+                        $("#share").jsSocials({
+                            showLabel: false,
+                            showCount: false,
+                            shares: ["twitter", "facebook", "googleplus", "reddit_terran"],
+                            text: "llllllllllll vs 邊緣人 07 Min Game on 黄金墙-天梯版"
+                        });
+                    </script>
+                    <a href="/download/13843563"
+                       class="btn btn-primary"
+                       style="display: inline-block; vertical-align: top; margin: 0.4em 0.6em 0.3em; padding: 4px 18px;">Download</a>
+                </div>
             </div>
-            <div class="col-md-2">
-                <strong>4837</strong>
-                <label>Max MMR</label>
-            </div>
-            <div class="col-md-2">
-                <strong>4597</strong>
-                <label>Min MMR</label>
-            </div>
-            <div class="col-md-2">
-                <strong>5150</strong>
-                <label>Opp Max MMR</label>
-            </div>
-            <div class="col-md-2">
-                <strong>4592</strong>
-                <label>Opp Avg MMR</label>
-            </div>
+
         </div>
-		
-	
-		</section>
-<div class="divider"><!-- divider -->
-						</div>
-<h2>Last <strong>Replay</strong> Statistics - 29 Mar, 2020 9:54 pm</h2>
-				
-						<h4>FFninetyone <strong>vs</strong> SHKstarlight on <strong>工业与净化-天梯版</strong></h4>
-						
-						<table class="table table-striped table-condensed">
-						<thead>
-							<tr>
-								<th>Player</th>
-								<th>Team</th>
-                                <th>MMR</th>
-								<th>Workers</th>
-								<th>SQ</th>
-								<th>Structures</th>
-								<th>Resource Collection</th>
-								<th>Avg Unspent Resources</th>
-								<th>Units Produced</th>
-								<th>Units Killed</th>
-							</tr>
-						</thead>
-						<tbody>
-						<tr>
-                                    <td><span class="races protoss size-16" style="display:inline-block;"></span> <span style="display:inline-block;" class="leagues league-diamond-4 size-16"></span> <a href="/player/1668397" target="_BLANK">FFninetyone</a></td>
-                                    <td>1</td>
-                                    <td>4491</td>
-                                    <td>82 <span class="fa fa-check-square-o"></span></td>
-                                    <td>147 <span class="fa fa-check-square-o"></span></td>
-                                    <td>55 <span class="fa fa-check-square-o"></span></td>
-                                    <td>2623 <span class="fa fa-check-square-o"></span></td>
-                                    <td>525 <span class="fa fa-check-square-o"></span></td>
-                                    <td>181 </td>
-                                    <td>104 <span class="fa fa-check-square-o"></span></td>
-                                  </tr><tr>
-                                    <td><span class="races terran size-16" style="display:inline-block;"></span> <span style="display:inline-block;" class="leagues league-master-4 size-16"></span> <a href="/player/2860039" target="_BLANK">SHKstarlight</a></td>
-                                    <td>2</td>
-                                    <td>4837</td>
-                                    <td>65 </td>
-                                    <td>117 </td>
-                                    <td>51 </td>
-                                    <td>2151 </td>
-                                    <td>634 </td>
-                                    <td>201 <span class="fa fa-check-square-o"></span></td>
-                                    <td>96 </td>
-                                  </tr>							</tbody>
-						</table>
-						
-						<div class="bs-callout text-center styleBackground" style="padding:10px 0px;">
-							<h3>Last <strong>Replay</strong>
+    </div>
+</div>
+<nav class="navbar navbar-default">
+    <div class="container-fluid"
+         style="background-color:white; box-shadow: 2px 2px 0px 1px rgba(0, 0, 0, 0.05); border-radius: 6px;">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Replay Navigation</a>
+        </div>
 
-                                <a href="/replay/13709130" target="_blank" class="btn btn-primary btn-md">View Replay</a>
-                            <a href="/TrainingCenter/replay/53113/13709130/2860039" target="_blank" class="btn btn-primary btn-md">View Training Center</a>                            </h3>
+        
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a
+                            href="/replay/13843563">Overview</a>
+                </li>
+                <li ><a
+                            href="/replay/chat/13843563">Chat
+                        History</a></li>
+                <li ><a
+                            href="/replay/heatmap/13843563">Heatmap</a>
+                </li>
+
+                <li ><a href="/replay/playerStats/13843563/2275521">llllllllllll Stats</a></li><li ><a href="/replay/playerStats/13843563/1876840">邊緣人 Stats</a></li>            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+    <div class="row">
 
 
-						</div>
-												
-						<div class="divider"><!-- divider -->
-						</div><h2>My <strong>Clan</strong> Statistics</h2>
-						
-						<table class="table table-striped table-condensed">
-						<thead>
-							<tr>
-								<th>Clan Rank</th>
-                                <th>MMR</th>
-								<th>Player</th>
-								<th>League Rank</th>
-								<th>Points</th>
-								<th class="hidden-xs">Server Rank</th>
-								<th class="hidden-xs">Global Rank</th>
-								<th>Wins</th>
-								<th>Losses</th>
-								<th class="hidden-xs">Last Change</th>
-							</tr>
-						</thead>
-						<tbody>
-						<tr class="info">
-                                    <td>1</td>
-                                    <td>4,788</td>
-                                    <td><div class="leagues league-master-2 size-16" style="display:inline-block;"></div>3 <div class="races terran size-16" style="display:inline-block;"></div> SHKstarlight</td>
-                                    <td>20</td>
-								    <td>286</td>
-                                    <td class="hidden-xs">916</td>
-                                    <td class="hidden-xs">4,086</td>
-                                    
-                                    <td>30</td>
-                                    <td>7</td>
-						            <td class="hidden-xs">4 days ago</td>
-                                  </tr>						
-							
-							</tbody>
-						</table>
-						
-						<div class="bs-callout text-center styleBackground" style="padding:10px 0px;">
-							<h3>Clan <strong> Center</strong> <a href="/account/clan/53113/0/2860039/1v1/AutoMM/43" target="_blank" class="btn btn-primary btn-md">View Clan</a></h3>
-						</div>
-						
-						<div class="divider"><!-- divider -->
-						</div>
-					</div>
-
-				</div>
+        <div class="col-md-12">
+            
+<style>
+    .highcharts-menu-item {
+        display:inline;
+    }
 
 
-			</section>
-		
-<script>
+</style>
 
-$(document).ready(function() {
-    $('#account_name').multiselect({
-        buttonContainer: '<div class="btn-group" style="width:100%;" />',
-        buttonWidth:'100%',
-        includeSelectAllOption: true,
-        buttonClass: 'multiselect dropdown-toggle btn btn-default btn-multiselect',
-    	buttonText: function(options, select) {
-    		if (options.length == 1) 
-            {
-    			var labels = [];
-                options.each(function() {
-                    if ($(this).attr('label') !== undefined) {
-                        labels.push($(this).attr('label'));
+
+<script type="text/javascript">
+    var units_alive = jQuery.parseJSON('{"0":{"2275521":{"scv":12},"1876840":{"scv":12}},"7":{"2275521":{"scv":12},"1876840":{"scv":12}},"14":{"2275521":{"scv":13},"1876840":{"scv":12}},"21":{"2275521":{"scv":13},"1876840":{"scv":13}},"28":{"2275521":{"scv":14},"1876840":{"scv":14}},"35":{"2275521":{"scv":14},"1876840":{"scv":14}},"42":{"2275521":{"scv":15},"1876840":{"scv":15}},"49":{"2275521":{"scv":15},"1876840":{"scv":15}},"56":{"2275521":{"scv":16},"1876840":{"scv":16}},"63":{"2275521":{"scv":16},"1876840":{"scv":16}},"70":{"2275521":{"scv":17},"1876840":{"scv":17}},"77":{"2275521":{"scv":17},"1876840":{"scv":18}},"84":{"2275521":{"scv":18},"1876840":{"scv":18}},"91":{"2275521":{"scv":19},"1876840":{"scv":19}},"98":{"2275521":{"scv":19},"1876840":{"scv":19}},"105":{"2275521":{"scv":19},"1876840":{"scv":19}},"112":{"2275521":{"scv":19},"1876840":{"scv":19}},"119":{"2275521":{"scv":19},"1876840":{"mule":1,"scv":19}},"126":{"2275521":{"mule":1,"scv":19},"1876840":{"mule":1,"reaper":1,"scv":19}},"133":{"2275521":{"mule":1,"scv":19},"1876840":{"mule":1,"reaper":1,"scv":20}},"140":{"2275521":{"mule":1,"scv":20},"1876840":{"mule":1,"reaper":1,"scv":21}},"147":{"2275521":{"mule":1,"scv":20},"1876840":{"mule":1,"reaper":1,"scv":21}},"154":{"2275521":{"mule":1,"scv":19},"1876840":{"mule":1,"reaper":1,"scv":22}},"161":{"2275521":{"mule":1,"marine":2,"scv":20},"1876840":{"mule":1,"reaper":2,"scv":22}},"168":{"2275521":{"mule":1,"marine":2,"scv":20},"1876840":{"mule":1,"reaper":2,"hellion":1,"scv":23}},"175":{"2275521":{"mule":1,"marine":2,"scv":21},"1876840":{"mule":1,"reaper":2,"hellion":1,"scv":23}},"182":{"2275521":{"mule":1,"marine":3,"scv":21},"1876840":{"mule":1,"reaper":2,"hellion":1,"scv":24}},"189":{"2275521":{"marine":3,"mule":1,"scv":22},"1876840":{"reaper":2,"hellion":1,"scv":24}},"196":{"2275521":{"marine":4,"mule":1,"scv":23},"1876840":{"reaper":2,"hellion":1,"scv":24}},"203":{"2275521":{"marine":5,"mule":1,"scv":23},"1876840":{"reaper":2,"hellion":1,"scv":25}},"210":{"2275521":{"marine":6,"mule":1,"scv":23},"1876840":{"reaper":2,"hellion":1,"scv":26}},"217":{"2275521":{"marine":5,"mule":1,"scv":24},"1876840":{"reaper":1,"hellion":1,"siegetank":1,"marine":2,"scv":26}},"224":{"2275521":{"marine":6,"mule":2,"scv":24},"1876840":{"reaper":1,"hellion":1,"siegetank":1,"marine":2,"scv":27}},"231":{"2275521":{"marine":7,"mule":2,"scv":26},"1876840":{"reaper":1,"hellion":1,"siegetank":1,"marine":2,"scv":27}},"238":{"2275521":{"marine":7,"mule":2,"scv":27},"1876840":{"reaper":1,"hellion":1,"siegetank":1,"marine":3,"scv":28}},"245":{"2275521":{"marine":7,"mule":2,"scv":27},"1876840":{"reaper":1,"hellion":1,"siegetank":1,"marine":4,"medivac":1,"scv":28}},"252":{"2275521":{"marine":8,"mule":3,"scv":27},"1876840":{"reaper":1,"hellion":1,"siegetank":1,"marine":4,"medivac":1,"mule":1,"scv":28}},"259":{"2275521":{"marine":8,"mule":2,"cyclone":1,"scv":29},"1876840":{"reaper":1,"hellion":1,"siegetank":1,"marine":5,"medivac":1,"mule":1,"scv":29}},"266":{"2275521":{"marine":8,"mule":2,"cyclone":1,"scv":30},"1876840":{"reaper":1,"hellion":1,"siegetank":2,"marine":6,"medivac":1,"mule":1,"scv":29}},"273":{"2275521":{"marine":8,"mule":2,"cyclone":1,"scv":31},"1876840":{"reaper":1,"hellion":1,"siegetank":2,"marine":6,"medivac":1,"mule":2,"scv":30}},"280":{"2275521":{"marine":8,"mule":2,"cyclone":1,"scv":33},"1876840":{"reaper":1,"hellion":1,"siegetank":2,"marine":7,"medivac":1,"mule":2,"scv":31}},"287":{"2275521":{"marine":3,"mule":2,"scv":32},"1876840":{"reaper":1,"hellion":1,"siegetank":2,"marine":7,"medivac":1,"mule":2,"scv":32}},"294":{"2275521":{"marine":2,"mule":2,"scv":32},"1876840":{"hellion":1,"siegetank":2,"marine":7,"medivac":1,"mule":2,"scv":32}},"301":{"2275521":{"marine":2,"mule":2,"scv":32},"1876840":{"hellion":1,"siegetank":2,"marine":8,"medivac":1,"mule":2,"scv":34}},"308":{"2275521":{"marine":2,"mule":2,"scv":32},"1876840":{"hellion":1,"siegetank":2,"marine":8,"medivac":1,"mule":2,"scv":34}},"315":{"2275521":{"marine":2,"mule":3,"scv":33},"1876840":{"hellion":1,"siegetank":2,"marine":9,"medivac":1,"mule":2,"scv":34}},"322":{"2275521":{"marine":2,"mule":1,"scv":32},"1876840":{"hellion":1,"siegetank":2,"marine":10,"medivac":1,"mule":2,"scv":36}},"329":{"2275521":{"mule":1,"siegetank":1,"scv":30},"1876840":{"hellion":1,"siegetank":2,"marine":11,"medivac":1,"mule":2,"scv":38}},"336":{"2275521":{"mule":1,"scv":26},"1876840":{"hellion":1,"marine":10,"medivac":1,"siegetank":1,"mule":2,"scv":38}},"350":{"2275521":{"mule":1,"marine":2,"scv":24},"1876840":{"hellion":1,"marine":11,"medivac":1,"siegetank":1,"mule":2,"cyclone":1,"scv":40}},"357":{"2275521":{"mule":1,"battlecruiser":1,"scv":22},"1876840":{"hellion":1,"marine":13,"medivac":1,"siegetank":1,"mule":2,"cyclone":1,"scv":40}},"364":{"2275521":{"mule":1,"battlecruiser":1,"scv":20},"1876840":{"hellion":1,"marine":10,"medivac":1,"mule":2,"cyclone":1,"scv":40}},"371":{"2275521":{"mule":2,"battlecruiser":1,"marine":2,"scv":21},"1876840":{"hellion":1,"marine":10,"medivac":1,"mule":2,"cyclone":1,"vikingfighter":2,"scv":40}},"378":{"2275521":{"mule":3,"battlecruiser":1,"marine":2,"scv":21},"1876840":{"hellion":1,"marine":10,"medivac":1,"mule":2,"cyclone":2,"vikingfighter":2,"scv":40}},"385":{"2275521":{"battlecruiser":1,"marine":2,"mule":2,"siegetank":1,"scv":21},"1876840":{"hellion":1,"marine":12,"medivac":1,"mule":2,"cyclone":2,"vikingfighter":2,"scv":42}},"392":{"2275521":{"battlecruiser":1,"marine":2,"mule":2,"siegetank":1,"scv":23},"1876840":{"hellion":1,"marine":12,"medivac":1,"mule":1,"cyclone":2,"vikingfighter":2,"scv":42}},"399":{"2275521":{"battlecruiser":1,"marine":4,"mule":2,"siegetank":1,"scv":24},"1876840":{"hellion":1,"marine":11,"medivac":1,"mule":1,"cyclone":2,"vikingfighter":4,"scv":44}},"406":{"2275521":{"battlecruiser":1,"marine":4,"mule":2,"siegetank":1,"scv":25},"1876840":{"hellion":1,"marine":12,"medivac":1,"cyclone":2,"vikingfighter":4,"mule":1,"scv":45}},"413":{"2275521":{"battlecruiser":1,"marine":4,"mule":2,"siegetank":1,"scv":25},"1876840":{"hellion":1,"marine":13,"medivac":1,"cyclone":2,"vikingfighter":4,"mule":1,"siegetank":1,"scv":46}},"420":{"2275521":{"battlecruiser":1,"marine":4,"mule":2,"siegetank":1,"scv":23},"1876840":{"medivac":1,"marine":12,"cyclone":2,"vikingfighter":4,"mule":1,"siegetank":1,"scv":47}},"427":{"2275521":{"battlecruiser":1,"marine":4,"mule":3,"siegetank":1,"scv":25},"1876840":{"medivac":1,"marine":12,"cyclone":2,"vikingfighter":4,"mule":1,"siegetank":1,"scv":47}},"434":{"2275521":{"battlecruiser":1,"marine":4,"mule":3,"siegetank":1,"scv":26},"1876840":{"medivac":1,"marine":13,"cyclone":2,"vikingfighter":5,"mule":1,"siegetank":1,"scv":48}},"441":{"2275521":{"battlecruiser":1,"marine":6,"mule":2,"siegetank":1,"scv":27},"1876840":{"medivac":1,"marine":14,"cyclone":2,"vikingfighter":5,"mule":1,"siegetank":1,"scv":50}},"448":{"2275521":{"marine":6,"siegetank":1,"mule":1,"scv":29},"1876840":{"marine":15,"cyclone":2,"vikingfighter":5,"mule":1,"siegetank":1,"scv":50}}}');
+    var upgrades = jQuery.parseJSON('{"0":{"2275521":[],"1876840":[]},"7":{"2275521":[],"1876840":[]},"14":{"2275521":[],"1876840":[]},"21":{"2275521":[],"1876840":[]},"28":{"2275521":[],"1876840":[]},"35":{"2275521":[],"1876840":[]},"42":{"2275521":[],"1876840":[]},"49":{"2275521":[],"1876840":[]},"56":{"2275521":[],"1876840":[]},"63":{"2275521":[],"1876840":[]},"70":{"2275521":[],"1876840":[]},"77":{"2275521":[],"1876840":[]},"84":{"2275521":[],"1876840":[]},"91":{"2275521":[],"1876840":[]},"98":{"2275521":[],"1876840":[]},"105":{"2275521":[],"1876840":[]},"112":{"2275521":[],"1876840":[]},"119":{"2275521":[],"1876840":[]},"126":{"2275521":[],"1876840":[]},"133":{"2275521":[],"1876840":[]},"140":{"2275521":[],"1876840":[]},"147":{"2275521":[],"1876840":[]},"154":{"2275521":[],"1876840":[]},"161":{"2275521":[],"1876840":[]},"168":{"2275521":[],"1876840":[]},"175":{"2275521":[],"1876840":[]},"182":{"2275521":[],"1876840":[]},"189":{"2275521":[],"1876840":[]},"196":{"2275521":[],"1876840":[]},"203":{"2275521":[],"1876840":[]},"210":{"2275521":[],"1876840":[]},"217":{"2275521":[],"1876840":[]},"224":{"2275521":[],"1876840":[]},"231":{"2275521":[],"1876840":[]},"238":{"2275521":[],"1876840":[]},"245":{"2275521":[],"1876840":[]},"252":{"2275521":[],"1876840":[]},"259":{"2275521":[],"1876840":[]},"266":{"2275521":[],"1876840":[]},"273":{"2275521":[],"1876840":[]},"280":{"2275521":[],"1876840":[]},"287":{"2275521":[],"1876840":[]},"294":{"2275521":[],"1876840":[]},"301":{"2275521":[],"1876840":[]},"308":{"2275521":[],"1876840":[]},"315":{"2275521":[],"1876840":[]},"322":{"2275521":[],"1876840":[]},"329":{"2275521":[],"1876840":[]},"336":{"2275521":[],"1876840":[]},"350":{"2275521":[],"1876840":[]},"357":{"2275521":[],"1876840":[]},"364":{"2275521":[],"1876840":[]},"371":{"2275521":[],"1876840":[]},"378":{"2275521":[],"1876840":[]},"385":{"2275521":[],"1876840":[]},"392":{"2275521":[],"1876840":[]},"399":{"2275521":[],"1876840":[]},"406":{"2275521":[],"1876840":[]},"413":{"2275521":[],"1876840":[]},"420":{"2275521":{"battlecruiserenablespecializations":1},"1876840":[]},"427":{"2275521":{"battlecruiserenablespecializations":1},"1876840":[]},"434":{"2275521":{"battlecruiserenablespecializations":1},"1876840":[]},"441":{"2275521":{"battlecruiserenablespecializations":1},"1876840":[]},"448":{"2275521":{"battlecruiserenablespecializations":1},"1876840":{"cyclonelockondamageupgrade":1}}}');
+    var resources = jQuery.parseJSON('{"0":{"2275521":{"minerals":0,"vespene":0,"unspent_minerals":50,"unspent_vespene":0,"lost_minerals":0,"lost_vespene":0},"1876840":{"minerals":0,"vespene":0,"unspent_minerals":50,"unspent_vespene":0,"lost_minerals":0,"lost_vespene":0}},"7":{"2275521":{"minerals":335,"vespene":0,"unspent_minerals":40,"unspent_vespene":0,"lost_minerals":0,"lost_vespene":0},"1876840":{"minerals":335,"vespene":0,"unspent_minerals":40,"unspent_vespene":0,"lost_minerals":0,"lost_vespene":0}},"14":{"2275521":{"minerals":699,"vespene":0,"unspent_minerals":75,"unspent_vespene":0,"lost_minerals":0,"lost_vespene":0},"1876840":{"minerals":671,"vespene":0,"unspent_minerals":70,"unspent_vespene":0,"lost_minerals":0,"lost_vespene":0}},"21":{"2275521":{"minerals":699,"vespene":0,"unspent_minerals":45,"unspent_vespene":0,"lost_minerals":0,"lost_vespene":0},"1876840":{"minerals":671,"vespene":0,"unspent_minerals":45,"unspent_vespene":0,"lost_minerals":0,"lost_vespene":0}},"28":{"2275521":{"minerals":615,"vespene":0,"unspent_minerals":75,"unspent_vespene":0,"lost_minerals":0,"lost_vespene":0},"1876840":{"minerals":699,"vespene":0,"unspent_minerals":90,"unspent_vespene":0,"lost_minerals":0,"lost_vespene":0}},"35":{"2275521":{"minerals":699,"vespene":0,"unspent_minerals":115,"unspent_vespene":0,"lost_minerals":0,"lost_vespene":0},"1876840":{"minerals":755,"vespene":0,"unspent_minerals":40,"unspent_vespene":0,"lost_minerals":0,"lost_vespene":0}},"42":{"2275521":{"minerals":727,"vespene":0,"unspent_minerals":120,"unspent_vespene":0,"lost_minerals":0,"lost_vespene":0},"1876840":{"minerals":727,"vespene":0,"unspent_minerals":130,"unspent_vespene":0,"lost_minerals":0,"lost_vespene":0}},"49":{"2275521":{"minerals":699,"vespene":0,"unspent_minerals":55,"unspent_vespene":0,"lost_minerals":0,"lost_vespene":0},"1876840":{"minerals":755,"vespene":0,"unspent_minerals":60,"unspent_vespene":0,"lost_minerals":0,"lost_vespene":0}},"56":{"2275521":{"minerals":727,"vespene":0,"unspent_minerals":90,"unspent_vespene":0,"lost_minerals":0,"lost_vespene":0},"1876840":{"minerals":755,"vespene":44,"unspent_minerals":25,"unspent_vespene":8,"lost_minerals":0,"lost_vespene":0}},"63":{"2275521":{"minerals":699,"vespene":44,"unspent_minerals":130,"unspent_vespene":8,"lost_minerals":0,"lost_vespene":0},"1876840":{"minerals":699,"vespene":134,"unspent_minerals":60,"unspent_vespene":24,"lost_minerals":0,"lost_vespene":0}},"70":{"2275521":{"minerals":587,"vespene":156,"unspent_minerals":140,"unspent_vespene":28,"lost_minerals":0,"lost_vespene":0},"1876840":{"minerals":671,"vespene":156,"unspent_minerals":130,"unspent_vespene":44,"lost_minerals":0,"lost_vespene":0}},"77":{"2275521":{"minerals":643,"vespene":156,"unspent_minerals":215,"unspent_vespene":44,"lost_minerals":0,"lost_vespene":0},"1876840":{"minerals":671,"vespene":156,"unspent_minerals":160,"unspent_vespene":64,"lost_minerals":0,"lost_vespene":0}},"84":{"2275521":{"minerals":615,"vespene":156,"unspent_minerals":300,"unspent_vespene":64,"lost_minerals":0,"lost_vespene":0},"1876840":{"minerals":587,"vespene":223,"unspent_minerals":175,"unspent_vespene":96,"lost_minerals":0,"lost_vespene":0}},"91":{"2275521":{"minerals":699,"vespene":156,"unspent_minerals":380,"unspent_vespene":84,"lost_minerals":0,"lost_vespene":0},"1876840":{"minerals":559,"vespene":335,"unspent_minerals":305,"unspent_vespene":136,"lost_minerals":0,"lost_vespene":0}},"98":{"2275521":{"minerals":727,"vespene":156,"unspent_minerals":95,"unspent_vespene":54,"lost_minerals":0,"lost_vespene":0},"1876840":{"minerals":615,"vespene":358,"unspent_minerals":30,"unspent_vespene":26,"lost_minerals":0,"lost_vespene":0}},"105":{"2275521":{"minerals":755,"vespene":156,"unspent_minerals":285,"unspent_vespene":74,"lost_minerals":0,"lost_vespene":0},"1876840":{"minerals":671,"vespene":291,"unspent_minerals":115,"unspent_vespene":54,"lost_minerals":0,"lost_vespene":0}},"112":{"2275521":{"minerals":699,"vespene":179,"unspent_minerals":375,"unspent_vespene":94,"lost_minerals":0,"lost_vespene":0},"1876840":{"minerals":727,"vespene":156,"unspent_minerals":100,"unspent_vespene":70,"lost_minerals":0,"lost_vespene":0}},"119":{"2275521":{"minerals":699,"vespene":179,"unspent_minerals":40,"unspent_vespene":114,"lost_minerals":0,"lost_vespene":0},"1876840":{"minerals":727,"vespene":156,"unspent_minerals":90,"unspent_vespene":44,"lost_minerals":0,"lost_vespene":0}},"126":{"2275521":{"minerals":671,"vespene":179,"unspent_minerals":85,"unspent_vespene":134,"lost_minerals":0,"lost_vespene":0},"1876840":{"minerals":867,"vespene":201,"unspent_minerals":155,"unspent_vespene":68,"lost_minerals":0,"lost_vespene":0}},"133":{"2275521":{"minerals":727,"vespene":201,"unspent_minerals":70,"unspent_vespene":162,"lost_minerals":0,"lost_vespene":0},"1876840":{"minerals":1007,"vespene":201,"unspent_minerals":220,"unspent_vespene":92,"lost_minerals":0,"lost_vespene":0}},"140":{"2275521":{"minerals":867,"vespene":223,"unspent_minerals":85,"unspent_vespene":190,"lost_minerals":0,"lost_vespene":0},"1876840":{"minerals":1063,"vespene":179,"unspent_minerals":240,"unspent_vespene":112,"lost_minerals":0,"lost_vespene":0}},"147":{"2275521":{"minerals":923,"vespene":223,"unspent_minerals":60,"unspent_vespene":118,"lost_minerals":0,"lost_vespene":0},"1876840":{"minerals":1175,"vespene":223,"unspent_minerals":370,"unspent_vespene":140,"lost_minerals":0,"lost_vespene":0}},"154":{"2275521":{"minerals":951,"vespene":246,"unspent_minerals":60,"unspent_vespene":146,"lost_minerals":50,"lost_vespene":0},"1876840":{"minerals":1175,"vespene":223,"unspent_minerals":50,"unspent_vespene":164,"lost_minerals":0,"lost_vespene":0}},"161":{"2275521":{"minerals":895,"vespene":246,"unspent_minerals":60,"unspent_vespene":174,"lost_minerals":50,"lost_vespene":0},"1876840":{"minerals":1203,"vespene":291,"unspent_minerals":120,"unspent_vespene":150,"lost_minerals":0,"lost_vespene":0}},"168":{"2275521":{"minerals":1035,"vespene":246,"unspent_minerals":175,"unspent_vespene":202,"lost_minerals":50,"lost_vespene":0},"1876840":{"minerals":979,"vespene":291,"unspent_minerals":50,"unspent_vespene":61,"lost_minerals":0,"lost_vespene":0}},"175":{"2275521":{"minerals":979,"vespene":313,"unspent_minerals":230,"unspent_vespene":242,"lost_minerals":50,"lost_vespene":0},"1876840":{"minerals":867,"vespene":335,"unspent_minerals":105,"unspent_vespene":101,"lost_minerals":0,"lost_vespene":0}},"182":{"2275521":{"minerals":951,"vespene":335,"unspent_minerals":175,"unspent_vespene":282,"lost_minerals":50,"lost_vespene":0},"1876840":{"minerals":867,"vespene":335,"unspent_minerals":20,"unspent_vespene":16,"lost_minerals":0,"lost_vespene":0}},"189":{"2275521":{"minerals":839,"vespene":335,"unspent_minerals":270,"unspent_vespene":322,"lost_minerals":50,"lost_vespene":0},"1876840":{"minerals":755,"vespene":313,"unspent_minerals":70,"unspent_vespene":52,"lost_minerals":0,"lost_vespene":0}},"196":{"2275521":{"minerals":923,"vespene":313,"unspent_minerals":45,"unspent_vespene":258,"lost_minerals":50,"lost_vespene":0},"1876840":{"minerals":783,"vespene":313,"unspent_minerals":70,"unspent_vespene":92,"lost_minerals":0,"lost_vespene":0}},"203":{"2275521":{"minerals":979,"vespene":335,"unspent_minerals":15,"unspent_vespene":273,"lost_minerals":50,"lost_vespene":0},"1876840":{"minerals":839,"vespene":335,"unspent_minerals":45,"unspent_vespene":132,"lost_minerals":0,"lost_vespene":0}},"210":{"2275521":{"minerals":1035,"vespene":335,"unspent_minerals":110,"unspent_vespene":313,"lost_minerals":100,"lost_vespene":0},"1876840":{"minerals":867,"vespene":335,"unspent_minerals":110,"unspent_vespene":172,"lost_minerals":50,"lost_vespene":50}},"217":{"2275521":{"minerals":1175,"vespene":313,"unspent_minerals":65,"unspent_vespene":249,"lost_minerals":100,"lost_vespene":0},"1876840":{"minerals":895,"vespene":313,"unspent_minerals":15,"unspent_vespene":108,"lost_minerals":50,"lost_vespene":50}},"224":{"2275521":{"minerals":1231,"vespene":313,"unspent_minerals":95,"unspent_vespene":289,"lost_minerals":100,"lost_vespene":0},"1876840":{"minerals":951,"vespene":335,"unspent_minerals":125,"unspent_vespene":148,"lost_minerals":50,"lost_vespene":50}},"231":{"2275521":{"minerals":1287,"vespene":335,"unspent_minerals":232,"unspent_vespene":329,"lost_minerals":100,"lost_vespene":0},"1876840":{"minerals":979,"vespene":403,"unspent_minerals":40,"unspent_vespene":75,"lost_minerals":50,"lost_vespene":50}},"238":{"2275521":{"minerals":1315,"vespene":313,"unspent_minerals":182,"unspent_vespene":190,"lost_minerals":100,"lost_vespene":0},"1876840":{"minerals":1035,"vespene":470,"unspent_minerals":10,"unspent_vespene":131,"lost_minerals":50,"lost_vespene":50}},"245":{"2275521":{"minerals":1371,"vespene":313,"unspent_minerals":92,"unspent_vespene":230,"lost_minerals":100,"lost_vespene":0},"1876840":{"minerals":1091,"vespene":492,"unspent_minerals":40,"unspent_vespene":191,"lost_minerals":50,"lost_vespene":50}},"252":{"2275521":{"minerals":1623,"vespene":335,"unspent_minerals":207,"unspent_vespene":270,"lost_minerals":100,"lost_vespene":0},"1876840":{"minerals":1147,"vespene":492,"unspent_minerals":75,"unspent_vespene":201,"lost_minerals":50,"lost_vespene":50}},"259":{"2275521":{"minerals":1567,"vespene":313,"unspent_minerals":217,"unspent_vespene":306,"lost_minerals":100,"lost_vespene":0},"1876840":{"minerals":1231,"vespene":470,"unspent_minerals":125,"unspent_vespene":257,"lost_minerals":50,"lost_vespene":50}},"266":{"2275521":{"minerals":1651,"vespene":313,"unspent_minerals":352,"unspent_vespene":346,"lost_minerals":100,"lost_vespene":0},"1876840":{"minerals":1203,"vespene":470,"unspent_minerals":68,"unspent_vespene":205,"lost_minerals":50,"lost_vespene":50}},"273":{"2275521":{"minerals":1707,"vespene":335,"unspent_minerals":547,"unspent_vespene":386,"lost_minerals":100,"lost_vespene":0},"1876840":{"minerals":1371,"vespene":515,"unspent_minerals":158,"unspent_vespene":265,"lost_minerals":50,"lost_vespene":50}},"280":{"2275521":{"minerals":1847,"vespene":335,"unspent_minerals":697,"unspent_vespene":426,"lost_minerals":250,"lost_vespene":0},"1876840":{"minerals":1539,"vespene":492,"unspent_minerals":38,"unspent_vespene":196,"lost_minerals":100,"lost_vespene":50}},"287":{"2275521":{"minerals":1427,"vespene":313,"unspent_minerals":422,"unspent_vespene":162,"lost_minerals":600,"lost_vespene":100},"1876840":{"minerals":1595,"vespene":470,"unspent_minerals":183,"unspent_vespene":252,"lost_minerals":100,"lost_vespene":50}},"294":{"2275521":{"minerals":923,"vespene":335,"unspent_minerals":422,"unspent_vespene":77,"lost_minerals":650,"lost_vespene":100},"1876840":{"minerals":1595,"vespene":492,"unspent_minerals":333,"unspent_vespene":437,"lost_minerals":150,"lost_vespene":100}},"301":{"2275521":{"minerals":1231,"vespene":335,"unspent_minerals":557,"unspent_vespene":117,"lost_minerals":650,"lost_vespene":100},"1876840":{"minerals":1623,"vespene":492,"unspent_minerals":373,"unspent_vespene":497,"lost_minerals":150,"lost_vespene":100}},"308":{"2275521":{"minerals":1427,"vespene":313,"unspent_minerals":322,"unspent_vespene":153,"lost_minerals":750,"lost_vespene":100},"1876840":{"minerals":1623,"vespene":470,"unspent_minerals":553,"unspent_vespene":553,"lost_minerals":150,"lost_vespene":100}},"315":{"2275521":{"minerals":1175,"vespene":313,"unspent_minerals":247,"unspent_vespene":43,"lost_minerals":750,"lost_vespene":100},"1876840":{"minerals":1679,"vespene":492,"unspent_minerals":628,"unspent_vespene":613,"lost_minerals":150,"lost_vespene":100}},"322":{"2275521":{"minerals":1175,"vespene":335,"unspent_minerals":292,"unspent_vespene":83,"lost_minerals":900,"lost_vespene":100},"1876840":{"minerals":1679,"vespene":515,"unspent_minerals":413,"unspent_vespene":673,"lost_minerals":150,"lost_vespene":100}},"329":{"2275521":{"minerals":811,"vespene":246,"unspent_minerals":337,"unspent_vespene":107,"lost_minerals":1200,"lost_vespene":225},"1876840":{"minerals":1847,"vespene":470,"unspent_minerals":413,"unspent_vespene":725,"lost_minerals":350,"lost_vespene":225}},"336":{"2275521":{"minerals":615,"vespene":156,"unspent_minerals":317,"unspent_vespene":123,"lost_minerals":1400,"lost_vespene":225},"1876840":{"minerals":1875,"vespene":470,"unspent_minerals":353,"unspent_vespene":635,"lost_minerals":350,"lost_vespene":225}},"350":{"2275521":{"minerals":391,"vespene":156,"unspent_minerals":317,"unspent_vespene":143,"lost_minerals":1550,"lost_vespene":225},"1876840":{"minerals":1931,"vespene":492,"unspent_minerals":228,"unspent_vespene":495,"lost_minerals":350,"lost_vespene":225}},"357":{"2275521":{"minerals":55,"vespene":111,"unspent_minerals":22,"unspent_vespene":30,"lost_minerals":1850,"lost_vespene":225},"1876840":{"minerals":2071,"vespene":470,"unspent_minerals":373,"unspent_vespene":551,"lost_minerals":400,"lost_vespene":225}},"364":{"2275521":{"minerals":363,"vespene":0,"unspent_minerals":87,"unspent_vespene":30,"lost_minerals":2000,"lost_vespene":225},"1876840":{"minerals":2015,"vespene":470,"unspent_minerals":613,"unspent_vespene":611,"lost_minerals":650,"lost_vespene":350}},"371":{"2275521":{"minerals":923,"vespene":0,"unspent_minerals":197,"unspent_vespene":30,"lost_minerals":2000,"lost_vespene":225},"1876840":{"minerals":1959,"vespene":515,"unspent_minerals":278,"unspent_vespene":521,"lost_minerals":650,"lost_vespene":350}},"378":{"2275521":{"minerals":1147,"vespene":0,"unspent_minerals":532,"unspent_vespene":30,"lost_minerals":1700,"lost_vespene":225},"1876840":{"minerals":1931,"vespene":492,"unspent_minerals":468,"unspent_vespene":577,"lost_minerals":650,"lost_vespene":350}},"385":{"2275521":{"minerals":1343,"vespene":156,"unspent_minerals":282,"unspent_vespene":58,"lost_minerals":1700,"lost_vespene":225},"1876840":{"minerals":1959,"vespene":470,"unspent_minerals":333,"unspent_vespene":508,"lost_minerals":650,"lost_vespene":350}},"392":{"2275521":{"minerals":1399,"vespene":291,"unspent_minerals":432,"unspent_vespene":90,"lost_minerals":1700,"lost_vespene":225},"1876840":{"minerals":1931,"vespene":492,"unspent_minerals":263,"unspent_vespene":568,"lost_minerals":700,"lost_vespene":350}},"399":{"2275521":{"minerals":1399,"vespene":291,"unspent_minerals":422,"unspent_vespene":126,"lost_minerals":1700,"lost_vespene":225},"1876840":{"minerals":1791,"vespene":492,"unspent_minerals":173,"unspent_vespene":553,"lost_minerals":700,"lost_vespene":350}},"406":{"2275521":{"minerals":1455,"vespene":335,"unspent_minerals":482,"unspent_vespene":166,"lost_minerals":1700,"lost_vespene":225},"1876840":{"minerals":1707,"vespene":470,"unspent_minerals":163,"unspent_vespene":609,"lost_minerals":700,"lost_vespene":350}},"413":{"2275521":{"minerals":1427,"vespene":335,"unspent_minerals":542,"unspent_vespene":206,"lost_minerals":1800,"lost_vespene":225},"1876840":{"minerals":1763,"vespene":582,"unspent_minerals":238,"unspent_vespene":685,"lost_minerals":700,"lost_vespene":350}},"420":{"2275521":{"minerals":1399,"vespene":559,"unspent_minerals":482,"unspent_vespene":278,"lost_minerals":1900,"lost_vespene":225},"1876840":{"minerals":1959,"vespene":671,"unspent_minerals":303,"unspent_vespene":765,"lost_minerals":900,"lost_vespene":350}},"427":{"2275521":{"minerals":1147,"vespene":604,"unspent_minerals":97,"unspent_vespene":54,"lost_minerals":1900,"lost_vespene":225},"1876840":{"minerals":1903,"vespene":627,"unspent_minerals":23,"unspent_vespene":737,"lost_minerals":900,"lost_vespene":350}},"434":{"2275521":{"minerals":1427,"vespene":604,"unspent_minerals":227,"unspent_vespene":126,"lost_minerals":1900,"lost_vespene":225},"1876840":{"minerals":1959,"vespene":627,"unspent_minerals":263,"unspent_vespene":817,"lost_minerals":900,"lost_vespene":350}},"441":{"2275521":{"minerals":1315,"vespene":649,"unspent_minerals":117,"unspent_vespene":77,"lost_minerals":1900,"lost_vespene":225},"1876840":{"minerals":2043,"vespene":649,"unspent_minerals":143,"unspent_vespene":722,"lost_minerals":1000,"lost_vespene":450}},"448":{"2275521":{"minerals":1063,"vespene":649,"unspent_minerals":227,"unspent_vespene":157,"lost_minerals":2300,"lost_vespene":525},"1876840":{"minerals":2127,"vespene":649,"unspent_minerals":188,"unspent_vespene":752,"lost_minerals":1000,"lost_vespene":450}}}');
+    var supply = jQuery.parseJSON('{"0":{"2275521":{"min":12,"max":15},"1876840":{"min":12,"max":15}},"7":{"2275521":{"min":13,"max":15},"1876840":{"min":13,"max":15}},"14":{"2275521":{"min":14,"max":15},"1876840":{"min":13,"max":15}},"21":{"2275521":{"min":14,"max":15},"1876840":{"min":14,"max":15}},"28":{"2275521":{"min":15,"max":15},"1876840":{"min":15,"max":15}},"35":{"2275521":{"min":15,"max":15},"1876840":{"min":15,"max":15}},"42":{"2275521":{"min":16,"max":23},"1876840":{"min":16,"max":23}},"49":{"2275521":{"min":16,"max":23},"1876840":{"min":16,"max":23}},"56":{"2275521":{"min":17,"max":23},"1876840":{"min":17,"max":23}},"63":{"2275521":{"min":17,"max":23},"1876840":{"min":17,"max":23}},"70":{"2275521":{"min":18,"max":23},"1876840":{"min":18,"max":23}},"77":{"2275521":{"min":18,"max":23},"1876840":{"min":19,"max":23}},"84":{"2275521":{"min":19,"max":23},"1876840":{"min":19,"max":23}},"91":{"2275521":{"min":19,"max":23},"1876840":{"min":19,"max":23}},"98":{"2275521":{"min":19,"max":23},"1876840":{"min":20,"max":23}},"105":{"2275521":{"min":19,"max":23},"1876840":{"min":20,"max":23}},"112":{"2275521":{"min":19,"max":23},"1876840":{"min":20,"max":23}},"119":{"2275521":{"min":19,"max":23},"1876840":{"min":21,"max":23}},"126":{"2275521":{"min":20,"max":23},"1876840":{"min":22,"max":23}},"133":{"2275521":{"min":20,"max":23},"1876840":{"min":23,"max":31}},"140":{"2275521":{"min":22,"max":23},"1876840":{"min":26,"max":31}},"147":{"2275521":{"min":22,"max":23},"1876840":{"min":26,"max":31}},"154":{"2275521":{"min":22,"max":23},"1876840":{"min":27,"max":31}},"161":{"2275521":{"min":24,"max":31},"1876840":{"min":27,"max":31}},"168":{"2275521":{"min":24,"max":31},"1876840":{"min":27,"max":31}},"175":{"2275521":{"min":26,"max":31},"1876840":{"min":28,"max":31}},"182":{"2275521":{"min":27,"max":31},"1876840":{"min":31,"max":31}},"189":{"2275521":{"min":29,"max":46},"1876840":{"min":32,"max":39}},"196":{"2275521":{"min":29,"max":46},"1876840":{"min":34,"max":39}},"203":{"2275521":{"min":31,"max":46},"1876840":{"min":35,"max":39}},"210":{"2275521":{"min":31,"max":46},"1876840":{"min":35,"max":39}},"217":{"2275521":{"min":35,"max":46},"1876840":{"min":39,"max":39}},"224":{"2275521":{"min":37,"max":46},"1876840":{"min":40,"max":54}},"231":{"2275521":{"min":38,"max":46},"1876840":{"min":43,"max":54}},"238":{"2275521":{"min":38,"max":46},"1876840":{"min":44,"max":54}},"245":{"2275521":{"min":40,"max":46},"1876840":{"min":46,"max":54}},"252":{"2275521":{"min":40,"max":46},"1876840":{"min":46,"max":54}},"259":{"2275521":{"min":42,"max":46},"1876840":{"min":49,"max":54}},"266":{"2275521":{"min":43,"max":46},"1876840":{"min":53,"max":54}},"273":{"2275521":{"min":44,"max":54},"1876840":{"min":54,"max":54}},"280":{"2275521":{"min":43,"max":54},"1876840":{"min":54,"max":54}},"287":{"2275521":{"min":42,"max":62},"1876840":{"min":54,"max":54}},"294":{"2275521":{"min":43,"max":62},"1876840":{"min":53,"max":54}},"301":{"2275521":{"min":44,"max":62},"1876840":{"min":54,"max":54}},"308":{"2275521":{"min":44,"max":54},"1876840":{"min":60,"max":62}},"315":{"2275521":{"min":45,"max":54},"1876840":{"min":61,"max":62}},"322":{"2275521":{"min":44,"max":54},"1876840":{"min":63,"max":70}},"329":{"2275521":{"min":39,"max":54},"1876840":{"min":62,"max":70}},"336":{"2275521":{"min":36,"max":54},"1876840":{"min":67,"max":70}},"350":{"2275521":{"min":34,"max":54},"1876840":{"min":70,"max":70}},"357":{"2275521":{"min":35,"max":54},"1876840":{"min":69,"max":70}},"364":{"2275521":{"min":32,"max":54},"1876840":{"min":64,"max":70}},"371":{"2275521":{"min":32,"max":54},"1876840":{"min":72,"max":78}},"378":{"2275521":{"min":34,"max":54},"1876840":{"min":72,"max":86}},"385":{"2275521":{"min":36,"max":54},"1876840":{"min":78,"max":86}},"392":{"2275521":{"min":38,"max":54},"1876840":{"min":77,"max":86}},"399":{"2275521":{"min":39,"max":54},"1876840":{"min":81,"max":101}},"406":{"2275521":{"min":40,"max":54},"1876840":{"min":83,"max":109}},"413":{"2275521":{"min":40,"max":54},"1876840":{"min":85,"max":109}},"420":{"2275521":{"min":40,"max":54},"1876840":{"min":83,"max":109}},"427":{"2275521":{"min":48,"max":54},"1876840":{"min":87,"max":109}},"434":{"2275521":{"min":49,"max":54},"1876840":{"min":89,"max":109}},"441":{"2275521":{"min":54,"max":54},"1876840":{"min":92,"max":109}},"448":{"2275521":{"min":51,"max":54},"1876840":{"min":95,"max":109}}}');
+    var buildings = jQuery.parseJSON('{"0":{"2275521":{"commandcenter":1},"1876840":{"commandcenter":1}},"7":{"2275521":{"commandcenter":1},"1876840":{"commandcenter":1}},"14":{"2275521":{"commandcenter":1},"1876840":{"commandcenter":1}},"21":{"2275521":{"commandcenter":1},"1876840":{"commandcenter":1}},"28":{"2275521":{"commandcenter":1},"1876840":{"commandcenter":1}},"35":{"2275521":{"commandcenter":1},"1876840":{"commandcenter":1}},"42":{"2275521":{"commandcenter":1,"supplydepot":1},"1876840":{"commandcenter":1,"supplydepot":1}},"49":{"2275521":{"commandcenter":1,"supplydepot":1},"1876840":{"commandcenter":1,"supplydepot":1}},"56":{"2275521":{"commandcenter":1,"supplydepot":1},"1876840":{"commandcenter":1,"supplydepot":1,"refinery":1}},"63":{"2275521":{"commandcenter":1,"supplydepot":1,"refinery":1},"1876840":{"commandcenter":1,"supplydepot":1,"refinery":1}},"70":{"2275521":{"commandcenter":1,"supplydepot":1,"refinery":1},"1876840":{"commandcenter":1,"supplydepot":1,"refinery":1}},"77":{"2275521":{"commandcenter":1,"supplydepot":1,"refinery":1},"1876840":{"commandcenter":1,"supplydepot":1,"refinery":1}},"84":{"2275521":{"commandcenter":1,"supplydepot":1,"refinery":1},"1876840":{"commandcenter":1,"supplydepot":1,"refinery":2}},"91":{"2275521":{"commandcenter":1,"supplydepot":1,"refinery":1},"1876840":{"commandcenter":1,"supplydepot":1,"refinery":2}},"98":{"2275521":{"commandcenter":1,"supplydepot":1,"refinery":1,"barracks":1},"1876840":{"commandcenter":1,"supplydepot":1,"refinery":2,"barracks":1}},"105":{"2275521":{"commandcenter":1,"supplydepot":1,"refinery":1,"barracks":1},"1876840":{"commandcenter":1,"supplydepot":1,"refinery":2,"barracks":1}},"112":{"2275521":{"commandcenter":1,"supplydepot":1,"refinery":1,"barracks":1},"1876840":{"commandcenter":1,"supplydepot":1,"refinery":2,"barracks":1}},"119":{"2275521":{"commandcenter":1,"supplydepot":1,"refinery":1,"barracks":1},"1876840":{"commandcenter":1,"supplydepot":1,"refinery":2,"barracks":1,"orbitalcommand":1}},"126":{"2275521":{"commandcenter":1,"supplydepot":1,"refinery":2,"barracks":1,"orbitalcommand":1},"1876840":{"commandcenter":1,"supplydepot":1,"refinery":2,"barracks":1,"orbitalcommand":1}},"133":{"2275521":{"commandcenter":1,"supplydepot":1,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":1},"1876840":{"commandcenter":1,"supplydepot":2,"refinery":2,"barracks":1,"orbitalcommand":1}},"140":{"2275521":{"commandcenter":1,"supplydepot":1,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":1},"1876840":{"commandcenter":1,"supplydepot":2,"refinery":2,"barracks":1,"orbitalcommand":1}},"147":{"2275521":{"commandcenter":1,"supplydepot":1,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":1},"1876840":{"commandcenter":1,"supplydepot":2,"refinery":2,"barracks":1,"orbitalcommand":1,"factory":1}},"154":{"2275521":{"commandcenter":1,"supplydepot":1,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":1},"1876840":{"commandcenter":1,"supplydepot":2,"refinery":2,"barracks":1,"orbitalcommand":1,"factory":1}},"161":{"2275521":{"commandcenter":1,"supplydepot":1,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":1},"1876840":{"commandcenter":1,"supplydepot":2,"refinery":2,"barracks":1,"orbitalcommand":1,"factory":1}},"168":{"2275521":{"commandcenter":1,"supplydepot":2,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":1},"1876840":{"commandcenter":1,"supplydepot":2,"refinery":2,"barracks":1,"orbitalcommand":1,"factory":1}},"175":{"2275521":{"commandcenter":1,"supplydepot":2,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":1},"1876840":{"commandcenter":1,"supplydepot":2,"refinery":2,"barracks":1,"orbitalcommand":1,"factory":1}},"182":{"2275521":{"commandcenter":1,"supplydepot":2,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":1},"1876840":{"commandcenter":1,"supplydepot":2,"refinery":2,"barracks":1,"orbitalcommand":1,"factory":1}},"189":{"2275521":{"commandcenter":1,"supplydepot":2,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":1},"1876840":{"commandcenter":1,"supplydepot":2,"refinery":2,"barracks":1,"orbitalcommand":1,"factory":1,"factorytechlab":1}},"196":{"2275521":{"commandcenter":2,"supplydepot":2,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":1,"factory":1},"1876840":{"commandcenter":1,"supplydepot":2,"refinery":2,"barracks":1,"orbitalcommand":1,"factory":1,"barracksreactor":1,"factorytechlab":1}},"203":{"2275521":{"commandcenter":2,"supplydepot":2,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":1,"factory":1},"1876840":{"commandcenter":1,"supplydepot":2,"refinery":2,"barracks":1,"orbitalcommand":1,"factory":1,"barracksreactor":1,"factorytechlab":1}},"210":{"2275521":{"commandcenter":2,"supplydepot":2,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":1,"factory":1},"1876840":{"commandcenter":1,"supplydepot":2,"refinery":2,"barracks":1,"orbitalcommand":1,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1}},"217":{"2275521":{"commandcenter":2,"supplydepot":2,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":1,"factory":1},"1876840":{"commandcenter":1,"supplydepot":2,"refinery":2,"barracks":1,"orbitalcommand":1,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1}},"224":{"2275521":{"commandcenter":2,"supplydepot":2,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"factorytechlab":1},"1876840":{"commandcenter":2,"supplydepot":2,"refinery":2,"barracks":1,"orbitalcommand":1,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1}},"231":{"2275521":{"commandcenter":2,"supplydepot":2,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"factorytechlab":1},"1876840":{"commandcenter":2,"supplydepot":2,"refinery":3,"barracks":1,"orbitalcommand":1,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1}},"238":{"2275521":{"commandcenter":2,"supplydepot":2,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1},"1876840":{"commandcenter":2,"supplydepot":2,"refinery":3,"barracks":1,"orbitalcommand":1,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1}},"245":{"2275521":{"commandcenter":2,"supplydepot":2,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1},"1876840":{"commandcenter":2,"supplydepot":2,"refinery":3,"barracks":1,"orbitalcommand":1,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1}},"252":{"2275521":{"commandcenter":2,"supplydepot":2,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1},"1876840":{"commandcenter":2,"supplydepot":2,"refinery":3,"barracks":1,"orbitalcommand":1,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1}},"259":{"2275521":{"commandcenter":2,"supplydepot":2,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1},"1876840":{"commandcenter":2,"supplydepot":2,"refinery":3,"barracks":1,"orbitalcommand":1,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1}},"266":{"2275521":{"commandcenter":2,"supplydepot":2,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1},"1876840":{"commandcenter":2,"supplydepot":2,"refinery":3,"barracks":1,"orbitalcommand":1,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1}},"273":{"2275521":{"commandcenter":2,"supplydepot":3,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1},"1876840":{"commandcenter":2,"supplydepot":2,"refinery":3,"barracks":1,"orbitalcommand":2,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1}},"280":{"2275521":{"commandcenter":2,"supplydepot":3,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1},"1876840":{"commandcenter":2,"supplydepot":2,"refinery":3,"barracks":1,"orbitalcommand":2,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1}},"287":{"2275521":{"commandcenter":2,"supplydepot":4,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1,"fusioncore":1},"1876840":{"commandcenter":2,"supplydepot":2,"refinery":3,"barracks":1,"orbitalcommand":2,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1}},"294":{"2275521":{"commandcenter":2,"supplydepot":4,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1,"fusioncore":1},"1876840":{"commandcenter":2,"supplydepot":2,"refinery":3,"barracks":1,"orbitalcommand":2,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1}},"301":{"2275521":{"commandcenter":2,"supplydepot":4,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1,"fusioncore":1},"1876840":{"commandcenter":2,"supplydepot":2,"refinery":3,"barracks":1,"orbitalcommand":2,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1}},"308":{"2275521":{"commandcenter":2,"supplydepot":3,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1,"fusioncore":1},"1876840":{"commandcenter":2,"supplydepot":2,"refinery":3,"barracks":1,"orbitalcommand":2,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1}},"315":{"2275521":{"commandcenter":2,"supplydepot":3,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1,"fusioncore":1},"1876840":{"commandcenter":2,"supplydepot":3,"refinery":3,"barracks":1,"orbitalcommand":2,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1}},"322":{"2275521":{"commandcenter":2,"supplydepot":3,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1,"fusioncore":1},"1876840":{"commandcenter":2,"supplydepot":3,"refinery":3,"barracks":1,"orbitalcommand":2,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1}},"329":{"2275521":{"commandcenter":2,"supplydepot":3,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1,"fusioncore":1},"1876840":{"commandcenter":2,"supplydepot":4,"refinery":3,"barracks":1,"orbitalcommand":2,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1}},"336":{"2275521":{"commandcenter":2,"supplydepot":3,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1,"fusioncore":1},"1876840":{"commandcenter":2,"supplydepot":4,"refinery":3,"barracks":1,"orbitalcommand":2,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1,"starportreactor":1}},"350":{"2275521":{"commandcenter":2,"supplydepot":3,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1,"fusioncore":1},"1876840":{"commandcenter":2,"supplydepot":4,"refinery":3,"barracks":1,"orbitalcommand":2,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1,"starportreactor":1}},"357":{"2275521":{"commandcenter":2,"supplydepot":3,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1,"fusioncore":1},"1876840":{"commandcenter":2,"supplydepot":4,"refinery":3,"barracks":1,"orbitalcommand":2,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1,"starportreactor":1}},"364":{"2275521":{"commandcenter":2,"supplydepot":3,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1,"fusioncore":1},"1876840":{"commandcenter":2,"supplydepot":4,"refinery":3,"barracks":1,"orbitalcommand":2,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1,"starportreactor":1}},"371":{"2275521":{"commandcenter":2,"supplydepot":3,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1,"fusioncore":1},"1876840":{"commandcenter":2,"supplydepot":5,"refinery":3,"barracks":1,"orbitalcommand":2,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1,"starportreactor":1}},"378":{"2275521":{"commandcenter":2,"supplydepot":3,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1,"fusioncore":1},"1876840":{"commandcenter":2,"supplydepot":5,"refinery":3,"barracks":1,"orbitalcommand":2,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1,"starportreactor":1}},"385":{"2275521":{"commandcenter":2,"supplydepot":3,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1,"fusioncore":1},"1876840":{"commandcenter":2,"supplydepot":6,"refinery":3,"barracks":1,"orbitalcommand":2,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1,"starportreactor":1}},"392":{"2275521":{"commandcenter":2,"supplydepot":3,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1,"fusioncore":1},"1876840":{"commandcenter":2,"supplydepot":6,"refinery":3,"barracks":1,"orbitalcommand":2,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1,"starportreactor":1}},"399":{"2275521":{"commandcenter":2,"supplydepot":3,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1,"fusioncore":1},"1876840":{"commandcenter":3,"supplydepot":6,"refinery":3,"barracks":1,"orbitalcommand":2,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1,"starportreactor":1}},"406":{"2275521":{"commandcenter":2,"supplydepot":3,"refinery":2,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1,"fusioncore":1},"1876840":{"commandcenter":3,"supplydepot":6,"refinery":4,"barracks":1,"orbitalcommand":2,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1,"starportreactor":1}},"413":{"2275521":{"commandcenter":2,"supplydepot":3,"refinery":4,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1,"fusioncore":1},"1876840":{"commandcenter":3,"supplydepot":7,"refinery":4,"barracks":1,"orbitalcommand":2,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1,"starportreactor":1}},"420":{"2275521":{"commandcenter":2,"supplydepot":3,"refinery":4,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1,"fusioncore":1},"1876840":{"commandcenter":3,"supplydepot":7,"refinery":4,"barracks":1,"orbitalcommand":2,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1,"starportreactor":1}},"427":{"2275521":{"commandcenter":2,"supplydepot":3,"refinery":4,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1,"fusioncore":1},"1876840":{"commandcenter":3,"supplydepot":7,"refinery":4,"barracks":1,"orbitalcommand":3,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1,"starportreactor":1}},"434":{"2275521":{"commandcenter":2,"supplydepot":3,"refinery":4,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1,"fusioncore":1},"1876840":{"commandcenter":3,"supplydepot":7,"refinery":4,"barracks":1,"orbitalcommand":3,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1,"starportreactor":1}},"441":{"2275521":{"commandcenter":2,"supplydepot":3,"refinery":4,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1,"fusioncore":1},"1876840":{"commandcenter":3,"supplydepot":7,"refinery":4,"barracks":3,"orbitalcommand":3,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1,"starportreactor":1}},"448":{"2275521":{"commandcenter":2,"supplydepot":3,"refinery":4,"barracks":1,"barracksreactor":1,"orbitalcommand":2,"factory":1,"starport":1,"factorytechlab":1,"starporttechlab":1,"fusioncore":1},"1876840":{"commandcenter":3,"supplydepot":7,"refinery":4,"barracks":3,"orbitalcommand":3,"factory":1,"barracksreactor":1,"factorytechlab":1,"starport":1,"starportreactor":1}}}');
+
+    var players = jQuery.parseJSON('[{"players_id":2275521,"name":"llllllllllll"},{"players_id":1876840,"name":"\u908a\u7de3\u4eba"}]');
+
+
+    var active_army_chart = null;
+
+    function removeOtherCharts()
+    {
+        if (active_army_chart.get('unspent-resources-axis')) {
+            active_army_chart.get('unspent-resources-axis').remove();
+        }
+
+        if (active_army_chart.get('collection-rate-axis')) {
+            active_army_chart.get('collection-rate-axis').remove();
+        }
+
+        if (active_army_chart.get('resources-lost-axis')) {
+            active_army_chart.get('resources-lost-axis').remove();
+        }
+        if (active_army_chart.get('workers_active-axis')) {
+            active_army_chart.get('workers_active-axis').remove();
+        }
+
+        if (active_army_chart.get('resources-income-advantage')) {
+            active_army_chart.get('resources-income-advantage').remove();
+        }
+    }
+
+    function setChartTitle(title) {
+        var chart_title = '';
+        $.each(players, function (count, players_object) {
+            if (active_army_chart.get('active_army_'+players_object.players_id)) {
+                if (active_army_chart.get('active_army_'+players_object.players_id).visible) {
+                    chart_title = 'Active Army';
+                }
+            }
+        });
+
+        if(title) {
+            if(chart_title) {
+                chart_title += ' & ';
+            }
+            chart_title += title;
+            active_army_chart.setTitle({text:chart_title});
+        }
+
+
+    }
+
+    function addUnspentResources() {
+        removeOtherCharts();
+        setChartTitle('Unspent Resources');
+        $("input[name=chart_options_radio][value='unspent_resources']").prop("checked",true);
+
+        active_army_chart.addAxis({ // Secondary yAxis
+            id: 'unspent-resources-axis',
+            title: {
+                text: 'Unspent Resources'
+            },
+            lineWidth: 5,
+            min: 0,
+            opposite: true
+        });
+        active_army_chart.addSeries({
+					        						name:'llllllllllll Unspent Resources',
+					        						color: 'rgba(180, 20, 30, 0.3)',
+	                                                yAxis: 'unspent-resources-axis',
+	                                                dashStyle: 'LongDash',
+					 	        						tooltip: {
+					 	        						valueSuffix: '',
+					 	        						pointFormat: '<span style="color:{series.color}; font-weight:bold;">{series.name}:</span> {point.minerals} Minerals {point.vespene} Vespene<br/>',
+						 },
+						 data:[{x:0,y:50,vespene:0,minerals:50},{x:7,y:40,vespene:0,minerals:40},{x:14,y:75,vespene:0,minerals:75},{x:21,y:45,vespene:0,minerals:45},{x:28,y:75,vespene:0,minerals:75},{x:35,y:115,vespene:0,minerals:115},{x:42,y:120,vespene:0,minerals:120},{x:49,y:55,vespene:0,minerals:55},{x:56,y:90,vespene:0,minerals:90},{x:63,y:138,vespene:8,minerals:130},{x:70,y:168,vespene:28,minerals:140},{x:77,y:259,vespene:44,minerals:215},{x:84,y:364,vespene:64,minerals:300},{x:91,y:464,vespene:84,minerals:380},{x:98,y:149,vespene:54,minerals:95},{x:105,y:359,vespene:74,minerals:285},{x:112,y:469,vespene:94,minerals:375},{x:119,y:154,vespene:114,minerals:40},{x:126,y:219,vespene:134,minerals:85},{x:133,y:232,vespene:162,minerals:70},{x:140,y:275,vespene:190,minerals:85},{x:147,y:178,vespene:118,minerals:60},{x:154,y:206,vespene:146,minerals:60},{x:161,y:234,vespene:174,minerals:60},{x:168,y:377,vespene:202,minerals:175},{x:175,y:472,vespene:242,minerals:230},{x:182,y:457,vespene:282,minerals:175},{x:189,y:592,vespene:322,minerals:270},{x:196,y:303,vespene:258,minerals:45},{x:203,y:288,vespene:273,minerals:15},{x:210,y:423,vespene:313,minerals:110},{x:217,y:314,vespene:249,minerals:65},{x:224,y:384,vespene:289,minerals:95},{x:231,y:561,vespene:329,minerals:232},{x:238,y:372,vespene:190,minerals:182},{x:245,y:322,vespene:230,minerals:92},{x:252,y:477,vespene:270,minerals:207},{x:259,y:523,vespene:306,minerals:217},{x:266,y:698,vespene:346,minerals:352},{x:273,y:933,vespene:386,minerals:547},{x:280,y:1123,vespene:426,minerals:697},{x:287,y:584,vespene:162,minerals:422},{x:294,y:499,vespene:77,minerals:422},{x:301,y:674,vespene:117,minerals:557},{x:308,y:475,vespene:153,minerals:322},{x:315,y:290,vespene:43,minerals:247},{x:322,y:375,vespene:83,minerals:292},{x:329,y:444,vespene:107,minerals:337},{x:336,y:440,vespene:123,minerals:317},{x:350,y:460,vespene:143,minerals:317},{x:357,y:52,vespene:30,minerals:22},{x:364,y:117,vespene:30,minerals:87},{x:371,y:227,vespene:30,minerals:197},{x:378,y:562,vespene:30,minerals:532},{x:385,y:340,vespene:58,minerals:282},{x:392,y:522,vespene:90,minerals:432},{x:399,y:548,vespene:126,minerals:422},{x:406,y:648,vespene:166,minerals:482},{x:413,y:748,vespene:206,minerals:542},{x:420,y:760,vespene:278,minerals:482},{x:427,y:151,vespene:54,minerals:97},{x:434,y:353,vespene:126,minerals:227},{x:441,y:194,vespene:77,minerals:117},{x:448,y:384,vespene:157,minerals:227}]
+						 });active_army_chart.addSeries({
+					        						name:'邊緣人 Unspent Resources',
+					        						color: 'rgba(0, 66, 255, 0.3)',
+	                                                yAxis: 'unspent-resources-axis',
+	                                                dashStyle: 'LongDash',
+					 	        						tooltip: {
+					 	        						valueSuffix: '',
+					 	        						pointFormat: '<span style="color:{series.color}; font-weight:bold;">{series.name}:</span> {point.minerals} Minerals {point.vespene} Vespene<br/>',
+						 },
+						 data:[{x:0,y:50,vespene:0,minerals:50},{x:7,y:40,vespene:0,minerals:40},{x:14,y:70,vespene:0,minerals:70},{x:21,y:45,vespene:0,minerals:45},{x:28,y:90,vespene:0,minerals:90},{x:35,y:40,vespene:0,minerals:40},{x:42,y:130,vespene:0,minerals:130},{x:49,y:60,vespene:0,minerals:60},{x:56,y:33,vespene:8,minerals:25},{x:63,y:84,vespene:24,minerals:60},{x:70,y:174,vespene:44,minerals:130},{x:77,y:224,vespene:64,minerals:160},{x:84,y:271,vespene:96,minerals:175},{x:91,y:441,vespene:136,minerals:305},{x:98,y:56,vespene:26,minerals:30},{x:105,y:169,vespene:54,minerals:115},{x:112,y:170,vespene:70,minerals:100},{x:119,y:134,vespene:44,minerals:90},{x:126,y:223,vespene:68,minerals:155},{x:133,y:312,vespene:92,minerals:220},{x:140,y:352,vespene:112,minerals:240},{x:147,y:510,vespene:140,minerals:370},{x:154,y:214,vespene:164,minerals:50},{x:161,y:270,vespene:150,minerals:120},{x:168,y:111,vespene:61,minerals:50},{x:175,y:206,vespene:101,minerals:105},{x:182,y:36,vespene:16,minerals:20},{x:189,y:122,vespene:52,minerals:70},{x:196,y:162,vespene:92,minerals:70},{x:203,y:177,vespene:132,minerals:45},{x:210,y:282,vespene:172,minerals:110},{x:217,y:123,vespene:108,minerals:15},{x:224,y:273,vespene:148,minerals:125},{x:231,y:115,vespene:75,minerals:40},{x:238,y:141,vespene:131,minerals:10},{x:245,y:231,vespene:191,minerals:40},{x:252,y:276,vespene:201,minerals:75},{x:259,y:382,vespene:257,minerals:125},{x:266,y:273,vespene:205,minerals:68},{x:273,y:423,vespene:265,minerals:158},{x:280,y:234,vespene:196,minerals:38},{x:287,y:435,vespene:252,minerals:183},{x:294,y:770,vespene:437,minerals:333},{x:301,y:870,vespene:497,minerals:373},{x:308,y:1106,vespene:553,minerals:553},{x:315,y:1241,vespene:613,minerals:628},{x:322,y:1086,vespene:673,minerals:413},{x:329,y:1138,vespene:725,minerals:413},{x:336,y:988,vespene:635,minerals:353},{x:350,y:723,vespene:495,minerals:228},{x:357,y:924,vespene:551,minerals:373},{x:364,y:1224,vespene:611,minerals:613},{x:371,y:799,vespene:521,minerals:278},{x:378,y:1045,vespene:577,minerals:468},{x:385,y:841,vespene:508,minerals:333},{x:392,y:831,vespene:568,minerals:263},{x:399,y:726,vespene:553,minerals:173},{x:406,y:772,vespene:609,minerals:163},{x:413,y:923,vespene:685,minerals:238},{x:420,y:1068,vespene:765,minerals:303},{x:427,y:760,vespene:737,minerals:23},{x:434,y:1080,vespene:817,minerals:263},{x:441,y:865,vespene:722,minerals:143},{x:448,y:940,vespene:752,minerals:188}]
+						 });
+    }
+
+    function addCollectionRate()
+    {
+        removeOtherCharts();
+        setChartTitle('Collection Rate');
+        $("input[name=chart_options_radio][value='collection_rate']").prop("checked",true);
+        active_army_chart.addAxis({ // Secondary yAxis
+            id: 'collection-rate-axis',
+            title: {
+                text: 'Collection Rate'
+            },
+            lineWidth: 5,
+            min: 0,
+            opposite: true
+        });
+        active_army_chart.addSeries({
+			        						name:'llllllllllll Collection Rate',
+			        						color: 'rgba(180, 20, 30, 0.3)',
+                                          yAxis: 'collection-rate-axis',
+                                          dashStyle: 'LongDash',
+			 	        						tooltip: {
+			 	        						valueSuffix: '',
+			 	        						pointFormat: '<span style="color:{series.color}; font-weight:bold;">{series.name}:</span> {point.minerals} Minerals {point.vespene} Vespene<br/>',
+			 },
+			 data:[{x:0,y:0,vespene:0,minerals:0},{x:7,y:335,vespene:0,minerals:335},{x:14,y:699,vespene:0,minerals:699},{x:21,y:699,vespene:0,minerals:699},{x:28,y:615,vespene:0,minerals:615},{x:35,y:699,vespene:0,minerals:699},{x:42,y:727,vespene:0,minerals:727},{x:49,y:699,vespene:0,minerals:699},{x:56,y:727,vespene:0,minerals:727},{x:63,y:743,vespene:44,minerals:699},{x:70,y:743,vespene:156,minerals:587},{x:77,y:799,vespene:156,minerals:643},{x:84,y:771,vespene:156,minerals:615},{x:91,y:855,vespene:156,minerals:699},{x:98,y:883,vespene:156,minerals:727},{x:105,y:911,vespene:156,minerals:755},{x:112,y:878,vespene:179,minerals:699},{x:119,y:878,vespene:179,minerals:699},{x:126,y:850,vespene:179,minerals:671},{x:133,y:928,vespene:201,minerals:727},{x:140,y:1090,vespene:223,minerals:867},{x:147,y:1146,vespene:223,minerals:923},{x:154,y:1197,vespene:246,minerals:951},{x:161,y:1141,vespene:246,minerals:895},{x:168,y:1281,vespene:246,minerals:1035},{x:175,y:1292,vespene:313,minerals:979},{x:182,y:1286,vespene:335,minerals:951},{x:189,y:1174,vespene:335,minerals:839},{x:196,y:1236,vespene:313,minerals:923},{x:203,y:1314,vespene:335,minerals:979},{x:210,y:1370,vespene:335,minerals:1035},{x:217,y:1488,vespene:313,minerals:1175},{x:224,y:1544,vespene:313,minerals:1231},{x:231,y:1622,vespene:335,minerals:1287},{x:238,y:1628,vespene:313,minerals:1315},{x:245,y:1684,vespene:313,minerals:1371},{x:252,y:1958,vespene:335,minerals:1623},{x:259,y:1880,vespene:313,minerals:1567},{x:266,y:1964,vespene:313,minerals:1651},{x:273,y:2042,vespene:335,minerals:1707},{x:280,y:2182,vespene:335,minerals:1847},{x:287,y:1740,vespene:313,minerals:1427},{x:294,y:1258,vespene:335,minerals:923},{x:301,y:1566,vespene:335,minerals:1231},{x:308,y:1740,vespene:313,minerals:1427},{x:315,y:1488,vespene:313,minerals:1175},{x:322,y:1510,vespene:335,minerals:1175},{x:329,y:1057,vespene:246,minerals:811},{x:336,y:771,vespene:156,minerals:615},{x:350,y:547,vespene:156,minerals:391},{x:357,y:166,vespene:111,minerals:55},{x:364,y:363,vespene:0,minerals:363},{x:371,y:923,vespene:0,minerals:923},{x:378,y:1147,vespene:0,minerals:1147},{x:385,y:1499,vespene:156,minerals:1343},{x:392,y:1690,vespene:291,minerals:1399},{x:399,y:1690,vespene:291,minerals:1399},{x:406,y:1790,vespene:335,minerals:1455},{x:413,y:1762,vespene:335,minerals:1427},{x:420,y:1958,vespene:559,minerals:1399},{x:427,y:1751,vespene:604,minerals:1147},{x:434,y:2031,vespene:604,minerals:1427},{x:441,y:1964,vespene:649,minerals:1315},{x:448,y:1712,vespene:649,minerals:1063}]
+			 });active_army_chart.addSeries({
+			        						name:'邊緣人 Collection Rate',
+			        						color: 'rgba(0, 66, 255, 0.3)',
+                                          yAxis: 'collection-rate-axis',
+                                          dashStyle: 'LongDash',
+			 	        						tooltip: {
+			 	        						valueSuffix: '',
+			 	        						pointFormat: '<span style="color:{series.color}; font-weight:bold;">{series.name}:</span> {point.minerals} Minerals {point.vespene} Vespene<br/>',
+			 },
+			 data:[{x:0,y:0,vespene:0,minerals:0},{x:7,y:335,vespene:0,minerals:335},{x:14,y:671,vespene:0,minerals:671},{x:21,y:671,vespene:0,minerals:671},{x:28,y:699,vespene:0,minerals:699},{x:35,y:755,vespene:0,minerals:755},{x:42,y:727,vespene:0,minerals:727},{x:49,y:755,vespene:0,minerals:755},{x:56,y:799,vespene:44,minerals:755},{x:63,y:833,vespene:134,minerals:699},{x:70,y:827,vespene:156,minerals:671},{x:77,y:827,vespene:156,minerals:671},{x:84,y:810,vespene:223,minerals:587},{x:91,y:894,vespene:335,minerals:559},{x:98,y:973,vespene:358,minerals:615},{x:105,y:962,vespene:291,minerals:671},{x:112,y:883,vespene:156,minerals:727},{x:119,y:883,vespene:156,minerals:727},{x:126,y:1068,vespene:201,minerals:867},{x:133,y:1208,vespene:201,minerals:1007},{x:140,y:1242,vespene:179,minerals:1063},{x:147,y:1398,vespene:223,minerals:1175},{x:154,y:1398,vespene:223,minerals:1175},{x:161,y:1494,vespene:291,minerals:1203},{x:168,y:1270,vespene:291,minerals:979},{x:175,y:1202,vespene:335,minerals:867},{x:182,y:1202,vespene:335,minerals:867},{x:189,y:1068,vespene:313,minerals:755},{x:196,y:1096,vespene:313,minerals:783},{x:203,y:1174,vespene:335,minerals:839},{x:210,y:1202,vespene:335,minerals:867},{x:217,y:1208,vespene:313,minerals:895},{x:224,y:1286,vespene:335,minerals:951},{x:231,y:1382,vespene:403,minerals:979},{x:238,y:1505,vespene:470,minerals:1035},{x:245,y:1583,vespene:492,minerals:1091},{x:252,y:1639,vespene:492,minerals:1147},{x:259,y:1701,vespene:470,minerals:1231},{x:266,y:1673,vespene:470,minerals:1203},{x:273,y:1886,vespene:515,minerals:1371},{x:280,y:2031,vespene:492,minerals:1539},{x:287,y:2065,vespene:470,minerals:1595},{x:294,y:2087,vespene:492,minerals:1595},{x:301,y:2115,vespene:492,minerals:1623},{x:308,y:2093,vespene:470,minerals:1623},{x:315,y:2171,vespene:492,minerals:1679},{x:322,y:2194,vespene:515,minerals:1679},{x:329,y:2317,vespene:470,minerals:1847},{x:336,y:2345,vespene:470,minerals:1875},{x:350,y:2423,vespene:492,minerals:1931},{x:357,y:2541,vespene:470,minerals:2071},{x:364,y:2485,vespene:470,minerals:2015},{x:371,y:2474,vespene:515,minerals:1959},{x:378,y:2423,vespene:492,minerals:1931},{x:385,y:2429,vespene:470,minerals:1959},{x:392,y:2423,vespene:492,minerals:1931},{x:399,y:2283,vespene:492,minerals:1791},{x:406,y:2177,vespene:470,minerals:1707},{x:413,y:2345,vespene:582,minerals:1763},{x:420,y:2630,vespene:671,minerals:1959},{x:427,y:2530,vespene:627,minerals:1903},{x:434,y:2586,vespene:627,minerals:1959},{x:441,y:2692,vespene:649,minerals:2043},{x:448,y:2776,vespene:649,minerals:2127}]
+			 });
+    }
+
+    function addResourcesLost()
+    {
+        removeOtherCharts();
+        setChartTitle('Resources Lost');
+        $("input[name=chart_options_radio][value='resources_lost']").prop("checked",true);
+        active_army_chart.addAxis({ // Secondary yAxis
+            id: 'resources-lost-axis',
+            title: {
+                text: 'Resources Lost'
+            },
+            lineWidth: 5,
+            min: 0,
+            opposite: true
+        });
+        active_army_chart.addSeries({
+			        						name:'llllllllllll Lost Resources',
+			        						color: 'rgba(180, 20, 30, 0.3)',
+                                          yAxis: 'resources-lost-axis',
+                                          dashStyle: 'LongDash',
+			 	        						tooltip: {
+			 	        						valueSuffix: '',
+			 	        						pointFormat: '<span style="color:{series.color}; font-weight:bold;">{series.name}:</span> {point.minerals} Minerals {point.vespene} Vespene<br/>',
+			 },
+			 data:[{x:0,y:0,vespene:0,minerals:0},{x:7,y:0,vespene:0,minerals:0},{x:14,y:0,vespene:0,minerals:0},{x:21,y:0,vespene:0,minerals:0},{x:28,y:0,vespene:0,minerals:0},{x:35,y:0,vespene:0,minerals:0},{x:42,y:0,vespene:0,minerals:0},{x:49,y:0,vespene:0,minerals:0},{x:56,y:0,vespene:0,minerals:0},{x:63,y:0,vespene:0,minerals:0},{x:70,y:0,vespene:0,minerals:0},{x:77,y:0,vespene:0,minerals:0},{x:84,y:0,vespene:0,minerals:0},{x:91,y:0,vespene:0,minerals:0},{x:98,y:0,vespene:0,minerals:0},{x:105,y:0,vespene:0,minerals:0},{x:112,y:0,vespene:0,minerals:0},{x:119,y:0,vespene:0,minerals:0},{x:126,y:0,vespene:0,minerals:0},{x:133,y:0,vespene:0,minerals:0},{x:140,y:0,vespene:0,minerals:0},{x:147,y:0,vespene:0,minerals:0},{x:154,y:50,vespene:0,minerals:50},{x:161,y:50,vespene:0,minerals:50},{x:168,y:50,vespene:0,minerals:50},{x:175,y:50,vespene:0,minerals:50},{x:182,y:50,vespene:0,minerals:50},{x:189,y:50,vespene:0,minerals:50},{x:196,y:50,vespene:0,minerals:50},{x:203,y:50,vespene:0,minerals:50},{x:210,y:100,vespene:0,minerals:100},{x:217,y:100,vespene:0,minerals:100},{x:224,y:100,vespene:0,minerals:100},{x:231,y:100,vespene:0,minerals:100},{x:238,y:100,vespene:0,minerals:100},{x:245,y:100,vespene:0,minerals:100},{x:252,y:100,vespene:0,minerals:100},{x:259,y:100,vespene:0,minerals:100},{x:266,y:100,vespene:0,minerals:100},{x:273,y:100,vespene:0,minerals:100},{x:280,y:250,vespene:0,minerals:250},{x:287,y:700,vespene:100,minerals:600},{x:294,y:750,vespene:100,minerals:650},{x:301,y:750,vespene:100,minerals:650},{x:308,y:850,vespene:100,minerals:750},{x:315,y:850,vespene:100,minerals:750},{x:322,y:1000,vespene:100,minerals:900},{x:329,y:1425,vespene:225,minerals:1200},{x:336,y:1625,vespene:225,minerals:1400},{x:350,y:1775,vespene:225,minerals:1550},{x:357,y:2075,vespene:225,minerals:1850},{x:364,y:2225,vespene:225,minerals:2000},{x:371,y:2225,vespene:225,minerals:2000},{x:378,y:1925,vespene:225,minerals:1700},{x:385,y:1925,vespene:225,minerals:1700},{x:392,y:1925,vespene:225,minerals:1700},{x:399,y:1925,vespene:225,minerals:1700},{x:406,y:1925,vespene:225,minerals:1700},{x:413,y:2025,vespene:225,minerals:1800},{x:420,y:2125,vespene:225,minerals:1900},{x:427,y:2125,vespene:225,minerals:1900},{x:434,y:2125,vespene:225,minerals:1900},{x:441,y:2125,vespene:225,minerals:1900},{x:448,y:2825,vespene:525,minerals:2300}]
+			 });active_army_chart.addSeries({
+			        						name:'邊緣人 Lost Resources',
+			        						color: 'rgba(0, 66, 255, 0.3)',
+                                          yAxis: 'resources-lost-axis',
+                                          dashStyle: 'LongDash',
+			 	        						tooltip: {
+			 	        						valueSuffix: '',
+			 	        						pointFormat: '<span style="color:{series.color}; font-weight:bold;">{series.name}:</span> {point.minerals} Minerals {point.vespene} Vespene<br/>',
+			 },
+			 data:[{x:0,y:0,vespene:0,minerals:0},{x:7,y:0,vespene:0,minerals:0},{x:14,y:0,vespene:0,minerals:0},{x:21,y:0,vespene:0,minerals:0},{x:28,y:0,vespene:0,minerals:0},{x:35,y:0,vespene:0,minerals:0},{x:42,y:0,vespene:0,minerals:0},{x:49,y:0,vespene:0,minerals:0},{x:56,y:0,vespene:0,minerals:0},{x:63,y:0,vespene:0,minerals:0},{x:70,y:0,vespene:0,minerals:0},{x:77,y:0,vespene:0,minerals:0},{x:84,y:0,vespene:0,minerals:0},{x:91,y:0,vespene:0,minerals:0},{x:98,y:0,vespene:0,minerals:0},{x:105,y:0,vespene:0,minerals:0},{x:112,y:0,vespene:0,minerals:0},{x:119,y:0,vespene:0,minerals:0},{x:126,y:0,vespene:0,minerals:0},{x:133,y:0,vespene:0,minerals:0},{x:140,y:0,vespene:0,minerals:0},{x:147,y:0,vespene:0,minerals:0},{x:154,y:0,vespene:0,minerals:0},{x:161,y:0,vespene:0,minerals:0},{x:168,y:0,vespene:0,minerals:0},{x:175,y:0,vespene:0,minerals:0},{x:182,y:0,vespene:0,minerals:0},{x:189,y:0,vespene:0,minerals:0},{x:196,y:0,vespene:0,minerals:0},{x:203,y:0,vespene:0,minerals:0},{x:210,y:100,vespene:50,minerals:50},{x:217,y:100,vespene:50,minerals:50},{x:224,y:100,vespene:50,minerals:50},{x:231,y:100,vespene:50,minerals:50},{x:238,y:100,vespene:50,minerals:50},{x:245,y:100,vespene:50,minerals:50},{x:252,y:100,vespene:50,minerals:50},{x:259,y:100,vespene:50,minerals:50},{x:266,y:100,vespene:50,minerals:50},{x:273,y:100,vespene:50,minerals:50},{x:280,y:150,vespene:50,minerals:100},{x:287,y:150,vespene:50,minerals:100},{x:294,y:250,vespene:100,minerals:150},{x:301,y:250,vespene:100,minerals:150},{x:308,y:250,vespene:100,minerals:150},{x:315,y:250,vespene:100,minerals:150},{x:322,y:250,vespene:100,minerals:150},{x:329,y:575,vespene:225,minerals:350},{x:336,y:575,vespene:225,minerals:350},{x:350,y:575,vespene:225,minerals:350},{x:357,y:625,vespene:225,minerals:400},{x:364,y:1000,vespene:350,minerals:650},{x:371,y:1000,vespene:350,minerals:650},{x:378,y:1000,vespene:350,minerals:650},{x:385,y:1000,vespene:350,minerals:650},{x:392,y:1050,vespene:350,minerals:700},{x:399,y:1050,vespene:350,minerals:700},{x:406,y:1050,vespene:350,minerals:700},{x:413,y:1050,vespene:350,minerals:700},{x:420,y:1250,vespene:350,minerals:900},{x:427,y:1250,vespene:350,minerals:900},{x:434,y:1250,vespene:350,minerals:900},{x:441,y:1450,vespene:450,minerals:1000},{x:448,y:1450,vespene:450,minerals:1000}]
+			 });    }
+
+    function addWorkersActive()
+    {
+        removeOtherCharts();
+        setChartTitle('Workers Active');
+        $("input[name=chart_options_radio][value='workers_active']").prop("checked",true);
+        active_army_chart.addAxis({ // Secondary yAxis
+            id: 'workers_active-axis',
+            title: {
+                text: 'Workers Active'
+            },
+            lineWidth: 5,
+            min: 0,
+            opposite: true
+        });
+        active_army_chart.addSeries({
+												name:'llllllllllll Workers Active',
+												color: 'rgba(180, 20, 30, 0.3)',
+											  yAxis: 'workers_active-axis',
+											  dashStyle: 'LongDash',
+													 tooltip: {
+													 valueSuffix: '',
+													 pointFormat: '<span style="color:{series.color}; font-weight:bold;">{series.name}:</span> {point.y} Workers<br/>',
+				 },
+				 data:[{x:0,y:12},{x:7,y:12},{x:14,y:13},{x:21,y:13},{x:28,y:14},{x:35,y:14},{x:42,y:15},{x:49,y:15},{x:56,y:16},{x:63,y:16},{x:70,y:17},{x:77,y:17},{x:84,y:18},{x:91,y:19},{x:98,y:19},{x:105,y:19},{x:112,y:19},{x:119,y:19},{x:126,y:19},{x:133,y:19},{x:140,y:20},{x:147,y:20},{x:154,y:19},{x:161,y:20},{x:168,y:20},{x:175,y:21},{x:182,y:21},{x:189,y:22},{x:196,y:23},{x:203,y:23},{x:210,y:23},{x:217,y:24},{x:224,y:24},{x:231,y:26},{x:238,y:27},{x:245,y:27},{x:252,y:27},{x:259,y:29},{x:266,y:30},{x:273,y:31},{x:280,y:33},{x:287,y:32},{x:294,y:32},{x:301,y:32},{x:308,y:32},{x:315,y:33},{x:322,y:32},{x:329,y:30},{x:336,y:26},{x:350,y:24},{x:357,y:22},{x:364,y:20},{x:371,y:21},{x:378,y:21},{x:385,y:21},{x:392,y:23},{x:399,y:24},{x:406,y:25},{x:413,y:25},{x:420,y:23},{x:427,y:25},{x:434,y:26},{x:441,y:27},{x:448,y:29}]
+				 });active_army_chart.addSeries({
+												name:'邊緣人 Workers Active',
+												color: 'rgba(0, 66, 255, 0.3)',
+											  yAxis: 'workers_active-axis',
+											  dashStyle: 'LongDash',
+													 tooltip: {
+													 valueSuffix: '',
+													 pointFormat: '<span style="color:{series.color}; font-weight:bold;">{series.name}:</span> {point.y} Workers<br/>',
+				 },
+				 data:[{x:0,y:12},{x:7,y:12},{x:14,y:12},{x:21,y:13},{x:28,y:14},{x:35,y:14},{x:42,y:15},{x:49,y:15},{x:56,y:16},{x:63,y:16},{x:70,y:17},{x:77,y:18},{x:84,y:18},{x:91,y:19},{x:98,y:19},{x:105,y:19},{x:112,y:19},{x:119,y:19},{x:126,y:19},{x:133,y:20},{x:140,y:21},{x:147,y:21},{x:154,y:22},{x:161,y:22},{x:168,y:23},{x:175,y:23},{x:182,y:24},{x:189,y:24},{x:196,y:24},{x:203,y:25},{x:210,y:26},{x:217,y:26},{x:224,y:27},{x:231,y:27},{x:238,y:28},{x:245,y:28},{x:252,y:28},{x:259,y:29},{x:266,y:29},{x:273,y:30},{x:280,y:31},{x:287,y:32},{x:294,y:32},{x:301,y:34},{x:308,y:34},{x:315,y:34},{x:322,y:36},{x:329,y:38},{x:336,y:38},{x:350,y:40},{x:357,y:40},{x:364,y:40},{x:371,y:40},{x:378,y:40},{x:385,y:42},{x:392,y:42},{x:399,y:44},{x:406,y:45},{x:413,y:46},{x:420,y:47},{x:427,y:47},{x:434,y:48},{x:441,y:50},{x:448,y:50}]
+				 });    }
+
+    function activeArmyChartOnly()
+    {
+        removeOtherCharts();
+        $("input[name=chart_options_radio][value='army_value_only']").prop("checked",true);
+    }
+
+    function hideActiveArmyChart()
+    {
+        $.each(players, function (count, players_object) {
+            if (active_army_chart.get('active_army_'+players_object.players_id)) {
+                if (active_army_chart.get('active_army_'+players_object.players_id).visible) {
+                    active_army_chart.get('active_army_'+players_object.players_id).hide();
+                    active_army_chart.get('active_army_axis').setTitle('');
+                }
+                else {
+                    active_army_chart.get('active_army_'+players_object.players_id).show();
+                    active_army_chart.get('active_army_axis').setTitle({text:'Active Army Value'});
+                }
+            }
+        });
+        setChartTitle('');
+    }
+
+    function addIncomeAdvantage()
+    {
+        removeOtherCharts();
+        setChartTitle('Income Advantage');
+        $("input[name=chart_options_radio][value='resources_income_advantage']").prop("checked",true);
+        active_army_chart.addAxis({ // Secondary yAxis
+            id: 'resources-income-advantage',
+            title: {
+                text: 'Income Advantage'
+            },
+            lineWidth: 5,
+            opposite: true,
+            labels: {
+                formatter: function () {
+                    return Math.abs(this.value);
+                }
+            },
+                        min: -2375,
+            max: 319,
+            
+
+            tickInterval: 150
+
+        });
+        active_army_chart.addSeries({
+                                                name:'',
+                                                color: 'rgba(180, 20, 30, 0.3)',
+                                                negativeColor: 'rgba(0, 66, 255, 0.3)',
+                                                yAxis: 'resources-income-advantage',
+                                                dashStyle: 'LongDash',
+                                                    tooltip: {
+                                                    valueSuffix: '',
+                                                    pointFormatter: function () {
+                                                        return '<span style="color:'+(this.y>0?'rgba(180, 20, 30, 0.3)':'rgba(0, 66, 255, 0.3)')+'; font-weight:bold;">Income Advantage '+(this.y>0?'Team 1': 'Team 2')+':</span> '+Math.abs(this.y)+'<br/>';
+                                                    } 
+                     },
+                     data:[{x:0,y:0},{x:7,y:0},{x:14,y:28},{x:21,y:28},{x:28,y:-84},{x:35,y:-56},{x:42,y:0},{x:49,y:-56},{x:56,y:-72},{x:63,y:-90},{x:70,y:-84},{x:77,y:-28},{x:84,y:-39},{x:91,y:-39},{x:98,y:-90},{x:105,y:-51},{x:112,y:-5},{x:119,y:-5},{x:126,y:-218},{x:133,y:-280},{x:140,y:-152},{x:147,y:-252},{x:154,y:-201},{x:161,y:-353},{x:168,y:11},{x:175,y:90},{x:182,y:84},{x:189,y:106},{x:196,y:140},{x:203,y:140},{x:210,y:168},{x:217,y:280},{x:224,y:258},{x:231,y:240},{x:238,y:123},{x:245,y:101},{x:252,y:319},{x:259,y:179},{x:266,y:291},{x:273,y:156},{x:280,y:151},{x:287,y:-325},{x:294,y:-829},{x:301,y:-549},{x:308,y:-353},{x:315,y:-683},{x:322,y:-684},{x:329,y:-1260},{x:336,y:-1574},{x:350,y:-1876},{x:357,y:-2375},{x:364,y:-2122},{x:371,y:-1551},{x:378,y:-1276},{x:385,y:-930},{x:392,y:-733},{x:399,y:-593},{x:406,y:-387},{x:413,y:-583},{x:420,y:-672},{x:427,y:-779},{x:434,y:-555},{x:441,y:-728},{x:448,y:-1064}]
+                     });    }
+
+    $(function () {
+        var chart_options = {
+            exporting: {
+                buttons: {
+                    contextButton: {
+                        enabled: false,
+                    },
+                    toggle: {
+                        align: 'right',
+                        buttonSpacing: 3,
+                        text: "Filter Options",
+                        y: 0,
+                        height: 22,
+
+                        symbol: 'menu',
+                        menuItems: [{
+                            text: 'Army Value Only',
+                            onclick: function () {
+                                removeOtherCharts();
+                                activeArmyChartOnly();
+
+                                $.each(players, function (count, players_object) {
+                                    if (active_army_chart.get('active_army_'+players_object.players_id)) {
+                                        if (!active_army_chart.get('active_army_'+players_object.players_id).visible) {
+                                            active_army_chart.get('active_army_'+players_object.players_id).show();
+                                            active_army_chart.get('active_army_axis').setTitle({text:'Active Army Value'});
+                                            setChartTitle('');
+                                        } else {
+                                            setChartTitle('');
+                                        }
+                                    }
+                                });
+
+                            }
+                        }, {
+                            text: 'Unspent Resources',
+                            onclick: function () {
+                                addUnspentResources();
+                            }
+                        }, {
+                            text: 'Collection Rate',
+                            onclick: function () {
+                                addCollectionRate();
+                            }
+                        }, {
+                            text: 'Resources Lost',
+                            onclick: function () {
+                                addResourcesLost();
+                            }
+                        }, {
+                            text: 'Workers Active',
+                            onclick: function () {
+                                addWorkersActive()
+                            }
+                        }, {
+                            text: 'Income Advantage',
+                            onclick: function () {
+                                addIncomeAdvantage();
+                            }
+                        }, {
+                            text: 'Hide Active Army Chart',
+                            onclick: function () {
+                                //removeOtherCharts();
+                                hideActiveArmyChart();
+                            }
+                        },{
+                            text: 'Save Filters',
+                            onclick: function () {
+                                $('#save_filter_settings').submit();
+                            }
+                        }]
                     }
-                    else {
-                        labels.push($(this).html());
+                }
+            },
+            chart: {
+                renderTo: 'active_army_tab_div',
+                borderRadius: 5,
+                borderWidth: 2,
+                type: 'spline',
+                borderColor:'#e5e5e5',
+                borderWidth:0,
+                shadow: { opacity:.05, width:6}
+            },
+            title: {
+                text: 'Active Army'
+            },
+            legend: {
+                enabled: false
+            },
+            subtitle: {
+                text: ''
+            },
+            yAxis: {
+                id: 'active_army_axis',
+                title: {
+                    text: 'Active Army Value'
+                },
+                min: 0
+
+
+            },
+
+            xAxis: {
+
+                title: {
+                    text: ''
+                },
+                labels: {
+                    formatter: function () {
+                        var minutes = Math.floor(this.value / 60);
+                        var seconds = this.value - minutes * 60;
+                        var hours = Math.floor(this.value / 3600);
+
+
+                        return minutes + ':' + seconds;
                     }
-                });
-                return labels.join(', ') + '';
-        	}
-            if (options.length > 1) 
+                }
+
+
+                ,plotBands: [{ 
+				                    from: 25.5,
+				                    to: 30.5,
+				                    color: 'rgba(0,66,255,0.2)',
+				                    label: {
+				                        text: 'Supply Blocked',
+				                        rotation: 90,
+				                        x:-3,
+					                    textAlign: 'left',
+					                        style: {
+					                            color: '#606060',
+					                            fontWeight: 'bold'
+					                        }
+					                    }
+					                },{ 
+				                    from: 32.5,
+				                    to: 37.5,
+				                    color: 'rgba(0,66,255,0.2)',
+				                    label: {
+				                        text: 'Supply Blocked',
+				                        rotation: 90,
+				                        x:-3,
+					                    textAlign: 'left',
+					                        style: {
+					                            color: '#606060',
+					                            fontWeight: 'bold'
+					                        }
+					                    }
+					                },{ 
+				                    from: 179.5,
+				                    to: 184.5,
+				                    color: 'rgba(0,66,255,0.2)',
+				                    label: {
+				                        text: 'Supply Blocked',
+				                        rotation: 90,
+				                        x:-3,
+					                    textAlign: 'left',
+					                        style: {
+					                            color: '#606060',
+					                            fontWeight: 'bold'
+					                        }
+					                    }
+					                },{ 
+				                    from: 214.5,
+				                    to: 219.5,
+				                    color: 'rgba(0,66,255,0.2)',
+				                    label: {
+				                        text: 'Supply Blocked',
+				                        rotation: 90,
+				                        x:-3,
+					                    textAlign: 'left',
+					                        style: {
+					                            color: '#606060',
+					                            fontWeight: 'bold'
+					                        }
+					                    }
+					                },{ 
+				                    from: 270.5,
+				                    to: 275.5,
+				                    color: 'rgba(0,66,255,0.2)',
+				                    label: {
+				                        text: 'Supply Blocked',
+				                        rotation: 90,
+				                        x:-3,
+					                    textAlign: 'left',
+					                        style: {
+					                            color: '#606060',
+					                            fontWeight: 'bold'
+					                        }
+					                    }
+					                },{ 
+				                    from: 277.5,
+				                    to: 282.5,
+				                    color: 'rgba(0,66,255,0.2)',
+				                    label: {
+				                        text: 'Supply Blocked',
+				                        rotation: 90,
+				                        x:-3,
+					                    textAlign: 'left',
+					                        style: {
+					                            color: '#606060',
+					                            fontWeight: 'bold'
+					                        }
+					                    }
+					                },{ 
+				                    from: 284.5,
+				                    to: 289.5,
+				                    color: 'rgba(0,66,255,0.2)',
+				                    label: {
+				                        text: 'Supply Blocked',
+				                        rotation: 90,
+				                        x:-3,
+					                    textAlign: 'left',
+					                        style: {
+					                            color: '#606060',
+					                            fontWeight: 'bold'
+					                        }
+					                    }
+					                },{ 
+				                    from: 298.5,
+				                    to: 303.5,
+				                    color: 'rgba(0,66,255,0.2)',
+				                    label: {
+				                        text: 'Supply Blocked',
+				                        rotation: 90,
+				                        x:-3,
+					                    textAlign: 'left',
+					                        style: {
+					                            color: '#606060',
+					                            fontWeight: 'bold'
+					                        }
+					                    }
+					                },{ 
+				                    from: 347.5,
+				                    to: 352.5,
+				                    color: 'rgba(0,66,255,0.2)',
+				                    label: {
+				                        text: 'Supply Blocked',
+				                        rotation: 90,
+				                        x:-3,
+					                    textAlign: 'left',
+					                        style: {
+					                            color: '#606060',
+					                            fontWeight: 'bold'
+					                        }
+					                    }
+					                },{ 
+				                    from: 25.5,
+				                    to: 30.5,
+				                    color: 'rgba(180,20,30,0.2)',
+				                    label: {
+				                        text: '',
+				                        rotation: 90,
+				                        x:-3,
+					                    textAlign: 'left',
+					                        style: {
+					                            color: '#606060',
+					                            fontWeight: 'bold'
+					                        }
+					                    }
+					                },{ 
+				                    from: 32.5,
+				                    to: 37.5,
+				                    color: 'rgba(180,20,30,0.2)',
+				                    label: {
+				                        text: '',
+				                        rotation: 90,
+				                        x:-3,
+					                    textAlign: 'left',
+					                        style: {
+					                            color: '#606060',
+					                            fontWeight: 'bold'
+					                        }
+					                    }
+					                },{ 
+				                    from: 438.5,
+				                    to: 443.5,
+				                    color: 'rgba(180,20,30,0.2)',
+				                    label: {
+				                        text: 'Supply Blocked',
+				                        rotation: 90,
+				                        x:-3,
+					                    textAlign: 'left',
+					                        style: {
+					                            color: '#606060',
+					                            fontWeight: 'bold'
+					                        }
+					                    }
+					                } ]
+
+            },
+            tooltip: {
+                shared: true,
+                headerFormat: '',
+            },
+            credits: {enabled: false},
+
+            plotOptions: {
+                spline: {
+                    lineWidth: 2,
+                    marker: {
+                        enabled: false
+                    },
+                    point: {
+                        events: {
+                            mouseOver: function () {
+                                var output_string = "";
+                                // alert(units_alive);
+
+                                
+                                $.each($("#units_display_team1_0 div span"), function (key, value) {
+                                    $(value).css('opacity', '.3');
+                                    $(value).find('h2').html('');
+
+                                });
+
+                                $.each(units_alive[this.x][2275521], function (unit_name, count) {
+                                    $('#2275521_' + unit_name).css('opacity', '1');
+                                    $('#2275521_' + unit_name + ' h2').html(count);
+
+                                });
+
+                                if (upgrades[this.x][2275521] != null) {
+
+                                    $.each(upgrades[this.x][2275521], function (upgrade_name, count) {
+                                        if (upgrade_name) {
+
+                                            var upgrade_level = upgrade_name.substr(upgrade_name.length - 1);
+                                            if (upgrade_level == '1' || upgrade_level == '2' || upgrade_level == '3') {
+                                                upgrade_name = upgrade_name.substr(0, upgrade_name.length - 1);
+                                            }
+                                            else {
+                                                upgrade_level = '';
+                                            }
+
+
+                                            $('#2275521_' + upgrade_name).css('opacity', '1');
+                                            $('#2275521_' + upgrade_name + ' h2').html(upgrade_level);
+                                        }
+                                    });
+                                }
+
+
+                                $.each($("#units_display_team2_0 div span"), function (key, value) {
+                                    $(value).css('opacity', '.3');
+                                    $(value).find('h2').html('');
+
+                                });
+
+                                $.each(units_alive[this.x][1876840], function (unit_name, count) {
+
+                                    $('#1876840_' + unit_name).css('opacity', '1');
+                                    $('#1876840_' + unit_name + ' h2').html(count);
+
+                                });
+
+
+                                if (upgrades[this.x][1876840] != null) {
+                                    $.each(upgrades[this.x][1876840], function (upgrade_name, count) {
+                                        if (upgrade_name) {
+
+
+                                            var upgrade_level = upgrade_name.substr(upgrade_name.length - 1);
+                                            if (upgrade_level == '1' || upgrade_level == '2' || upgrade_level == '3') {
+                                                upgrade_name = upgrade_name.substr(0, upgrade_name.length - 1);
+                                            }
+                                            else {
+                                                upgrade_level = '';
+                                            }
+
+
+                                            $('#1876840_' + upgrade_name).css('opacity', '1');
+                                            $('#1876840_' + upgrade_name + ' h2').html(upgrade_level);
+                                        }
+
+
+                                    });
+                                }
+
+                                if (buildings[this.x][2275521]) {
+                                    $.each(buildings[this.x][2275521], function (unit_name, count) {
+                                        $('#2275521_' + unit_name).css('opacity', '1');
+                                        $('#2275521_' + unit_name + ' h2').html(count);
+
+                                    });
+                                }
+                                if (buildings[this.x][1876840]) {
+                                    $.each(buildings[this.x][1876840], function (unit_name, count) {
+
+                                        $('#1876840_' + unit_name).css('opacity', '1');
+                                        $('#1876840_' + unit_name + ' h2').html(count);
+
+                                    });
+                                }
+
+                                if (resources[this.x][2275521] != null) {
+                                    $('#2275521_unspent_minerals').html(resources[this.x][2275521]['unspent_minerals']);
+                                    $('#2275521_collection_rate_minerals').html(resources[this.x][2275521]['minerals']);
+                                    $('#2275521_resources_lost_minerals').html(resources[this.x][2275521]['lost_minerals']);
+
+                                    $('#2275521_unspent_vespene').html(resources[this.x][2275521]['unspent_vespene']);
+                                    $('#2275521_collection_rate_vespene').html(resources[this.x][2275521]['vespene']);
+                                    $('#2275521_resources_lost_vespene').html(resources[this.x][2275521]['lost_vespene']);
+
+                                }
+
+                                if (supply[this.x] != null && supply[this.x][2275521]['min'] != null) {
+                                    $('.supply_display_team1_2275521').html(supply[this.x][2275521]['min'] + '/' + supply[this.x][2275521]['max']);
+                                }
+
+
+                                if (resources[this.x][1876840] != null) {
+                                    $('#1876840_unspent_minerals').html(resources[this.x][1876840]['unspent_minerals']);
+                                    $('#1876840_collection_rate_minerals').html(resources[this.x][1876840]['minerals']);
+                                    $('#1876840_resources_lost_minerals').html(resources[this.x][1876840]['lost_minerals']);
+
+                                    $('#1876840_unspent_vespene').html(resources[this.x][1876840]['unspent_vespene']);
+                                    $('#1876840_collection_rate_vespene').html(resources[this.x][1876840]['vespene']);
+                                    $('#1876840_resources_lost_vespene').html(resources[this.x][1876840]['lost_vespene']);
+
+                                }
+
+                                if (supply[this.x] != null && supply[this.x][1876840]['min'] != null) {
+                                    $('.supply_display_team1_1876840').html(supply[this.x][1876840]['min'] + '/' + supply[this.x][1876840]['max']);
+                                }
+
+
+
+                                                                var minutes = Math.floor(this.x / 60);
+                                var seconds = this.x - minutes * 60;
+                                var hours = Math.floor(this.x / 3600);
+
+
+                                $('#game_time').html(pad(minutes, 2) + ':' + pad(seconds, 2));
+
+                            },
+                        }
+                    }
+
+                },
+
+
+            },
+
+            series: [
                 {
-                return 'Multiple Accounts Selected';
-            	}
-    	}
-        	});
-});
-                    
-			function gameTypeChange(element)
-			{
-				if($(element).val() == 'AutoMM_Archon')
-				{
-					$('#format').val('2v2');
-				}
-			}
+		        						name:'llllllllllll',
+		        						id: 'active_army_2275521',
+		        						color: 'rgba(180, 20, 30, 1)',
+		        						tooltip: {
+		        			                 valueSuffix: ' Army Value',
+	                                         pointFormat: '<span style="color:{series.color}; font-weight:bold;">{series.name}:</span> {point.y}<br/>',
+		        			                },
+		        						data:[{x:0,y:0},{x:7,y:0},{x:14,y:0},{x:21,y:0},{x:28,y:0},{x:35,y:0},{x:42,y:0},{x:49,y:0},{x:56,y:0},{x:63,y:0},{x:70,y:0},{x:77,y:0},{x:84,y:0},{x:91,y:0},{x:98,y:0},{x:105,y:0},{x:112,y:0},{x:119,y:0},{x:126,y:0},{x:133,y:0},{x:140,y:0},{x:147,y:0},{x:154,y:100},{x:161,y:100},{x:168,y:100},{x:175,y:100},{x:182,y:150},{x:189,y:200},{x:196,y:200},{x:203,y:250},{x:210,y:250},{x:217,y:300},{x:224,y:350},{x:231,y:350},{x:238,y:350},{x:245,y:400},{x:252,y:650},{x:259,y:650},{x:266,y:650},{x:273,y:650},{x:280,y:500},{x:287,y:100},{x:294,y:100},{x:301,y:100},{x:308,y:100},{x:315,y:100},{x:322,y:275},{x:329,y:0},{x:336,y:100},{x:350,y:100},{x:357,y:700},{x:364,y:700},{x:371,y:800},{x:378,y:800},{x:385,y:1075},{x:392,y:1075},{x:399,y:1175},{x:406,y:1175},{x:413,y:1175},{x:420,y:1175},{x:427,y:1175},{x:434,y:1175},{x:441,y:1275},{x:448,y:575}]
+			        					},{
+		        						name:'邊緣人',
+		        						id: 'active_army_1876840',
+		        						color: 'rgba(0, 66, 255, 1)',
+		        						tooltip: {
+		        			                 valueSuffix: ' Army Value',
+	                                         pointFormat: '<span style="color:{series.color}; font-weight:bold;">{series.name}:</span> {point.y}<br/>',
+		        			                },
+		        						data:[{x:0,y:0},{x:7,y:0},{x:14,y:0},{x:21,y:0},{x:28,y:0},{x:35,y:0},{x:42,y:0},{x:49,y:0},{x:56,y:0},{x:63,y:0},{x:70,y:0},{x:77,y:0},{x:84,y:0},{x:91,y:0},{x:98,y:0},{x:105,y:0},{x:112,y:0},{x:119,y:0},{x:126,y:100},{x:133,y:100},{x:140,y:100},{x:147,y:100},{x:154,y:100},{x:161,y:300},{x:168,y:300},{x:175,y:300},{x:182,y:300},{x:189,y:300},{x:196,y:300},{x:203,y:300},{x:210,y:200},{x:217,y:575},{x:224,y:575},{x:231,y:575},{x:238,y:675},{x:245,y:875},{x:252,y:925},{x:259,y:1250},{x:266,y:1250},{x:273,y:1300},{x:280,y:1300},{x:287,y:1300},{x:294,y:1200},{x:301,y:1250},{x:308,y:1300},{x:315,y:1350},{x:322,y:1350},{x:329,y:1075},{x:336,y:1375},{x:350,y:1375},{x:357,y:1425},{x:364,y:1050},{x:371,y:1500},{x:378,y:1750},{x:385,y:1850},{x:392,y:1800},{x:399,y:2250},{x:406,y:2300},{x:413,y:2625},{x:420,y:2475},{x:427,y:2475},{x:434,y:2750},{x:441,y:2600},{x:448,y:2650}]
+			        					},
+            ]
+        }
+        active_army_chart = new Highcharts.Chart(chart_options);
 
-                    
-			function filterReplays()
-			{		
-				var page = 'display';
-				var url_pieces = (window.location.href).split("/");
 
-				if(url_pieces[4]) {
-					page = url_pieces[4];
-				}
-				
-				window.location = "/account/"+page+"/"+53113+"/0/"+$("#account_name").val().join('-')+"/"+$("#format").val()+"/"+$("#game_type").val()+"/"+$("#seasons_id").val()+"/"+$("#race").val();
-			}
+        
+
+
+    });
+
+    function pad(num, size) {
+        var s = num + "";
+        if (s) {
+            while (s.length < size) s = "0" + s;
+            return s;
+        }
+    }
+
+
+    function showStatsRow(row) {
+        $(".active_army_stats tbody tr." + row).toggle();
+    }
+
+
+
+
 </script>
-	 
+
+<style>
+
+    .re-filterbox {
+        background-color: #fff;
+        display: block;
+    }
+
+    div.toggle {
+        margin: 0;
+        line-height: 8px;
+
+    }
+
+    .toggle-content .row {
+        line-height: 20px;
+    }
+
+    .re-filterbox.no-top {
+        border: #2D2D2D 1px solid;
+
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+    }
+
+    .re-filterbox label {
+        font-weight: normal;
+    }
+
+    .active_army_div {
+        height: 250px;
+    }
+
+    .game_time_h5 {
+        margin: 0;
+        font-weight: bold;
+    }
+
+    .main_stats_table {
+        width: 100%;
+        font-size: 12px;
+        margin-bottom:10px;
+    }
+
+    .team_1 {
+        color: white;
+        text-align: left;
+        font-size: 20px;
+        font-weight: bold;
+        width: 49%;
+        background-image: url('http://sc2replaystats.com/images/gradient_left.png');
+        background-repeat: repeat-y;
+        background-position: left;
+    }
+
+    .team_2 {
+        color: white;
+        text-align: right;
+        font-size: 20px;
+        font-weight: bold;
+        width: 49%;
+        background-image: url('http://sc2replaystats.com/images/gradient_right.png');
+        background-repeat: repeat-y;
+        background-position: right;
+    }
+
+    .margin_right3 {
+        margin-right: 3px;
+    }
+
+    .margin_right5_float {
+        margin-right: 5px;
+        float: left;
+    }
+
+
+</style>
+
+
+<style>
+    div.tabs ul.nav-tabs a {
+        padding: 5px 10px;
+    }
+
+    div.tabs ul.nav-tabs li.active a {
+        padding-top: 5px;
+    }
+
+    /* UI X */
+    .ui-105 {
+        border-radius: 4px;
+        box-shadow: 2px 2px 0px 1px rgba(0, 0, 0, 0.05);
+        margin-top: 5px;
+    }
+
+    @media (max-width: 400px) {
+        .ui-105 {
+            margin: 40px 10px;
+        }
+    }
+
+    .ui-105 .nav-tabs {
+        border-bottom: 0px;
+        text-align: center;
+    }
+
+    .ui-105 ul li a i {
+        display: block;
+        font-size: 25px;
+        margin-bottom: 8px;
+        text-align: center;
+    }
+
+    .ui-105 ul li a {
+        background: #fff;
+        color: #ccc;
+        border: 0px;
+        font-size: 14px;
+        text-transform: uppercase;
+        font-weight: 600;
+        border-right: 1px solid #e5e5e5;
+        border-top: 3px solid #e5e5e5;
+        border-bottom: 1px solid #e5e5e5;
+        border-radius: 0px !important;
+        -webkit-transition: all 0.7s ease;
+        -moz-transition: all 0.7s ease;
+        -o-transition: all 0.7s ease;
+        -ms-transition: all 0.7s ease;
+        transition: all 0.7s ease;
+        line-height: 1.2;
+    }
+
+    .ui-105 ul li a:hover {
+        color: #bbb;
+        border-top: 3px solid #ddd !important;
+    }
+
+    .ui-105 ul li:first-child a {
+        border-top-left-radius: 5px !important;
+        border-left: 1px solid #e5e5e5;
+    }
+
+    .ui-105 ul li:first-child.active a, .ui-105 ul li:first-child.active:hover a {
+        border-left: 1px solid #e5e5e5 !important;
+    }
+
+    .ui-105 ul li:last-child a {
+        border-top-right-radius: 5px !important;
+        border-right: 1px solid #e5e5e5 !important;
+    }
+
+    .ui-105 ul li:last-child.active a, .ui-105 ul li:last-child.active:hover a {
+        border-right: 1px solid #e5e5e5 !important;
+    }
+
+    .ui-105 ul li.link-one.active a, .ui-105 ul li.link-one.active:hover a {
+        border-top: 3px solid #51d466 !important;
+    }
+
+    .ui-105 ul li.link-one.active a i {
+        color: #51d466;
+    }
+
+    .ui-105 ul li.link-two.active a, .ui-105 ul li.link-two.active:hover a {
+        border-top: 3px solid #32c8de !important;
+    }
+
+    .ui-105 ul li.link-two.active a i {
+        color: #32c8de;
+    }
+
+    .ui-105 ul li.link-three.active a, .ui-105 ul li.link-three.active:hover a {
+        border-top: 3px solid #cb79e6 !important;
+    }
+
+    .ui-105 ul li.link-three.active a i {
+        color: #cb79e6;
+    }
+
+    .ui-105 ul li.link-four.active a, .ui-105 ul li.link-four.active:hover a {
+        border-top: 3px solid #f75353 !important;
+    }
+
+    .ui-105 ul li.link-four.active a i {
+        color: #f75353;
+    }
+
+    .ui-105 ul li.active a {
+        color: #444 !important;
+    }
+
+    .ui-105 ul li.active a, .ui-105 ul li.active:hover a {
+        background: #fff !important;
+        border-left: 0px !important;
+    }
+
+    .ui-105 ul li:hover a {
+        background: #fff !important;
+        border-bottom: 1px solid #e5e5e5;
+        border-right: 1px solid #e5e5e5;
+    }
+
+    @media (max-width: 767px) {
+        .ui-105 ul li a {
+            border: 1px solid #eee !important;
+        }
+
+        .ui-105 ul li:hover a {
+            border: 1px solid #eee !important;
+        }
+    }
+
+    .ui-105-content .tab-content {
+        background: #fff;
+        padding: 20px 30px 10px;
+        border: 1px solid #e5e5e5;
+        border-top: 0px;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+
+    .ui-105-content .tab-content h4 {
+        text-align: center;
+        color: #777;
+    }
+
+    .ui-105-content .tab-content .bor {
+        width: 50px;
+        height: 3px;
+        margin: 0 auto;
+        margin-top: 10px;
+        margin-bottom: 20px;
+        border-radius: 2px;
+    }
+
+    .ui-105-content .tab-content label {
+        color: #666;
+        font-size: 13px;
+        font-weight: 400;
+    }
+
+    @media (max-width: 767px) {
+        .ui-105-content .nav-tabs.nav-justified li a {
+            margin-bottom: 0px;
+        }
+    }
+
+    .fa {
+        line-height: inherit;
+    }
+
+    /* Background color classes */
+    .bg-white {
+        background-color: #ffffff !important;
+    }
+
+    .bg-grey {
+        background-color: #eeeeee !important;
+    }
+
+    .bg-black {
+        background-color: #555555 !important;
+    }
+
+    .bg-red {
+        background-color: #f75353 !important;
+    }
+
+    .bg-green {
+        background-color: #51d466 !important;
+    }
+
+    .bg-lblue {
+        background-color: #32c8de !important;
+    }
+
+    .bg-blue {
+        background-color: #609cec !important;
+    }
+
+    .bg-orange {
+        background-color: #f78153 !important;
+    }
+
+    .bg-yellow {
+        background-color: #fcd419 !important;
+    }
+
+    .bg-purple {
+        background-color: #cb79e6 !important;
+    }
+
+    .bg-rose {
+        background-color: #ff61e7 !important;
+    }
+
+    .bg-brown {
+        background-color: #d08166 !important;
+    }
+
+
+</style>
+
+<div class="row">
+    <div class="col-md-12 active_army_div" id="active_army_tab_div"></div>
+</div>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h5 class="game_time_h5" id="game_time">00:00</h5>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="ui-105">
+                    <!-- Combined Form Content -->
+                    <div class="ui-105-content">
+                        <ul class="nav nav-tabs nav-justified">
+                            <li class="active link-one"><a href="#overview" data-toggle="tab">Overview</a></li>
+                            <li class="link-two"><a href="#resources" data-toggle="tab">Resources</a></li>
+                            <!--<li class="link-three"><a href="#units_killed" data-toggle="tab">Units Killed</a></li>-->
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active fade in" id="overview">
+                                
+
+
+<table class="main_stats_table">
+    <tr>
+        <td class="team_1"
+            style="height:50px; background-color:rgba(180, 20, 30, 1);">
+            <div style="width:45px; float:left; position:relative;">
+                <div class="races terran size-32" style="display:inline-block; margin-top:8px; margin-left:5px;"></div>
+            </div>
+            
+
+            <div style="float:left; margin-top:8px;"><a class="white_link" href="/player/2275521">llllllllllll</a>
+                                        <div style="font-size:13px; margin-top:-4px;">Master 5118</div></div>
+
+                            <div style="float:right; font-size:12px; margin-top:12px;"><span
+                        class="minersls_supply_gas supply margin_right3"></span>
+                    <span class="supply_display_team1_2275521"
+                          style="display:inline-block; width:55px;">0/0</span>
+                </div>
+                        </td>
+        <td class="team_2"
+            style="background-color:rgba(0, 66, 255, 1); ">
+            <div style="width:45px; float:right; position:relative;">
+                <div class="races terran size-32" style="display:inline-block; margin-top:8px; margin-right:5px;"></div>            </div>
+
+            
+            <div style="float:right; margin-top:8px;"><a class="white_link" href="/player/1876840">邊緣人</a>
+                                        <div style="font-size:13px; margin-top:-4px;">Grandmaster 5358</div></div>
+                            <div style="float:left; font-size:12px; margin-top:12px;"><span
+                        class="minersls_supply_gas supply margin_right3"
+                        style=" margin-left:10px;"></span>
+                    <span class="supply_display_team1_1876840"
+                          style="display:inline-block; width:30px;">0/0</span>
+                </div>
+                        </td>
+    </tr>                                        <tr>
+                                            <td style="vertical-align:top;"
+                                                id="units_display_team1_0">
+
+                                                <div style="width:450px; float:left;">
+                                                    <div class="Units">
+                                                        <p style="float:left; font-weight:bold; font-size:12px; margin:0;">
+                                                            Units</p>
+                                                        <div style="width:450px; float:left;">
+                                                            
+<div style='float:left; padding-right:2px;'>
+    <span title="scv" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-unit-terran-scv.png"),  radial-gradient(ellipse at center, rgba(180, 20, 30, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='2275521_scv'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:left; padding-right:2px;'>
+    <span title="mule" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-unit-terran-mule.png"),  radial-gradient(ellipse at center, rgba(180, 20, 30, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='2275521_mule'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:left; padding-right:2px;'>
+    <span title="marine" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-unit-terran-marine.png"),  radial-gradient(ellipse at center, rgba(180, 20, 30, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='2275521_marine'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:left; padding-right:2px;'>
+    <span title="cyclone" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-unit-terran-cyclone.png"),  radial-gradient(ellipse at center, rgba(180, 20, 30, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='2275521_cyclone'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:left; padding-right:2px;'>
+    <span title="siegetank" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-unit-terran-siegetank.png"),  radial-gradient(ellipse at center, rgba(180, 20, 30, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='2275521_siegetank'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:left; padding-right:2px;'>
+    <span title="battlecruiser" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-unit-terran-battlecruiser.png"),  radial-gradient(ellipse at center, rgba(180, 20, 30, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='2275521_battlecruiser'>
+            <h2></h2>
+    </span>
+</div>                                                        </div>
+                                                    </div>
+                                                    <div style="clear:both;"></div>
+                                                    <div class="Upgrades">
+                                                        <p style="float:left; font-weight:bold; font-size:12px; margin:0;">
+                                                            Upgrades</p>
+                                                        <div style="width:450px; float:left;">
+                                                            
+<div style='float:left; padding-right:2px;'>
+    <span title="battlecruiserenablespecializations" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-ability-terran-yamatogun-color.png"),  radial-gradient(ellipse at center, rgba(180, 20, 30, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='2275521_battlecruiserenablespecializations'>
+            <h2></h2>
+    </span>
+</div>                                                        </div>
+                                                    </div>
+
+                                                    <div style="clear:both;"></div>
+                                                    <div class="Buildings">
+                                                        <p style="float:left; font-weight:bold; font-size:12px; margin:0;">
+                                                            Buildings</p>
+                                                        <div style="width:450px; float:left;">
+                                                            
+<div style='float:left; padding-right:2px;'>
+    <span title="commandcenter" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-building-terran-commandcenter.png"),  radial-gradient(ellipse at center, rgba(180, 20, 30, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='2275521_commandcenter'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:left; padding-right:2px;'>
+    <span title="supplydepot" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-building-terran-supplydepot.png"),  radial-gradient(ellipse at center, rgba(180, 20, 30, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='2275521_supplydepot'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:left; padding-right:2px;'>
+    <span title="refinery" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-building-terran-refinery.png"),  radial-gradient(ellipse at center, rgba(180, 20, 30, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='2275521_refinery'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:left; padding-right:2px;'>
+    <span title="barracks" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-building-terran-barracks.png"),  radial-gradient(ellipse at center, rgba(180, 20, 30, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='2275521_barracks'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:left; padding-right:2px;'>
+    <span title="orbitalcommand" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-building-terran-surveillancestation.png"),  radial-gradient(ellipse at center, rgba(180, 20, 30, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='2275521_orbitalcommand'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:left; padding-right:2px;'>
+    <span title="barracksreactor" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-building-terran-reactor.png"),  radial-gradient(ellipse at center, rgba(180, 20, 30, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='2275521_barracksreactor'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:left; padding-right:2px;'>
+    <span title="factory" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-building-terran-factory.png"),  radial-gradient(ellipse at center, rgba(180, 20, 30, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='2275521_factory'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:left; padding-right:2px;'>
+    <span title="factorytechlab" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-building-terran-techlab.png"),  radial-gradient(ellipse at center, rgba(180, 20, 30, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='2275521_factorytechlab'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:left; padding-right:2px;'>
+    <span title="starport" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-building-terran-starport.png"),  radial-gradient(ellipse at center, rgba(180, 20, 30, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='2275521_starport'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:left; padding-right:2px;'>
+    <span title="starporttechlab" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-building-terran-techlab.png"),  radial-gradient(ellipse at center, rgba(180, 20, 30, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='2275521_starporttechlab'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:left; padding-right:2px;'>
+    <span title="fusioncore" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-building-terran-fusioncore.png"),  radial-gradient(ellipse at center, rgba(180, 20, 30, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='2275521_fusioncore'>
+            <h2></h2>
+    </span>
+</div>                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                                <div style="clear:both;"></div>
+                                            </td>
+                                            <td style="vertical-align:top;"
+                                                id="units_display_team2_0">
+
+                                                <div style="width:400px; float:right;">
+                                                    <div class="Units">
+                                                        <p style="float:right; font-weight:bold; font-size:12px; margin:0;">
+                                                            Units</p>
+                                                        <div style="width:450px; float:right;">
+                                                            
+<div style='float:right; padding-right:2px;'>
+    <span title="scv" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-unit-terran-scv.png"),  radial-gradient(ellipse at center, rgba(0, 66, 255, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='1876840_scv'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:right; padding-right:2px;'>
+    <span title="mule" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-unit-terran-mule.png"),  radial-gradient(ellipse at center, rgba(0, 66, 255, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='1876840_mule'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:right; padding-right:2px;'>
+    <span title="reaper" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-unit-terran-reaper.png"),  radial-gradient(ellipse at center, rgba(0, 66, 255, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='1876840_reaper'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:right; padding-right:2px;'>
+    <span title="hellion" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-unit-terran-hellion.png"),  radial-gradient(ellipse at center, rgba(0, 66, 255, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='1876840_hellion'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:right; padding-right:2px;'>
+    <span title="siegetank" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-unit-terran-siegetank.png"),  radial-gradient(ellipse at center, rgba(0, 66, 255, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='1876840_siegetank'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:right; padding-right:2px;'>
+    <span title="marine" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-unit-terran-marine.png"),  radial-gradient(ellipse at center, rgba(0, 66, 255, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='1876840_marine'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:right; padding-right:2px;'>
+    <span title="medivac" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-unit-terran-medivac.png"),  radial-gradient(ellipse at center, rgba(0, 66, 255, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='1876840_medivac'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:right; padding-right:2px;'>
+    <span title="cyclone" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-unit-terran-cyclone.png"),  radial-gradient(ellipse at center, rgba(0, 66, 255, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='1876840_cyclone'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:right; padding-right:2px;'>
+    <span title="vikingfighter" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-unit-terran-vikingfighter.png"),  radial-gradient(ellipse at center, rgba(0, 66, 255, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='1876840_vikingfighter'>
+            <h2></h2>
+    </span>
+</div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div style="clear:both;"></div>
+                                                    <div class="Upgrades">
+                                                        <p style="float:right; font-weight:bold; font-size:12px; margin:0;">
+                                                            Upgrades</p>
+                                                        <div style="width:450px; float:right;">
+                                                            
+<div style='float:right; padding-right:2px;'>
+    <span title="cyclonelockondamageupgrade" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-upgrade-terran-magfieldaccelerator.png"),  radial-gradient(ellipse at center, rgba(0, 66, 255, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='1876840_cyclonelockondamageupgrade'>
+            <h2></h2>
+    </span>
+</div>                                                        </div>
+                                                    </div>
+
+                                                    <div style="clear:both;"></div>
+                                                    <div class="Buildings">
+                                                        <p style="float:right; font-weight:bold; font-size:12px; margin:0;">
+                                                            Buildings</p>
+                                                        <div style="width:450px; float:right;">
+                                                            
+<div style='float:right; padding-right:2px;'>
+    <span title="commandcenter" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-building-terran-commandcenter.png"),  radial-gradient(ellipse at center, rgba(0, 66, 255, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='1876840_commandcenter'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:right; padding-right:2px;'>
+    <span title="supplydepot" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-building-terran-supplydepot.png"),  radial-gradient(ellipse at center, rgba(0, 66, 255, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='1876840_supplydepot'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:right; padding-right:2px;'>
+    <span title="refinery" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-building-terran-refinery.png"),  radial-gradient(ellipse at center, rgba(0, 66, 255, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='1876840_refinery'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:right; padding-right:2px;'>
+    <span title="barracks" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-building-terran-barracks.png"),  radial-gradient(ellipse at center, rgba(0, 66, 255, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='1876840_barracks'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:right; padding-right:2px;'>
+    <span title="orbitalcommand" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-building-terran-surveillancestation.png"),  radial-gradient(ellipse at center, rgba(0, 66, 255, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='1876840_orbitalcommand'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:right; padding-right:2px;'>
+    <span title="factory" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-building-terran-factory.png"),  radial-gradient(ellipse at center, rgba(0, 66, 255, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='1876840_factory'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:right; padding-right:2px;'>
+    <span title="factorytechlab" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-building-terran-techlab.png"),  radial-gradient(ellipse at center, rgba(0, 66, 255, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='1876840_factorytechlab'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:right; padding-right:2px;'>
+    <span title="barracksreactor" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-building-terran-reactor.png"),  radial-gradient(ellipse at center, rgba(0, 66, 255, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='1876840_barracksreactor'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:right; padding-right:2px;'>
+    <span title="starport" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-building-terran-starport.png"),  radial-gradient(ellipse at center, rgba(0, 66, 255, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='1876840_starport'>
+            <h2></h2>
+    </span>
+</div>
+<div style='float:right; padding-right:2px;'>
+    <span title="starportreactor" class='blizzard_icons_single'
+          style='background-image:url("/images/sc2_images/btn-building-terran-reactor.png"),  radial-gradient(ellipse at center, rgba(0, 66, 255, 0.8) 0%,rgba(0,0,0,0) 100%); opacity:0.3;'
+          id='1876840_starportreactor'>
+            <h2></h2>
+    </span>
+</div>                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+
+
+                                            </td>
+                                        </tr>
+                                    </table>
+
+
+                                    
+
+                            </div>
+
+                            <div class="tab-pane fade" id="resources">
+
+                                
+
+
+<table class="main_stats_table">
+    <tr>
+        <td class="team_1"
+            style="height:50px; background-color:rgba(180, 20, 30, 1);">
+            <div style="width:45px; float:left; position:relative;">
+                <div class="races terran size-32" style="display:inline-block; margin-top:8px; margin-left:5px;"></div>
+            </div>
+            
+
+            <div style="float:left; margin-top:8px;"><a class="white_link" href="/player/2275521">llllllllllll</a>
+                                        <div style="font-size:13px; margin-top:-4px;">Master 5118</div></div>
+
+                            <div style="float:right; font-size:12px; margin-top:12px;"><span
+                        class="minersls_supply_gas supply margin_right3"></span>
+                    <span class="supply_display_team1_2275521"
+                          style="display:inline-block; width:55px;">0/0</span>
+                </div>
+                        </td>
+        <td class="team_2"
+            style="background-color:rgba(0, 66, 255, 1); ">
+            <div style="width:45px; float:right; position:relative;">
+                <div class="races terran size-32" style="display:inline-block; margin-top:8px; margin-right:5px;"></div>            </div>
+
+            
+            <div style="float:right; margin-top:8px;"><a class="white_link" href="/player/1876840">邊緣人</a>
+                                        <div style="font-size:13px; margin-top:-4px;">Grandmaster 5358</div></div>
+                            <div style="float:left; font-size:12px; margin-top:12px;"><span
+                        class="minersls_supply_gas supply margin_right3"
+                        style=" margin-left:10px;"></span>
+                    <span class="supply_display_team1_1876840"
+                          style="display:inline-block; width:30px;">0/0</span>
+                </div>
+                        </td>
+    </tr>
+                                        <tr>
+                                            <td style="vertical-align:top;"
+                                                id="units_display_team1_0">
+
+                                                <div style="width:450px; float:left;">
+                                                    <div class="unspent_resources">
+                                                        <table style="width:240px;">
+                                                            <tr>
+                                                                <td colspan="2"
+                                                                    style="font-size:12px; font-weight:bold; text-align:left;">
+                                                                    Unspent Resources
+                                                                </td>
+                                                                <td style="width:20px;"><div class="minersls_supply_gas minersls margin_right5_float"></div></td>
+                                                                <td style="width:30px;" id="2275521_unspent_minerals">0</td>
+                                                                <td style="width:20px;"><div class="minersls_supply_gas gas margin_right5_float"></div></td>
+                                                                <td style="width:30px;" id="2275521_unspent_vespene">0</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div class="collection_rate">
+                                                        <table style="width:240px;">
+                                                            <tr>
+                                                                <td colspan="2" style="font-size:12px; font-weight:bold; text-align:left;">Collection Rate
+                                                                </td>
+                                                                <td style="width:20px;"><div class="minersls_supply_gas minersls margin_right5_float"></div></td>
+                                                                <td style="width:30px;" id="2275521_collection_rate_minerals">0</td>
+                                                                <td style="width:20px;"><div class="minersls_supply_gas gas margin_right5_float"></div></td>
+                                                                <td style="width:30px;" id="2275521_collection_rate_vespene">0</td>
+                                                            </tr>
+
+                                                        </table>
+                                                    </div>
+                                                    <div class="resources_lost">
+                                                        <table style="width:240px;">
+                                                            <tr>
+                                                                <td style="font-size:12px; font-weight:bold; text-align:left;">Resources Lost</td>
+                                                                <td style="width:20px;"> <div class="minersls_supply_gas minersls margin_right5_float"></div></td>
+                                                                <td style="width:30px;" id="2275521_resources_lost_minerals">0</td>
+                                                                <td style="width:20px;"><div class="minersls_supply_gas gas margin_right5_float"></div></td>
+                                                                <td style="width:30px;" id="2275521_resources_lost_vespene">0</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                                <div style="clear:both;"></div>
+                                            </td>
+                                            <td style="vertical-align:top;"
+                                                id="units_display_team2_0">
+
+                                                <div style="width:400px; float:right;">
+
+                                                    <div class="unspent_resources" style="float:right;">
+                                                        <table style="width:250px;">
+                                                            <tr>
+
+                                                                <td style="width:20px;"> <div class="minersls_supply_gas minersls margin_right5_float"></div></td>
+                                                                <td style="width:30px;" id="1876840_unspent_minerals">0</td>
+                                                                <td style="width:20px;"><div class="minersls_supply_gas gas margin_right5_float"></div></td>
+                                                                <td style="width:30px;" id="1876840_unspent_vespene">0</td>
+                                                                <td style="font-size:12px; font-weight:bold;">Unspent Resources</td>
+                                                            </tr>
+
+                                                        </table>
+                                                    </div>
+                                                    <div style="clear:both;"></div>
+                                                    <div class="collection_rate" style="float:right;">
+                                                        <table style="width:250px;">
+                                                            <tr>
+
+                                                                <td style="width:20px;"><div class="minersls_supply_gas minersls margin_right5_float"></div></td>
+                                                                <td style="width:30px;" id="1876840_collection_rate_minerals">0</td>
+                                                                <td style="width:20px;"><div class="minersls_supply_gas gas margin_right5_float"></div></td>
+                                                                <td style="width:30px;" id="1876840_collection_rate_vespene">0</td>
+                                                                <td style="font-size:12px; font-weight:bold;">Collection Rate</td>
+                                                            </tr>
+
+                                                        </table>
+                                                    </div>
+                                                    <div style="clear:both;"></div>
+                                                    <div class="resources_lost" style="float:right;">
+                                                        <table style="width:250px;">
+                                                            <tr>
+
+                                                                <td style="width:20px;"><div class="minersls_supply_gas minersls margin_right5_float"></div></td>
+                                                                <td style="width:30px;" id="1876840_resources_lost_minerals">0</td>
+                                                                <td style="width:20px;"><div class="minersls_supply_gas gas margin_right5_float"></div></td>
+                                                                <td style="width:30px;" id="1876840_resources_lost_vespene">0</td>
+                                                                <td style="font-size:12px; font-weight:bold;;">Resources Lost</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+
+                                                </div>
+
+
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    
+                            </div>
+
+                            <div class="tab-pane fade" id="units_killed">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<form method="post" id="save_filter_settings">
+    <input type="radio" name="chart_options_radio" value="army_value_only" style="visibility: hidden;">
+<input type="radio" name="chart_options_radio" value="unspent_resources" style="visibility: hidden;">
+    <input type="radio" name="chart_options_radio" value="collection_rate" style="visibility: hidden;">
+    <input type="radio" name="chart_options_radio" value="resources_lost" style="visibility: hidden;">
+    <input type="radio" name="chart_options_radio" value="workers_active" style="visibility: hidden;">
+    <input type="radio" name="chart_options_radio" value="resources_income_advantage" style="visibility: hidden;">
+    <input type="checkbox" name="hide_active_army" value="hide_active_army" style="visibility: hidden;">
+</form>
+	
+	
 
         </div>
+
+    </div>
+
+
+    <div class="divider"><!-- divider -->
+    </div>
+
+
+    <section class="container">
+        <div class="row" style="margin-top:10px;">
+            <div class="col-md-12">
+                <h4>Replay <strong>Information</strong></h4>
+                <table class="table table-bordered  table-condensed table-striped">
+                    <thead>
+                    <tr>
+                        <th>Format</th>
+                        <th>Expansion</th>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>Length</th>
+                        <th>Winning</th>
+                        <th>Version</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td align="center">1v1</td>
+                        <td align="center">Legacy Of the Void</td>
+                        <td align="center">AutoMM</td>
+                        <td align="center">09 Apr, 2020 9:59 pm</td>
+                        <td align="center">07:30</td>
+                        <td align="center">
+                            <p class="spoiler">
+                                <!--Spoiler:-->
+                                <span>Eternity</span>
+                            </p>
+                        </td>
+                        <td align="center">4.11.4.78285</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+             <div class="col-sm-12">
+    	<div class="divider"><!-- divider -->
+						</div>
+    <h4>Replay <strong>Player</strong> Resource Statistics</h4>
+    <table class="table table-bordered  table-condensed  table-striped"  >
+    <thead>
+<tr><th>Player</th><th>Team</th><th>Workers</th><th>Resource Collection</th><th>Avg Unspent Resources</th><th>Spending Quotient</th><th>Workers Killed</th><th>Resources Lost Minerals</th><th>Resources Lost Vespene</th></tr></thead><tbody class="streaming_colors"><tr><td><div class="leagues league-master-4 size-16" style="display:inline-block;"></div> <div class="races terran size-16" style="display:inline-block;"></div><strong> llllllllllll</strong> </td><td>1 </td><td>54 <span class="fa fa-trophy" style="font-size:14px; color:#2E363F;"></span></td><td>1,253 </td><td>359 <span class="fa fa-trophy" style="font-size:14px; color:#2E363F;"></span></td><td>Excellent (94) </td><td>0 </td><td>2,300 </td><td>525 </td></tr><tr><td><div class="leagues league-grandmaster-4 size-16" style="display:inline-block;"></div> <div class="races terran size-16" style="display:inline-block;"></div><strong> 邊緣人</strong> </td><td>2 </td><td>50 </td><td>1,578 <span class="fa fa-trophy" style="font-size:14px; color:#2E363F;"></span></td><td>459 </td><td>Excellent (101) <span class="fa fa-trophy" style="font-size:14px; color:#2E363F;"></span></td><td>25 <span class="fa fa-trophy" style="font-size:14px; color:#2E363F;"></span></td><td>1,000 <span class="fa fa-trophy" style="font-size:14px; color:#2E363F;"></span></td><td>450 <span class="fa fa-trophy" style="font-size:14px; color:#2E363F;"></span></td></tr></tbody></table>	<div class="divider"><!-- divider -->
+						</div><h4>Replay <strong>Player</strong> Unit Statistics</h4>
+    <table class="table table-bordered  table-condensed  table-striped"  >
+    <thead>
+<tr><th>Player</th><th>Team</th><th>MMR</th><th>Units Produced</th><th>Units Killed</th><th>Structures Killed</th><th>Supply Blocked</th><th>APM</th><th>SPM</th></tr></thead><tbody  class="streaming_colors"><tr><td><div class="leagues league-master-4 size-16" style="display:inline-block;"></div> <div class="races terran size-16" style="display:inline-block;"></div><strong> llllllllllll</strong> </td><td>1 </td><td>5118 </td><td>84 </td><td>21 </td><td>1 </td><td>00:21 <span class="fa fa-trophy" style="font-size:14px; color:#2E363F;"></span></td><td>260 </td><td>14.53 </td></tr><tr><td><div class="leagues league-grandmaster-4 size-16" style="display:inline-block;"></div> <div class="races terran size-16" style="display:inline-block;"></div><strong> 邊緣人</strong> </td><td>2 </td><td>5358 <span class="fa fa-trophy" style="font-size:14px; color:#2E363F;"></span></td><td>93 <span class="fa fa-trophy" style="font-size:14px; color:#2E363F;"></span></td><td>45 <span class="fa fa-trophy" style="font-size:14px; color:#2E363F;"></span></td><td>2 <span class="fa fa-trophy" style="font-size:14px; color:#2E363F;"></span></td><td>01:04 </td><td>352 <span class="fa fa-trophy" style="font-size:14px; color:#2E363F;"></span></td><td>43.20 <span class="fa fa-trophy" style="font-size:14px; color:#2E363F;"></span></td></tr></tbody></table></div>        </div>
+        <div class="divider"><!-- divider -->
+        </div>
+        <div class="row">
+            <h4>Replay <strong>Player</strong> Hero Unit</h4>
+            <div class="col-md-6" style="padding-left:0px;">
+                    <div class="col-md-12" style="padding-left:0px;">
+                        <div class="bs-callout text-center styleBackground"
+                             style="padding:0px 0px; margin:0; background-color:rgba(180,20,30,.5);">
+                            <h3><a rel="nofollow" class="white_link" href="/player/2275521" >llllllllllll</a></h3>
+                        </div><h4 style="font-weight:bold">Captain Ezra the Prince</h4>
+                            <div class="col-md-2" style="padding-left:0px;">
+                            
+                           
+                            <span class='blizzard_icons_single_larger'
+                                  style='background-image:url("/images/sc2_images/btn-unit-terran-battlecruiser.png"),  radial-gradient(ellipse at center, rgba(180,20,30, 0.8) 0%,rgba(0,0,0,0) 100%);'>
+                            </span>
+                            <h4><strong>Kills: 4</strong></h4>
+              
+                        </div>
+                        <div class="col-md-8 units_killed"><div style="float:left; padding-right:2px;">
+                                         <span class='blizzard_icons_single'
+                                                 style='background-image:url("/images/sc2_images/btn-unit-terran-marine.png"),  radial-gradient(ellipse at center, rgba(0,0,0, 0.8) 0%,rgba(0,0,0,0) 100%);'>
+                                                 <h2>2</h2>
+                                          </span>
+                                       </div><div style="float:left; padding-right:2px;">
+                                         <span class='blizzard_icons_single'
+                                                 style='background-image:url("/images/sc2_images/btn-unit-terran-siegetank.png"),  radial-gradient(ellipse at center, rgba(0,0,0, 0.8) 0%,rgba(0,0,0,0) 100%);'>
+                                                 <h2>1</h2>
+                                          </span>
+                                       </div><div style="float:left; padding-right:2px;">
+                                         <span class='blizzard_icons_single'
+                                                 style='background-image:url("/images/sc2_images/btn-unit-terran-medivac.png"),  radial-gradient(ellipse at center, rgba(0,0,0, 0.8) 0%,rgba(0,0,0,0) 100%);'>
+                                                 <h2>1</h2>
+                                          </span>
+                                       </div></div></div></div><div class="col-md-6" style="padding-left:0px;">
+                    <div class="col-md-12" style="padding-left:0px;">
+                        <div class="bs-callout text-center styleBackground"
+                             style="padding:0px 0px; margin:0; background-color:rgba(0,66,255,.5);">
+                            <h3><a rel="nofollow" class="white_link" href="/player/1876840" >邊緣人</a></h3>
+                        </div><h4 style="font-weight:bold">Corporal Nathaniel the Crimson</h4>
+                            <div class="col-md-2" style="padding-left:0px;">
+                                
+                            <span class='blizzard_icons_single_larger'
+                                  style='background-image:url("/images/sc2_images/btn-unit-terran-marine.png"),  radial-gradient(ellipse at center, rgba(0,66,255, 0.8) 0%,rgba(0,0,0,0) 100%);'>
+                            </span>
+                                <h4><strong>Kills: 8</strong></h4>
+                            </div>
+                            <div class="col-md-8 units_killed"><div style="float:left; padding-right:2px;">
+                                         <span class='blizzard_icons_single'
+                                                 style='background-image:url("/images/sc2_images/btn-unit-terran-marine.png"),  radial-gradient(ellipse at center, rgba(0,0,0, 0.8) 0%,rgba(0,0,0,0) 100%);'>
+                                                 <h2>4</h2>
+                                          </span>
+                                       </div><div style="float:left; padding-right:2px;">
+                                         <span class='blizzard_icons_single'
+                                                 style='background-image:url("/images/sc2_images/btn-unit-terran-scv.png"),  radial-gradient(ellipse at center, rgba(0,0,0, 0.8) 0%,rgba(0,0,0,0) 100%);'>
+                                                 <h2>4</h2>
+                                          </span>
+                                       </div></div></div></div>
+
+                    
+
+                            </div>
+
+
+    </section>
+
+
+</div>
+
+<script>
+    //1. Hide Spoiler
+    $(".spoiler span").hide();
+    //2. Add a button
+    $(".spoiler").append("<button>Reveal Winner!</button>");
+    //3. when button pressed
+    $("button").click(function () {
+//3.1 show spoiler
+        $(this).prev().show();
+//3.2 get rid of button
+        $(this).remove();
+    });
+
+</script>        </div>
 
         <!-- FOOTER -->
 		<footer>
@@ -628,7 +2186,7 @@ UserVoice.push(['autoprompt', {}]);
 </script>
        
 
-	<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"00bdaa1b27","applicationID":"19354950","transactionName":"NldVZERUV0JZBURfWA8ddlNCXFZfFwdTVVgUXEM=","queueTime":0,"applicationTime":104,"atts":"GhBWEgxOREw=","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+	<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"00bdaa1b27","applicationID":"19354950","transactionName":"NldVZERUV0JZBURfWA8ddlNCXFZfFxRVRlsASxhUU1NYRFQS","queueTime":0,"applicationTime":387,"atts":"GhBWEgxOREw=","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
 </html>
 
 
