@@ -184,12 +184,21 @@ class API:
             "sc2replayreferer":self.sc2replayreferer,
             "PHPSESSID":self.PHPSESSID
         }
+        attack=0
         try:
             res=requests.get(attack_url,headers=req_header,cookies=cookie)
             soup = BeautifulSoup(res.text, 'lxml')
             re_tbody=soup.find("table")
             re_tr=re_tbody.find_all("tr")
-            return round(int(re_tr[2].find_all("td")[1].text.split(" ")[1][:-1])/10,1)
+            for tr in re_tr:
+                try:
+                    title=tr.find_all("td")[0].text
+                    if title=="attack":
+                        attack=tr.find_all("td")[1].text.split(" ")[1][:-1]
+                        break
+                except:
+                    pass
+            return attack
         except:
             return 0
     
@@ -246,7 +255,7 @@ class API:
             avg=round(avg/3,1)
             for i in winrates:
                 variance+=(i-avg)**2
-            variance=round(math.sqrt(variance/3),1)
+            variance=math.sqrt(100/(variance/3+1))
         except:
             pass
         return worker_created,supply_blocked,variance
@@ -267,8 +276,6 @@ class API:
         try:
             res=requests.get(general_url,headers=req_header,cookies=cookie)
             soup = BeautifulSoup(res.text, 'lxml')
-            # with open('./test.html', 'w') as f:
-            #     f.write(res.text)
             re_div=soup.find_all("div",{'class':'col-xs-6 col-sm-3 col-md-3'})
             win_rates=defaultdict(lambda:0)
             for d in re_div:
@@ -285,14 +292,14 @@ class API:
             t=int(item.split(" min")[0].split(" - ")[0])
             if text==0:
                 text=50
-            exponent+=t*text/100
+            exponent+=t*text
             s+=1
-        return round(exponent/s,1)
+        return round(math.sqrt(exponent/s),1)
     
     def get_style(self,bn_id):
         attack=self.get_attack(bn_id)
         worker_created,supply_blocked,variance=self.get_general(bn_id)
-        operation=round(worker_created/(supply_blocked+10)+4,1)
+        operation=round(worker_created/(supply_blocked+1),1)
         game_length=self.get_gamelength(bn_id)
         return attack,operation,game_length,variance
     

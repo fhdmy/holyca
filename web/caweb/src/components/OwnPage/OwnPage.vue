@@ -72,28 +72,58 @@
                                         <div>
                                           <!-- 用户主页 -->
                                           <DxButton
-                                            text="修改"
+                                            class="hl_button"
                                             styling-mode="contained"
                                             :element-attr="change_btn_attrs"
                                             v-show="has_login"
                                             @click="alter_info()"
-                                          />
+                                          >
+                                            <template>
+                                              <span>
+                                                <DxLoadIndicator
+                                                  :visible="change_visible"
+                                                  class="button-indicator"
+                                                />
+                                                <span class="dx-button-text">{{ change_text }}</span>
+                                              </span>
+                                            </template>
+                                          </DxButton>
                                           <!-- 登录 -->
                                           <DxButton
-                                            text="登录"
+                                            class="hl_button"
                                             styling-mode="contained"
                                             :element-attr="change_btn_attrs"
                                             @click="login()"
                                             v-show="!has_login && !signup_flag"
-                                          />
+                                          >
+                                            <template>
+                                              <span>
+                                                <DxLoadIndicator
+                                                  :visible="logining_visible"
+                                                  class="button-indicator"
+                                                />
+                                                <span class="dx-button-text">{{ login_text }}</span>
+                                              </span>
+                                            </template>
+                                          </DxButton>
                                           <!-- 注册 -->
                                           <DxButton
-                                            text="注册"
+                                            class="hl_button"
                                             styling-mode="contained"
                                             :element-attr="change_btn_attrs"
                                             v-show="!has_login && signup_flag"
                                             @click="signup()"
-                                          />
+                                          >
+                                            <template>
+                                              <span>
+                                                <DxLoadIndicator
+                                                  :visible="signup_visible"
+                                                  class="button-indicator"
+                                                />
+                                                <span class="dx-button-text">{{ signup_text }}</span>
+                                              </span>
+                                            </template>
+                                          </DxButton>
                                         </div>
                                       </template>
                                     </DxItem>
@@ -339,6 +369,7 @@ import Gauge from "../Home/Gauge.vue";
 import LineChart from "../Home/LineChart.vue";
 import PieChart from "../Home/PieChart.vue";
 import PolarChart from "./PolarChart.vue";
+import { DxLoadIndicator } from 'devextreme-vue/load-indicator';
 
 export default {
   components: {
@@ -351,10 +382,17 @@ export default {
     Gauge,
     LineChart,
     PieChart,
-    PolarChart
+    PolarChart,
+    DxLoadIndicator
   },
   props: {},
   data: () => ({
+    logining_visible: false,
+    login_text: '登录',
+    signup_visible: false,
+    signup_text: '注册',
+    change_visible: false,
+    change_text: '修改',
     token:"",
     has_login:false,
     signup_flag:false,
@@ -415,37 +453,8 @@ export default {
     map_items:[],
     map_datas:[],
     basic_palette:"Violet",
-    basic_items:[
-      { value: "Xnick", name: "Xnick" },
-      { value: "星之所在", name: "星之所在" }
-    ],
-    basic_datas:[
-      {
-        arg: "全面",
-        Xnick: 4.21,
-        星之所在: 6.22
-      },
-      {
-        arg: "进攻",
-        Xnick: 4.21,
-        星之所在: 6.22
-      },
-      {
-        arg: "后期",
-        Xnick: 4.21,
-        星之所在: 6.22
-      },
-      {
-        arg: "运营",
-        Xnick: 4.21,
-        星之所在: 6.22
-      },
-      {
-        arg: "骚扰",
-        Xnick: 4.21,
-        星之所在: 6.22
-      },
-    ],
+    basic_items:[],
+    basic_datas:[],
   }),
   created() {
     this.token=localStorage.getItem("token") == null
@@ -476,6 +485,9 @@ export default {
         this.empty_input();
         return;
       }
+      this.logining_visible = true;
+      this.login_text = '登录中';
+
       this.$http({
         method: "post",
         url: "/api/account/teammates/login/",
@@ -497,9 +509,13 @@ export default {
         this.has_login=true;
         notify("登录成功！", "success", 1500);
         this.refresh_all();
+        this.logining_visible = false;
+        this.login_text = '登录';
       })
       .catch(error => {
         console.log(error.response);
+        this.logining_visible = false;
+        this.login_text = '登录';
         if (error.response.data == "Serializer is invalid") {
           notify("账号或密码错误", "error", 1500);
         }
@@ -528,6 +544,7 @@ export default {
           console.log(error.response);
           if(error.response.statusText=="Unauthorized"){
             notify("账户未登录或登录状态错误!", "error", 1500);
+            this.logout();
           }
           else
             notify("获取信息失败!", "error", 1500);
@@ -552,13 +569,16 @@ export default {
       this.reset_login_info();
       this.signup_flag=false;
     },
+    logout(){
+      localStorage.clear();
+      this.has_login=false;
+      this.signup_flag=false;
+      this.token="";
+      this.reset_all();
+    },
     click_to_logout(){
       if(confirm("确定要注销？")){
-        localStorage.clear();
-        this.has_login=false;
-        this.signup_flag=false;
-        this.token="";
-        this.reset_all();
+        this.logout();
       }
     },
     reset_all(){
@@ -612,6 +632,8 @@ export default {
         notify("RepStats信息不全!", "error", 1500);
         return;
       }
+      this.signup_visible = true;
+      this.signup_text = '注册中';
 
       this.$http({
         method: "post",
@@ -637,9 +659,13 @@ export default {
           this.has_login=true;
           notify("注册成功！", "success", 1500);
           this.refresh_all();
+          this.signup_visible = false;
+          this.signup_text = '注册';
         })
         .catch(error => {
           console.log(error.response);
+          this.signup_visible = false;
+          this.signup_text = '注册';
           if(error.response.data == "RepStats verification is invalid"){
             notify("RepStats核对错误!", "error", 1500);
           }
@@ -679,6 +705,8 @@ export default {
         notify("RepStats信息不全!", "error", 1500);
         return;
       }
+      this.change_visible=true;
+      this.change_text="修改中";
 
       this.$http({
         method: "post",
@@ -701,10 +729,18 @@ export default {
             notify("修改成功!", "success", 1500);
           }
           this.refresh_all();
+          this.change_visible=false;
+          this.change_text="修改";
         })
         .catch(error => {
           console.log(error.response);
-          if(error.response.data=="Password does not match"){
+          this.change_visible=false;
+          this.change_text="修改";
+          if(error.response.statusText=="Unauthorized"){
+            notify("账户未登录或登录状态错误!", "error", 1500);
+            this.logout();
+          }
+          else if(error.response.data=="Password does not match"){
             notify("原密码错误!", "error", 1500);
           }
           else if(error.response.data=="Username already exisits"){
@@ -750,6 +786,7 @@ export default {
           console.log(error.response);
           if(error.response.statusText=="Unauthorized"){
             notify("账户未登录或登录状态错误!", "error", 1500);
+            this.logout();
           }
           else
             notify("请检查你的网络!", "error", 1500);
@@ -811,6 +848,7 @@ export default {
           console.log(error.response);
           if(error.response.statusText=="Unauthorized"){
             notify("账户未登录或登录状态错误!", "error", 1500);
+            this.logout();
           }
           else
             notify("请检查你的网络!", "error", 1500);
@@ -861,6 +899,7 @@ export default {
           console.log(error.response);
           if(error.response.statusText=="Unauthorized"){
             notify("账户未登录或登录状态错误!", "error", 1500);
+            this.logout();
           }
           else
             notify("请检查你的网络!", "error", 1500);
@@ -894,6 +933,7 @@ export default {
           console.log(error.response);
           if(error.response.statusText=="Unauthorized"){
             notify("账户未登录或登录状态错误!", "error", 1500);
+            this.logout();
           }
           else
             notify("请检查你的网络!", "error", 1500);
@@ -948,6 +988,7 @@ export default {
           console.log(error.response);
           if(error.response.statusText=="Unauthorized"){
             notify("账户未登录或登录状态错误!", "error", 1500);
+            this.logout();
           }
           else
             notify("请检查你的网络!", "error", 1500);
@@ -996,6 +1037,7 @@ export default {
           console.log(error.response);
           if(error.response.statusText=="Unauthorized"){
             notify("账户未登录或登录状态错误!", "error", 1500);
+            this.logout();
           }
           else
             notify("请检查你的网络!", "error", 1500);
@@ -1005,6 +1047,16 @@ export default {
 };
 </script>
 <style scoped>
+.hl_button>>>.button-indicator {
+  height: 16px;
+  width: 16px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+.hl_button>>>.button-indicator .dx-loadindicator-segment{
+  background:white!important;
+}
 .wrapper {
   display: block;
   position: relative;

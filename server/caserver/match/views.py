@@ -15,6 +15,12 @@ from match.apis import API
 from apscheduler.schedulers.background import BackgroundScheduler
 from django_apscheduler.jobstores import DjangoJobStore, register_events, register_job
 
+def interval_mapping(Omax,Omin,Odata):
+    Nmax=10
+    Nmin=0
+    N=(Nmax-Nmin)/(Omax-Omin)*(int(Odata)-Omin)+Nmin
+    return round(N,1)
+
 # 定时更新match数据
 try:  
     # 实例化调度器
@@ -27,7 +33,7 @@ try:
     # @register_job(scheduler, 'interval', minutes=30,id='get_matchs')
     @register_job(scheduler, 'interval', minutes=30,id='get_matchs')
     def match_update():
-        # print("***start***")
+        print("match_update...")
         teammates = account.models.Teammate.objects.all()
         for tm in teammates:
             try:
@@ -88,14 +94,16 @@ try:
                             replay=replay,
                             battlenet_acc=player_1,
                             mmr=r["player1_mmr"],
-                            date=r["date"]
+                            date=r["date"],
+                            race=r["vs_race"].split("v")[0]
                         )
                         # print("new MMR: "+str(player_1.battlenet_name)+" "+str(r["player1_mmr"])+" "+str(r["date"]))
                         match.models.MMR.objects.get_or_create(
                             replay=replay,
                             battlenet_acc=player_2,
                             mmr=r["player2_mmr"],
-                            date=r["date"]
+                            date=r["date"],
+                            race=r["vs_race"].split("v")[1]
                         )
                         # print("new MMR: "+str(player_2.battlenet_name)+" "+str(r["player2_mmr"])+" "+str(r["date"]))
                         replay.repstats_acc.add(repstats)
@@ -108,6 +116,7 @@ try:
     @register_job(scheduler, 'interval', minutes=60,id='replay_update')
     def replay_update():
         replays=match.models.Replay.objects.all()
+        print(f"replay_update...(replays: {len(replays)})")
         for rep in replays:
             try:
                 if str(rep.kills)!='':
@@ -129,6 +138,7 @@ try:
     @register_job(scheduler, 'interval', minutes=60,id='basic_update')
     def basic_update():
         teammates = account.models.Teammate.objects.all()
+        print(f"basic_update...(teammates: {len(teammates)})")
         for tm in teammates:
             try:
                 repstats=tm.repstats
@@ -156,10 +166,40 @@ try:
                         for r in reps:
                             if not (r.player1==bn or r.player2==bn):
                                 continue
+                            if r.kills=="":
+                                continue
                             ks=eval(r.kills)
                             kills+=ks[" "+bn.battlenet_name]
                             kill_sum+=1
                         avg_kill=round(kills/kill_sum,1)
+
+                        #区间映射
+                        attack=interval_mapping(70,25,attack)
+                        if attack<0:
+                            attack=0
+                        if attack>10:
+                            attack=10
+                        operation=interval_mapping(1.2,0,operation)
+                        if operation<0:
+                            operation=0
+                        if operation>10:
+                            operation=10
+                        game_length=interval_mapping(26,10,game_length)
+                        if game_length<0:
+                            game_length=0
+                        if game_length>10:
+                            game_length=10
+                        variance=interval_mapping(2,0,variance)
+                        if variance<0:
+                            variance=0
+                        if variance>10:
+                            variance=10
+                        avg_kill=interval_mapping(28,0,avg_kill)
+                        if avg_kill<0:
+                            avg_kill=0
+                        if avg_kill>10:
+                            avg_kill=10
+
                         basic_accomplishment={
                             'attack':attack,
                             'operation':operation,
@@ -171,10 +211,19 @@ try:
                         bn.basic_accomplishment=str(basic_accomplishment)
                         bn.save()
 
-                    except:
-                        pass
-            except:
-                pass
+                    except Exception as e:
+                        print(e)
+            except Exception as e:
+                print(e)
+    
+    # @register_job(scheduler, 'interval', minutes=1,id='reset_database')
+    # def reset_database():
+    #     reps=match.models.Replay.objects.all()
+    #     for rep in reps:
+    #         rep.delete()
+    #     mmrs=match.models.MMR.objects.all()
+    #     for mmr in mmrs:
+    #         mmr.delete()
 
     # 监控任务
     register_events(scheduler)
@@ -213,8 +262,7 @@ class ActiveStatistics(views.APIView):
         today = datetime.today()
         reps=match.models.Replay.objects.filter(       
             date__range=(today-timedelta(days=7),today)
-        )
-
+        ).order_by("-date")
         rtn=[]
         for tm in teammates:
             s=0
@@ -237,7 +285,7 @@ class MMRStatistics(views.APIView):
         today = datetime.today()
         info=[]
         mmr_record=[]
-        for i in range(12,0,-1):
+        for i in range(11,-1,-1):
             repstats=account.models.RepStats.objects.all() 
             players=[]
             mmr_record.append({})
@@ -246,52 +294,97 @@ class MMRStatistics(views.APIView):
                 for bn in rp.battlenet_acc.all():
                     if bn in players:
                         continue
+                    mmr_T={"sum":0,"num":0}
+                    mmr_P={"sum":0,"num":0}
+                    mmr_Z={"sum":0,"num":0}
                     mmrs=match.models.MMR.objects.filter(
                         date__range=(today-timedelta(days=day_long*(i+1)),today-timedelta(days=day_long*i)),
                         battlenet_acc=bn
-                    )
+                    ).order_by("-date")
                     mmr_sum=0
                     mmr_num=0
                     for mmr in mmrs:
-                        if mmr!=0:
-                            mmr_sum+=mmr.mmr
-                            mmr_num+=1
+                        if mmr.mmr!=0:
+                            if mmr.race=="P":
+                                mmr_P["sum"]+=mmr.mmr
+                                mmr_P["num"]+=1
+                            elif mmr.race=="Z":
+                                mmr_Z["sum"]+=mmr.mmr
+                                mmr_Z["num"]+=1
+                            else:
+                                mmr_T["sum"]+=mmr.mmr
+                                mmr_T["num"]+=1
                     mmr_avg=0
                     # 向前寻找mmr非0的点并赋值
-                    if mmr_sum==0:
+                    if mmr_T["sum"]==0 and mmr_P["sum"]==0 and mmr_Z["sum"]==0:
                         k=0
                         while k<12:
                             # 先从mmr_record查找
-                            if i<12:
-                                if mmr_record[12-i-1][bn.battlenet_name]!=0:
+                            if i<11:
+                                if mmr_record[11-i-1][bn.battlenet_name]!=0:
                                     # 替换
-                                    mmr_avg=(int)(mmr_record[12-i-1][bn.battlenet_name])
+                                    mmr_avg=(int)(mmr_record[11-i-1][bn.battlenet_name])
                                     break
                             former_mmrs=match.models.MMR.objects.filter(
                                 date__range=(today-timedelta(days=day_long*(i+1+k)),today-timedelta(days=day_long*(i+k))),
                                 battlenet_acc=bn
-                            )
-                            temp_sum=0
-                            temp_num=0
+                            ).order_by("-date")
+                            tempmmr_T={"sum":0,"num":0}
+                            tempmmr_P={"sum":0,"num":0}
+                            tempmmr_Z={"sum":0,"num":0}
                             for former_mmr in former_mmrs:
-                                if former_mmr!=0:
-                                    temp_sum+=former_mmr.mmr
-                                    temp_num+=1
+                                if former_mmr.mmr!=0:
+                                    if former_mmr.race=="P":
+                                        tempmmr_P["sum"]+=former_mmr.mmr
+                                        tempmmr_P["num"]+=1
+                                    elif former_mmr.race=="Z":
+                                        tempmmr_Z["sum"]+=former_mmr.mmr
+                                        tempmmr_Z["num"]+=1
+                                    else:
+                                        tempmmr_T["sum"]+=former_mmr.mmr
+                                        tempmmr_T["num"]+=1
+                            #选择最大的mmr
+                            if tempmmr_Z["num"]==0:
+                                tempmmr_avg_Z=0
+                            else:
+                                tempmmr_avg_Z=(int)(tempmmr_Z["sum"]/tempmmr_Z["num"])
+                            if tempmmr_P["num"]==0:
+                                tempmmr_avg_P=0
+                            else:
+                                tempmmr_avg_P=(int)(tempmmr_P["sum"]/tempmmr_P["num"])
+                            if tempmmr_T["num"]==0:
+                                tempmmr_avg_T=0
+                            else:
+                                tempmmr_avg_T=(int)(tempmmr_T["sum"]/tempmmr_T["num"])
+                            tempmmr_avg=max(tempmmr_avg_Z,tempmmr_avg_P,tempmmr_avg_T)
                             # 替换
-                            if temp_sum!=0:
-                                mmr_avg=(int)(temp_sum/temp_num)
+                            if tempmmr_avg!=0:
+                                mmr_avg=tempmmr_avg
                                 break
                             k+=1
 
                     else:
-                        mmr_avg=(int)(mmr_sum/mmr_num)
+                        #选择最大的mmr
+                        if mmr_Z["num"]==0:
+                            mmr_avg_Z=0
+                        else:
+                            mmr_avg_Z=(int)(mmr_Z["sum"]/mmr_Z["num"])
+                        if mmr_P["num"]==0:
+                            mmr_avg_P=0
+                        else:
+                            mmr_avg_P=(int)(mmr_P["sum"]/mmr_P["num"])
+                        if mmr_T["num"]==0:
+                            mmr_avg_T=0
+                        else:
+                            mmr_avg_T=(int)(mmr_T["sum"]/mmr_T["num"])
+                        mmr_avg=max(mmr_avg_Z,mmr_avg_P,mmr_avg_T)
                     
-                    info[12-i].append({
+                    info[11-i].append({
                         "name":bn.battlenet_name,
                         "mmr":mmr_avg,
                         "date":today-timedelta(days=day_long*i+day_long/2),
                     })
-                    mmr_record[12-i][bn.battlenet_name]=mmr_avg
+                    mmr_record[11-i][bn.battlenet_name]=mmr_avg
                     players.append(bn)
         
         return Response(info)
@@ -305,7 +398,7 @@ class RaceSumStatistics(views.APIView):
         today = datetime.today()
         reps=match.models.Replay.objects.filter(
             date__range=(today-timedelta(days=30),today)
-        )
+        ).order_by("-date")
         p_sum=0
         z_sum=0
         t_sum=0
@@ -353,10 +446,10 @@ class RaceWinrateStatistics(views.APIView):
         day_long=4
         today = datetime.today()
         rtn=[]
-        for i in range(12,0,-1):
+        for i in range(11,-1,-1):
             reps=match.models.Replay.objects.filter(
                 date__range=(today-timedelta(days=day_long*(i+1)),today-timedelta(days=day_long*i))
-            )
+            ).order_by("-date")
             
             tvp_sum=0
             pvz_sum=0
@@ -410,9 +503,14 @@ class ReplayStatistics(views.APIView):
     permission_classes = [permissions.AllowAny, ]
 
     def get(self, request, *args, **kwargs):
-        #最近的10个rep
+        params = request.query_params
+        num=int(params['replays'])
+        #最近的num个rep
         today = datetime.today()
-        reps=match.models.Replay.objects.all().order_by("-date")[:10]
+        if num==-1:
+            reps=match.models.Replay.objects.all().order_by("-date")
+        else:
+            reps=match.models.Replay.objects.all().order_by("-date")[:num]
         serializer = match.serializers.RecentReplaySerializer(
             instance=reps,
             context={'request': request},

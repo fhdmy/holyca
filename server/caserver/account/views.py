@@ -169,6 +169,12 @@ class TeammateViewSet(viewsets.ModelViewSet):
         )
         return Response(serializer.data)
     
+    @action(methods=['get'], detail=False, permission_classes=[permissions.IsAuthenticated])
+    def get_score(self, request, *args, **kwargs):
+        teammate = request.user.teammate
+        score=teammate.score
+        return Response(score)
+    
     @action(methods=['post'],detail=False,permission_classes=[permissions.IsAuthenticated])
     def signin(self, request, *args, **kwargs):
         user = request.user
@@ -188,59 +194,104 @@ class TeammateViewSet(viewsets.ModelViewSet):
         today = datetime.today()
         info=[]
         mmr_record=[]
-        for i in range(12,0,-1):
+        for i in range(11,-1,-1):
             players=[]
             mmr_record.append({})
             info.append([])
             for bn in user.teammate.repstats.battlenet_acc.all():
                 if bn in players:
                     continue
+                mmr_T={"sum":0,"num":0}
+                mmr_P={"sum":0,"num":0}
+                mmr_Z={"sum":0,"num":0}
                 mmrs=match.models.MMR.objects.filter(
                     date__range=(today-timedelta(days=day_long*(i+1)),today-timedelta(days=day_long*i)),
                     battlenet_acc=bn
-                )
+                ).order_by("-date")
                 mmr_sum=0
                 mmr_num=0
                 for mmr in mmrs:
-                    if mmr!=0:
-                        mmr_sum+=mmr.mmr
-                        mmr_num+=1
+                    if mmr.mmr!=0:
+                        if mmr.race=="P":
+                            mmr_P["sum"]+=mmr.mmr
+                            mmr_P["num"]+=1
+                        elif mmr.race=="Z":
+                            mmr_Z["sum"]+=mmr.mmr
+                            mmr_Z["num"]+=1
+                        else:
+                            mmr_T["sum"]+=mmr.mmr
+                            mmr_T["num"]+=1
                 mmr_avg=0
                 # 向前寻找mmr非0的点并赋值
-                if mmr_sum==0:
+                if mmr_T["sum"]==0 and mmr_P["sum"]==0 and mmr_Z["sum"]==0:
                     k=0
                     while k<12:
                         # 先从mmr_record查找
-                        if i<12:
-                            if mmr_record[12-i-1][bn.battlenet_name]!=0:
+                        if i<11:
+                            if mmr_record[11-i-1][bn.battlenet_name]!=0:
                                 # 替换
-                                mmr_avg=(int)(mmr_record[12-i-1][bn.battlenet_name])
+                                mmr_avg=(int)(mmr_record[11-i-1][bn.battlenet_name])
                                 break
                         former_mmrs=match.models.MMR.objects.filter(
                             date__range=(today-timedelta(days=day_long*(i+1+k)),today-timedelta(days=day_long*(i+k))),
                             battlenet_acc=bn
-                        )
-                        temp_sum=0
-                        temp_num=0
+                        ).order_by("-date")
+                        tempmmr_T={"sum":0,"num":0}
+                        tempmmr_P={"sum":0,"num":0}
+                        tempmmr_Z={"sum":0,"num":0}
                         for former_mmr in former_mmrs:
-                            if former_mmr!=0:
-                                temp_sum+=former_mmr.mmr
-                                temp_num+=1
+                            if former_mmr.mmr!=0:
+                                if former_mmr.race=="P":
+                                    tempmmr_P["sum"]+=former_mmr.mmr
+                                    tempmmr_P["num"]+=1
+                                elif former_mmr.race=="Z":
+                                    tempmmr_Z["sum"]+=former_mmr.mmr
+                                    tempmmr_Z["num"]+=1
+                                else:
+                                    tempmmr_T["sum"]+=former_mmr.mmr
+                                    tempmmr_T["num"]+=1
+                        #选择最大的mmr
+                        if tempmmr_Z["num"]==0:
+                            tempmmr_avg_Z=0
+                        else:
+                            tempmmr_avg_Z=(int)(tempmmr_Z["sum"]/tempmmr_Z["num"])
+                        if tempmmr_P["num"]==0:
+                            tempmmr_avg_P=0
+                        else:
+                            tempmmr_avg_P=(int)(tempmmr_P["sum"]/tempmmr_P["num"])
+                        if tempmmr_T["num"]==0:
+                            tempmmr_avg_T=0
+                        else:
+                            tempmmr_avg_T=(int)(tempmmr_T["sum"]/tempmmr_T["num"])
+                        tempmmr_avg=max(tempmmr_avg_Z,tempmmr_avg_P,tempmmr_avg_T)
                         # 替换
-                        if temp_sum!=0:
-                            mmr_avg=(int)(temp_sum/temp_num)
+                        if tempmmr_avg!=0:
+                            mmr_avg=tempmmr_avg
                             break
                         k+=1
 
                 else:
-                    mmr_avg=(int)(mmr_sum/mmr_num)
-                
-                info[12-i].append({
+                    #选择最大的mmr
+                    if mmr_Z["num"]==0:
+                        mmr_avg_Z=0
+                    else:
+                        mmr_avg_Z=(int)(mmr_Z["sum"]/mmr_Z["num"])
+                    if mmr_P["num"]==0:
+                        mmr_avg_P=0
+                    else:
+                        mmr_avg_P=(int)(mmr_P["sum"]/mmr_P["num"])
+                    if mmr_T["num"]==0:
+                        mmr_avg_T=0
+                    else:
+                        mmr_avg_T=(int)(mmr_T["sum"]/mmr_T["num"])
+                    mmr_avg=max(mmr_avg_Z,mmr_avg_P,mmr_avg_T)
+
+                info[11-i].append({
                     "name":bn.battlenet_name,
                     "mmr":mmr_avg,
                     "date":today-timedelta(days=day_long*i+day_long/2),
                 })
-                mmr_record[12-i][bn.battlenet_name]=mmr_avg
+                mmr_record[11-i][bn.battlenet_name]=mmr_avg
                 players.append(bn)
         
         return Response(info)
@@ -253,7 +304,7 @@ class TeammateViewSet(viewsets.ModelViewSet):
         reps=match.models.Replay.objects.filter(
             date__range=(today-timedelta(days=30),today),
             repstats_acc=user.teammate.repstats
-        )
+        ).order_by("-date")
         p_sum=0
         z_sum=0
         t_sum=0
@@ -297,11 +348,11 @@ class TeammateViewSet(viewsets.ModelViewSet):
         day_long=4
         today = datetime.today()
         rtn=[]
-        for i in range(12,0,-1):
+        for i in range(11,-1,-1):
             reps=match.models.Replay.objects.filter(
                 date__range=(today-timedelta(days=day_long*(i+1)),today-timedelta(days=day_long*i)),
                 repstats_acc=user.teammate.repstats
-            )
+            ).order_by("-date")
             
             tvp_sum=0
             pvz_sum=0
@@ -358,7 +409,7 @@ class TeammateViewSet(viewsets.ModelViewSet):
         reps=match.models.Replay.objects.filter(       
             date__range=(today-timedelta(days=7),today),
             repstats_acc=user.teammate.repstats
-        )
+        ).order_by("-date")
         return Response(len(reps))
     
     @action(methods=['get'],detail=False,permission_classes=[permissions.IsAuthenticated])
@@ -368,6 +419,8 @@ class TeammateViewSet(viewsets.ModelViewSet):
         battlenets_accs=repstats.battlenet_acc.all()
         map_winrates=[]
         for bn in battlenets_accs:
+            if bn.map_winrate=="":
+                continue
             mw=eval(bn.map_winrate)
             map_winrates.append({
                 'account':bn.battlenet_name,
@@ -460,7 +513,8 @@ class SignUp(views.APIView):
             account.models.Teammate.objects.create(
                 user=new_user,
                 nickname=request.data['nickname'],
-                repstats=new_repstats
+                repstats=new_repstats,
+                score=100
             )
             user_id = str(new_user.id)
             profile_id = str(new_user.teammate.id)

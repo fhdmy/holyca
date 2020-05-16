@@ -1,6 +1,7 @@
 from django.db import models
 import account.models
 import django.utils.timezone as timezone
+from datetime import datetime
 
 class BattlenetAccount(models.Model):
     battlenet_name=models.CharField(max_length=100,default='')
@@ -19,7 +20,7 @@ class Replay(models.Model):
     player1_mmr=models.IntegerField(default=0)
     player2_mmr=models.IntegerField(default=0)
     winner=models.CharField(max_length=100,default='')
-    date=models.DateField(default = timezone.now)
+    date=models.DateTimeField(default = timezone.now)
     vs_race=models.CharField(max_length=100,default='')
     game_length=models.CharField(max_length=100,default='')
     game_map=models.CharField(max_length=100,default='')
@@ -49,7 +50,8 @@ class Replay(models.Model):
 
 class MMR(models.Model):
     mmr=models.IntegerField(default=0)
-    date=models.DateField(default = timezone.now)
+    date=models.DateTimeField(default = timezone.now)
+    race=models.CharField(max_length=10,default='')
     
     replay=models.ForeignKey(
         to=Replay,

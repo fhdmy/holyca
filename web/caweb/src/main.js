@@ -5,6 +5,12 @@ import VueRouter from 'vue-router'
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.darkmoon.css';
 
+import zhMessages from "devextreme/localization/messages/zh.json";
+import { locale, loadMessages } from "devextreme/localization";
+
+loadMessages(zhMessages);
+locale(navigator.language);
+
 //https://github.com/dankogai/js-base64
 //npm install --save js-base64
 
@@ -21,6 +27,9 @@ Vue.use(VueRouter)
 import Home from  "./components/Home/Home.vue"
 import OwnPage from  "./components/OwnPage/OwnPage.vue"
 import ActivityPage from  "./components/ActivityPage/ActivityPage.vue"
+import Replay from "./components/Home/Replay.vue"
+import ForumPage from "./components/ActivityPage/ForumPage.vue"
+import BetPage from "./components/ActivityPage/BetPage.vue"
 
 const router = new VueRouter({
   routes: [
@@ -28,6 +37,10 @@ const router = new VueRouter({
       component: Home,
       name:"homepage",
       meta:{title:'HolyCA 首页'},
+      children: [
+        // UserHome will be rendered inside User's <router-view>
+        // when /user/:id is matched
+      ]
     },
     { path: '/ownpage',
       component: OwnPage,
@@ -48,7 +61,37 @@ const router = new VueRouter({
         // when /user/:id is matched
         // { path: '', component: UserHome },
       ]
-    }
+    },
+    { path: '/replay', 
+      component: Replay,
+      name:"replay", 
+      meta:{title:'HolyCA 录像'},
+      children: [
+        // UserHome will be rendered inside User's <router-view>
+        // when /user/:id is matched
+        // { path: '', component: UserHome },
+      ]
+    },
+    { path: '/forum_page', 
+      component: ForumPage,
+      name:"forum_page", 
+      meta:{title:'HolyCA 论坛'},
+      children: [
+        // UserHome will be rendered inside User's <router-view>
+        // when /user/:id is matched
+        // { path: '', component: UserHome },
+      ]
+    },
+    { path: '/bet_page', 
+      component: BetPage,
+      name:"bet_page", 
+      meta:{title:'HolyCA 积分专区'},
+      children: [
+        // UserHome will be rendered inside User's <router-view>
+        // when /user/:id is matched
+        // { path: '', component: UserHome },
+      ]
+    },
   ]
 })
 

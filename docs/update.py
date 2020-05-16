@@ -52,6 +52,7 @@ class Update:
             
             # self._ssh.exec_command(f"rm -r {self.nginx_url}/html.zip ")
             # self._ssh.exec_command(f"rm -r {self.nginx_url}/server/new_caserver.zip ")
+            self._ssh.exec_command(f"rm -r {self.nginx_url}/server/new_caserver/caserver/manage.log")
             if exchange_db:
                 self._ssh.exec_command(f"cp -frap {self.nginx_url}/server/new_caserver/caserver/* {self.nginx_url}/server/caserver/")
             else:
@@ -76,4 +77,4 @@ if __name__ == "__main__":
     update=Update()
     update.handle_files()
     update.transport()
-    update.operate_remote(exchange_db=True)
+    update.operate_remote(exchange_db=False)

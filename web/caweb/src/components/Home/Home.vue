@@ -217,7 +217,20 @@
                   <!-- sub-content -->
                   <DxItem :ratio="7">
                     <template #default>
-                      <dataGrid :dataSource="reps"></dataGrid>
+                      <div style="position:relative;">
+                        <DxBox :height="25" direction="row" width="100%">
+                          <DxItem :ratio="16">
+                            <template #default>
+                            </template>
+                          </DxItem>
+                          <DxItem :ratio="1">
+                            <template #default>
+                              <span class="more-btn" @click="switch_to_replay()">查看更多</span>
+                            </template>
+                          </DxItem>
+                        </DxBox>
+                        <dataGrid :dataSource="reps" style="margin-top:5px;"></dataGrid>
+                      </div>
                     </template>
                   </DxItem>
                 </DxBox>
@@ -320,6 +333,10 @@ export default {
           name: 'activitypage'
         })
     },
+    switch_to_replay(){
+      let routeData = this.$router.resolve({ path: '/replay'});
+      window.open(routeData.href, '_blank');
+    },
     sign_in(){
       this.$http({
         method: "post",
@@ -375,6 +392,8 @@ export default {
             this.active_max_value=acc_not_zero*200;
           else
             this.active_max_value=sum;
+          if(this.active_max_value==0)
+            this.active_max_value=200;
           //排序，取前8
           for(let i=0;i<res.data.length-1;i++){
             for(let j=0;j<i;j++){
@@ -400,7 +419,7 @@ export default {
     replay_statistics(){
       this.$http({
         method: "get",
-        url: "/api/match/replay_statistics/",
+        url: "/api/match/replay_statistics/?replays=10",
         headers: {
           "Authorization": this.token
         },
@@ -412,7 +431,7 @@ export default {
             game_map=res.data[k].game_map.split("-天梯版")[0];
             this.$set(this.reps,k,{
               player:res.data[k].player1.battlenet_name,
-              play_MMR: res.data[k].player1_mmr,
+              player_MMR: res.data[k].player1_mmr,
               player_race: res.data[k].vs_race.split("v")[0],
               opponent: res.data[k].player2.battlenet_name,
               opponent_MMR: res.data[k].player2_mmr,
@@ -421,7 +440,8 @@ export default {
               winner: res.data[k].winner,
               map:game_map,
               date:res.data[k].date,
-              rep_id:res.data[k].rep_id
+              rep_id:res.data[k].rep_id,
+              date_show:res.data[k].date.split("T")[0]
             });
           }
         })
@@ -529,6 +549,8 @@ export default {
             this.$set(this.mmr_players,m,res.data[0][m].name);
           }
           for(let m=0;m<res.data.length;m++){
+            if(res.data[m].length==0)
+              continue
             this.$set(this.mmr_players_mmr,m,{});
             for(let n=0;n<res.data[m].length;n++){
               this.$set(this.mmr_players_mmr[m],res.data[m][n].name,res.data[m][n].mmr);
@@ -544,6 +566,8 @@ export default {
               mmr_num+=1;
             }
           }
+          if(mmr_num==0)
+            return;
           let avg_mmr=parseInt(mmr_sum/mmr_num);
           let old_val=this.mmr_score;
           if(this.mmr_score_show != avg_mmr)
@@ -654,6 +678,11 @@ DxItem {
   position: relative;
   top: 18px;
   left:4px;
+}
+.more-btn{
+  cursor: pointer;
+  text-align: right;
+  margin: 0;
 }
 </style>
 

@@ -1,6 +1,6 @@
 <template>
   <DxForm :form-data="formData" id="form-wrapper">
-    <DxGroupItem :col-count="3" css-class="group-wrapper">
+    <DxGroupItem :col-count="3" css-class="group-wrapper" :col-count-by-screen="{'lg':3,'md':3,'sm':3,'xs':3}">
       <DxGroupItem>
         <DxSimpleItem data-field="nickname">
           <DxLabel text="昵称"/>
@@ -12,7 +12,7 @@
           <DxLabel text="新密码"/>
         </DxSimpleItem>
       </DxGroupItem>
-      <DxGroupItem>
+      <DxGroupItem :colCount="1">
         <DxSimpleItem data-field="repstats_acc">
           <DxLabel text="RepStats账号"/>
         </DxSimpleItem>
@@ -23,7 +23,7 @@
           <DxLabel text="Auth Key"/>
         </DxSimpleItem>
       </DxGroupItem>
-      <DxGroupItem>
+      <DxGroupItem :colCount="1">
         <DxSimpleItem data-field="score" css-class="score-input">
           <DxLabel text="站内积分"/>
         </DxSimpleItem>

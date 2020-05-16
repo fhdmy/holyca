@@ -57,7 +57,7 @@
       </DxItem>
 
       <!-- cell -->
-      <DxItem :ratio="10">
+      <DxItem :ratio="dataSource.length">
         <template #default>
           <div>
             <div
@@ -69,7 +69,7 @@
               <DxBox :height="40" direction="row" width="100%">
                 <DxItem :ratio="2">
                   <template #default>
-                    <div class="cell">{{item.date}}</div>
+                    <div class="cell">{{item.date_show}}</div>
                   </template>
                 </DxItem>
                 <DxItem :ratio="2">
@@ -84,7 +84,7 @@
                 </DxItem>
                 <DxItem :ratio="2">
                   <template #default>
-                    <div class="cell">{{item.play_MMR}}</div>
+                    <div class="cell">{{item.player_MMR}}</div>
                   </template>
                 </DxItem>
                 <DxItem :ratio="3">
