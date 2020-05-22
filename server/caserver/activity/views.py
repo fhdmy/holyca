@@ -93,6 +93,7 @@ try:
                         re_invest.teammate.score+=re_invest.score
                         re_invest.teammate.save()
                         re_invest.settled=True
+                        re_invest.gain=re_invest.score
                         re_invest.save()
                     
                     #设置为finished
@@ -133,8 +134,10 @@ try:
                     if str(settle_invest.target)==str(winner):
                         if str(settle_invest.target)==str(may_finish_bet.player_1):
                             settle_invest.teammate.score+=int(settle_invest.score*bet_1)
+                            settle_invest.gain=int(settle_invest.score*bet_1)
                         elif str(settle_invest.target)==str(may_finish_bet.player_2):
                             settle_invest.teammate.score+=int(settle_invest.score*bet_2)
+                            settle_invest.gain=int(settle_invest.score*bet_2)
                     
                     settle_invest.settled=True
                     settle_invest.save()
@@ -254,6 +257,56 @@ class BetViewSet(viewsets.ModelViewSet):
                 "bet_1":bet_1,
                 "bet_2":bet_2
             })
+        return Response(rtn)
+    
+    @action(methods=['get'],detail=False,permission_classes=[permissions.IsAuthenticated])
+    def get_own_bets(self, request, *args, **kwargs):
+        params = request.query_params
+        rtn=[]
+        user = request.user
+        invests=activity.models.Invest.objects.filter(teammate=user.teammate).order_by("-bet")
+        for invest in invests:
+            bet=invest.bet
+            ivs=activity.models.Invest.objects.filter(
+                bet=bet
+            )
+            score_1=0
+            score_2=0
+            for iv in ivs:
+                if str(iv.target)==str(bet.player_1):
+                    score_1+=int(iv.score)
+                elif str(iv.target)==str(bet.player_2):
+                    score_2+=int(iv.score)
+            bet_1=0
+            bet_2=0
+            if score_1==0 and score_2==0:
+                bet_1=0
+                bet_2=0
+            elif score_1==0 and score_2!=0:
+                bet_1=0
+                bet_2=1
+            elif score_2==0 and score_1!=0:
+                bet_2=0
+                bet_1=1
+            else:
+                bet_1=round((score_1+score_2)/score_1,1)
+                bet_2=round((score_1+score_2)/score_2,1)
+
+            rtn.append({
+                "id":invest.id,
+                "player_1":bet.player_1,
+                "player_2":bet.player_2,
+                "tournament":bet.tournament,
+                "match_url":bet.match_url,
+                "time":bet.match_time,
+                "stop_bet":bet.stop_bet,
+                "finished":bet.finished,
+                "bet_1":bet_1,
+                "bet_2":bet_2,
+                "score":invest.score,
+                "gain":invest.gain,
+                "target":invest.target
+            })          
         return Response(rtn)
     
     @action(methods=['post'],detail=False,permission_classes=[permissions.IsAuthenticated])

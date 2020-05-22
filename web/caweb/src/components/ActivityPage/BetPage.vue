@@ -46,6 +46,19 @@
             <DxItem :ratio="18">
               <template #default>
                 <div>
+                  <p class="more-btn" @click="ownbet_open()">历史记录</p>
+                  <DxPopup
+                    :visible.sync="ownbet_popup_visible"
+                    :drag-enabled="false"
+                    :close-on-outside-click="false"
+                    :show-title="true"
+                    :width="1000"
+                    title="历史记录"
+                  >
+                    <template #content>
+                      <betOwn :dataSource="own_bets"></betOwn>
+                    </template>
+                  </DxPopup>
                   <betList :dataSource="bets" :score.sync="score" :token="token"></betList>
                 </div>
               </template>
@@ -69,7 +82,9 @@ import { DxBox, DxItem } from "devextreme-vue/box";
 import notify from 'devextreme/ui/notify';
 import { DxLoadPanel } from 'devextreme-vue/load-panel';
 import BetList from "./BetList.vue";
+import BetOwn from "./BetOwn.vue";
 import Scheduler from "./Scheduler.vue";
+import { DxPopup } from 'devextreme-vue/popup';
 
 export default {
   components: {
@@ -77,7 +92,9 @@ export default {
     DxItem,
     DxLoadPanel,
     BetList,
-    Scheduler
+    Scheduler,
+    DxPopup,
+    BetOwn
   },
   props: {},
   data: () => ({
@@ -89,9 +106,12 @@ export default {
       position: { of: '#myscheduler' },
       matches:[],
       bets:[],
+      own_bets:[],
       bets_timer:"",
+      ownbets_timer:"",
       has_login:false,
-      score:0
+      score:0,
+      ownbet_popup_visible:false,
   }),
   created() {
       this.loading_visible=true;
@@ -99,10 +119,12 @@ export default {
       this.get_bets();
       if(this.token!=""){
         this.get_score();
+        this.get_own_bets();
       }
   },
   beforeDestroy() {
     clearInterval(this.bets_timer);
+    clearInterval(this.ownbets_timer);
   },
   methods: {
     match_scheduler(){
@@ -226,6 +248,90 @@ export default {
           notify("请检查你的网络!", "error", 1500);
         });
     },
+    get_own_bets(){
+      this.$http({
+        method: "get",
+        url: "/api/activity/bet/get_own_bets/",
+        headers: {
+          "Authorization": this.token
+        },
+      })
+        .then(res => {
+          console.log(res);
+          for(let k=0;k<res.data.length;k++){
+            let t_split=res.data[k].time.split("T")
+            let year=t_split[0].split("-")[0]
+            let month=t_split[0].split("-")[1]
+            let day=t_split[0].split("-")[2]
+            let hour=t_split[1].split(":")[0]
+            let minute=t_split[1].split(":")[1]
+            let time=year+"-"+month+"-"+day+"  "+hour+":"+minute;
+            let dt=new Date(year,month-1,day,hour,minute);
+            let now=new Date()
+            let last="";
+            if(dt<now || dt==now){
+              if(res.data[k].finished)
+                last="已结束";
+              else
+                last="正在进行中";
+            }
+            else{
+              let d = Math.floor((dt-now)/(24*60*60*1000));
+              let h = Math.floor((dt-now)/60/60/1000-(d*24));
+              let m = Math.floor((dt-now)/60/1000-(h*60)-(d*24*60));
+              last=d+"天"+h+"小时"+m+"分钟";
+            }
+
+            this.$set(this.own_bets,k,{
+              id:res.data[k].id,
+              player_1:res.data[k].player_1,
+              player_2:res.data[k].player_2,
+              tournament:res.data[k].tournament,
+              match_url:res.data[k].match_url,
+              time:time,
+              time_visible:false,
+              last:last,
+              input_bet:0,
+              bet_1:res.data[k].bet_1,
+              bet_2:res.data[k].bet_2,
+              finished:res.data[k].finished,
+              stop_bet:res.data[k].stop_bet,
+              score:res.data[k].score,
+              gain:res.data[k].gain,
+              target:res.data[k].target,
+            })
+          }
+
+          this.ownbets_timer=setInterval(()=>{
+              for(let i=0;i<this.own_bets.length;i++){
+                if(this.own_bets.last=="正在进行中" || this.own_bets.last=="已结束")
+                  continue
+                let year=this.own_bets[i].time.split("  ")[0].split("-")[0];
+                let month=this.own_bets[i].time.split("  ")[0].split("-")[1];
+                let day=this.own_bets[i].time.split("  ")[0].split("-")[2];
+                let hour=this.own_bets[i].time.split("  ")[1].split(":")[0];
+                let minute=this.own_bets[i].time.split("  ")[1].split(":")[1];
+                let dt=new Date(year,month-1,day,hour,minute);
+                let now=new Date()
+                let last="";
+                if(dt<now || dt==now){
+                  last="正在进行中";
+                }
+                else{
+                  let d = Math.floor((dt-now)/(24*60*60*1000));
+                  let h = Math.floor((dt-now)/60/60/1000-(d*24));
+                  let m = Math.floor((dt-now)/60/1000-(h*60)-(d*24*60));
+                  last=d+"天"+h+"小时"+m+"分钟";
+                }
+                this.$set(this.own_bets[i],"last",last)
+              }
+          },60000)
+        })
+        .catch(error => {
+          console.log(error.response);
+          notify("请检查你的网络!", "error", 1500);
+        });
+    },
     get_score(){
       this.$http({
         method: "get",
@@ -249,6 +355,9 @@ export default {
           this.has_login=false;
         });
     },
+    ownbet_open(){
+      this.ownbet_popup_visible=true;
+    }
   }
 };
 </script>
@@ -285,5 +394,11 @@ DxItem {
   border-bottom: 1px solid #6b7289;
   position: relative;
   bottom: 75%;
+}
+.more-btn{
+  cursor: pointer;
+  text-align: right;
+  width: 100%;
+  margin: 0;
 }
 </style>

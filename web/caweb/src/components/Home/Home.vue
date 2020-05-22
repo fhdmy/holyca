@@ -1,5 +1,19 @@
 <template>
   <div class="wrapper">
+    <DxPopup
+      :visible.sync="update_popup_visible"
+      :drag-enabled="false"
+      :close-on-outside-click="false"
+      :show-title="true"
+      :width="500"
+      :height="300"
+      title="更新内容"
+      :onHiding="update_popup_hidden()"
+    >
+      <p>1.添加赛程安排模块</p>
+      <p>2.添加积分菠菜功能</p>
+      <p>3.添加简易更新通知面板</p>
+    </DxPopup>
     <DxBox :height="1200" direction="row" width="100%">
       <DxItem :ratio="1">
         <template #default></template>
@@ -254,6 +268,7 @@
 
 <script>
 import { DxBox, DxItem } from "devextreme-vue/box";
+import { DxPopup } from 'devextreme-vue/popup';
 import notify from 'devextreme/ui/notify';
 import Gauge from "./Gauge.vue";
 import BarChart from "./BarChart.vue";
@@ -270,12 +285,14 @@ export default {
     LineChart,
     PieChart,
     DataGrid,
+    DxPopup
   },
 
   data: () => ({
     token:localStorage.getItem("token") == null
         ? ""
         : "Token " + localStorage.getItem("token"),
+    update_popup_visible:localStorage.getItem("update_seen_v0.1") == "true"?false:true,
     active_timer:"",
     imba_timer:"",
     mmr_timer:"",
@@ -585,6 +602,11 @@ export default {
           notify("请检查你的网络!", "error", 1500);
         });
     },
+    update_popup_hidden(){
+      if(!this.update_popup_visible)
+        localStorage.removeItem("update_seen_v0");
+        localStorage.setItem("update_seen_v0.1",true);
+    }
   }
 };
 </script>

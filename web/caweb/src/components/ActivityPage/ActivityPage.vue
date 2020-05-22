@@ -176,7 +176,7 @@
 <script>
 import { DxBox, DxItem } from "devextreme-vue/box";
 import ForumOuter from "./ForumOuter.vue";
-import BetList from "./BetList.vue"
+import BetList from "./BetList.vue";
 import notify from 'devextreme/ui/notify';
 
 export default {
@@ -184,7 +184,7 @@ export default {
     DxBox,
     DxItem,
     ForumOuter,
-    BetList
+    BetList,
   },
   props: {},
   data: () => ({

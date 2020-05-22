@@ -36,5 +36,6 @@ class Invest(models.Model):
     )
 
     score=models.IntegerField(default=0)
+    gain=models.IntegerField(default=0)
     target=models.CharField(max_length=100,default='')
     settled=models.BooleanField(default=False)  #是否被结算
