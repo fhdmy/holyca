@@ -3,7 +3,7 @@
     <DxPopup
       :visible.sync="update_popup_visible"
       :drag-enabled="false"
-      :close-on-outside-click="false"
+      :close-on-outside-click="true"
       :show-title="true"
       :width="500"
       :height="300"

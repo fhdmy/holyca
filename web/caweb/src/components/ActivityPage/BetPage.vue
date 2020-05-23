@@ -50,7 +50,7 @@
                   <DxPopup
                     :visible.sync="ownbet_popup_visible"
                     :drag-enabled="false"
-                    :close-on-outside-click="false"
+                    :close-on-outside-click="true"
                     :show-title="true"
                     :width="1000"
                     title="历史记录"
@@ -356,7 +356,10 @@ export default {
         });
     },
     ownbet_open(){
-      this.ownbet_popup_visible=true;
+      if(this.token!="")
+        this.ownbet_popup_visible=true;
+      else
+        notify("账户未登录或登录状态错误!", "error", 1500);
     }
   }
 };
