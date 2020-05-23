@@ -18,7 +18,7 @@ from django_apscheduler.jobstores import DjangoJobStore, register_events, regist
 def interval_mapping(Omax,Omin,Odata):
     Nmax=10
     Nmin=0
-    N=(Nmax-Nmin)/(Omax-Omin)*(int(Odata)-Omin)+Nmin
+    N=(Nmax-Nmin)/(Omax-Omin)*(float(Odata)-Omin)+Nmin
     return round(N,1)
 
 # 定时更新match数据

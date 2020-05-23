@@ -74,7 +74,11 @@ export default {
     palette: {
       type: String,
       default: "Violet"
-    }
+    },
+    chart_type: {
+      type: String,
+      default: "mmr"
+    },
   },
   data: () => ({}),
   methods: {
@@ -89,9 +93,14 @@ export default {
         item.isVisible() ? item.hide() : item.show();
     },
     customizeTooltip(pointInfo){
-      return {
-        text: `${pointInfo.valueText}<br/>${this.dataSource[pointInfo.argument-1].holyca_date.split("T")[0]}`
-      };
+      if(this.chart_type=="mmr")
+        return {
+          text: `${pointInfo.valueText}<br/>${this.dataSource[pointInfo.argument-1].holyca_date.split("T")[0]}`
+        };
+      else
+        return {
+          text: `${pointInfo.valueText}%<br/>${this.dataSource[pointInfo.argument-1].holyca_date.split("T")[0]}`
+        };
     }
   }
 };

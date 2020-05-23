@@ -136,7 +136,7 @@
                           <template #default>
                             <lineChart :players="mmr_players" 
                             :dataSource="mmr_players_mmr"
-                            :palette="mmr_palette"
+                            :palette="mmr_palette" chart_type="mmr"
                             ></lineChart>
                           </template>
                         </DxItem>
@@ -195,6 +195,7 @@
                             <lineChart :players="imba_vs" 
                             :dataSource="imba_rate"
                             :palette="imba_palette"
+                            chart_type="imba"
                             ></lineChart>
                           </template>
                         </DxItem>
@@ -570,7 +571,8 @@ export default {
               continue
             this.$set(this.mmr_players_mmr,m,{});
             for(let n=0;n<res.data[m].length;n++){
-              this.$set(this.mmr_players_mmr[m],res.data[m][n].name,res.data[m][n].mmr);
+              if(res.data[m][n].mmr!=0)
+                this.$set(this.mmr_players_mmr[m],res.data[m][n].name,res.data[m][n].mmr);
             }
             this.$set(this.mmr_players_mmr[m],"holyca_index",m+1);
             this.$set(this.mmr_players_mmr[m],"holyca_date",res.data[m][0].date);

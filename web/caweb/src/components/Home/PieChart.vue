@@ -78,7 +78,7 @@ export default {
 
 <style scoped>
 #pie {
-  width: 210px;
-  height: 210px;
+  width: 220px;
+  height: 220px;
 }
 </style>
