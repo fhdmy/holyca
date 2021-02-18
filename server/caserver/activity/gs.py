@@ -38,6 +38,7 @@ class GS:
                 match["time"]=time
                 matches.append(match)
             except:
+                #一定会产生关于a["href"]的exception
                 continue
         return matches
     
@@ -54,7 +55,8 @@ class GS:
             score=score.find_all("span")[0].text.strip()+":"+score.find_all("span")[1].text.strip()
             # print(f"winner: {winner} score:{score}")
             return winner,score
-        except:
+        except Exception as e:
+            print(e)
             return "",""
         # with open('./test.html', 'w') as f:
         #     f.write(res.text)

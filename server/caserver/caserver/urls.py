@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.conf.urls import url, include
+from django.urls import path
 from rest_framework import routers
 import account.views
 import match.views
@@ -37,4 +38,5 @@ base_urlpatterns= [
 
 urlpatterns = [
     url(r'^api/', include(base_urlpatterns)),
+    # path('admin/', admin.site.urls),
 ]

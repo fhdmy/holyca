@@ -37,12 +37,12 @@ try:
         teammates = account.models.Teammate.objects.all()
         for tm in teammates:
             try:
-                # print("***********")
+                print("***********")
                 repstats=tm.repstats
                 if repstats=="":
                     continue
                 api=API(email=repstats.repstats_acc,password=repstats.repstats_pwd,auth=repstats.auth)
-                # print("login...")
+                print("login...")
                 repstats_id,battlenet_info=api.login()
                 # 登录失败
                 if repstats_id==-1:
@@ -59,7 +59,7 @@ try:
                     if str(bn.battlenet_id) not in battlenet_info.values():
                         bn.repstats_acc.remove(repstats)
 
-                # print("get_rep...")
+                print("get_rep...")
                 repstats.save()
                 reps=api.get_rep()
                 for r in reps:
@@ -69,12 +69,12 @@ try:
                             battlenet_name=r["player1"],
                             battlenet_id=r["player1_id"]
                         )
-                        # print("created player1: "+str(player_1.battlenet_name)+"-"+str(player_1.battlenet_id))
+                        print("created player1: "+str(player_1.battlenet_name)+"-"+str(player_1.battlenet_id))
                         player_2,created=match.models.BattlenetAccount.objects.get_or_create(
                             battlenet_name=r["player2"],
                             battlenet_id=r["player2_id"]
                         )
-                        # print("created player2: "+str(player_2.battlenet_name)+"-"+str(player_2.battlenet_id))
+                        print("created player2: "+str(player_2.battlenet_name)+"-"+str(player_2.battlenet_id))
                         # 新增replay
                         replay,created=match.models.Replay.objects.get_or_create(
                             rep_id=r["rep_id"],
@@ -88,7 +88,7 @@ try:
                             player1=player_1,
                             player2=player_2
                         )
-                        # print("new replay: "+str(r["rep_id"])+" "+str(r["rep_map"])+" "+str(r["game_length"])+" "+str(r["vs_race"])+" "+str(r["winner"]))
+                        print("new replay: "+str(r["rep_id"])+" "+str(r["rep_map"])+" "+str(r["game_length"])+" "+str(r["vs_race"])+" "+str(r["winner"]))
                         # MMR
                         match.models.MMR.objects.get_or_create(
                             replay=replay,
@@ -97,7 +97,7 @@ try:
                             date=r["date"],
                             race=r["vs_race"].split("v")[0]
                         )
-                        # print("new MMR: "+str(player_1.battlenet_name)+" "+str(r["player1_mmr"])+" "+str(r["date"]))
+                        print("new MMR: "+str(player_1.battlenet_name)+" "+str(r["player1_mmr"])+" "+str(r["date"]))
                         match.models.MMR.objects.get_or_create(
                             replay=replay,
                             battlenet_acc=player_2,
@@ -105,13 +105,13 @@ try:
                             date=r["date"],
                             race=r["vs_race"].split("v")[1]
                         )
-                        # print("new MMR: "+str(player_2.battlenet_name)+" "+str(r["player2_mmr"])+" "+str(r["date"]))
+                        print("new MMR: "+str(player_2.battlenet_name)+" "+str(r["player2_mmr"])+" "+str(r["date"]))
                         replay.repstats_acc.add(repstats)
                         repstats.save()
-                    except:
-                        pass
-            except:
-                pass
+                    except Exception as e:
+                        print(e)
+            except Exception as e:
+                print(e)
 
     @register_job(scheduler, 'interval', minutes=60,id='replay_update')
     def replay_update():
@@ -131,8 +131,8 @@ try:
                 # 更新kills
                 rep.kills=str(api.get_repinfo(rep.rep_id))
                 rep.save()
-            except:
-                pass
+            except Exception as e:
+                print(e)
 
     #设置地图胜率和基本素养
     @register_job(scheduler, 'interval', minutes=60,id='basic_update')

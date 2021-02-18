@@ -5,10 +5,11 @@ from datetime import datetime
 from datetime import timedelta
 from collections import defaultdict
 import math
+import json
 
 class API:
     auth=""
-    url="https://sc2replaystats.com/"
+    url="http://sc2replaystats.com/"
     PHPSESSID=""
     sc2replayreferer=""
     season=0
@@ -41,10 +42,9 @@ class API:
         res=session.post(login_url,data=req_data,headers=req_header)
         if "Failed to login, please try your email and password again." in res.text:
             return -1,self.battlenet_infos
-        re_season=re.findall(r'<h2>Season <strong>.*?</strong> Quick Statistics</h2>', res.text)
-        self.season=re_season[0][19:-31]
-        re_repstats_id=re.findall(r'<a href=\"/account/display/.*\">', res.text)
         soup = BeautifulSoup(res.text, 'lxml')
+        self.season=soup.find("input",id="seasons_id")["value"]
+        re_repstats_id=re.findall(r'<a href=\"/account/display/.*\">', res.text)
         re_bn_opts=soup.find(id='account_name')
         re_bn_opts=re_bn_opts.find_all("option")
         self.battlenet_infos.clear()
@@ -167,7 +167,8 @@ class API:
             players_info[player1]=kill1
             players_info[player2]=kill2
             return players_info
-        except:
+        except Exception as e:
+            print(e)
             return ""
         
     
@@ -196,29 +197,65 @@ class API:
                     if title=="attack":
                         attack=tr.find_all("td")[1].text.split(" ")[1][:-1]
                         break
-                except:
+                except Exception as e:
                     pass
+            # print(attack)
             return attack
-        except:
+        except Exception as e:
+            print(e)
             return 0
     
     def get_general(self,bn_id):
-        general_url=f"{self.url}account/display/{self.repstats_id}/0/{bn_id}/1v1/All/{self.season}/"
+        general_url=f"{self.url}stats/runReport"
+        # general_url=f"{self.url}account/display/{self.repstats_id}/0/{bn_id}/1v1/All/{self.season}/"
         req_header={
             "Authorization":self.auth,
             "user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36",
-            "referer":"https://sc2replaystats.com/Account/signin",
+            "referer":f"{self.url}account/display/{self.repstats_id}/0/{bn_id}/1v1/All/{self.season}/",
             "authority":"sc2replaystats.com",
-            "origin":"https://sc2replaystats.com"
+            "origin":"http://sc2replaystats.com"
         }
         cookie={
             "sc2replayreferer":self.sc2replayreferer,
             "PHPSESSID":self.PHPSESSID
         }
+        # payload={"metrics":["null","games","player_wins","player_losses","player_spending_quotient_avg","player_workers_avg","player_supply_block_time_avg","player_mmr_avg","player_max_mmr_min","player_max_mmr_max","opp_player_mmr_avg","opp_player_max_mmr_max"],
+        # "group_bys":[],
+        # "filters":{"account_id":{"logic":"equal","value":"42919"},
+        # "format":{"logic":"equal","value":"1v1"},
+        # "player_id":{"logic":"in","value":"2859519"},
+        # "season_id":{"logic":"relative","value":"current_season"}},
+        # "order":[],
+        # "date":"season_id:current_season",
+        # "settings":{"account_id":42919}}
+        # payload={"metrics":["games","player_wins","player_losses","player_spending_quotient_avg","player_workers_avg","player_supply_block_time_avg","player_mmr_avg","player_max_mmr_min","player_max_mmr_max","opp_player_mmr_avg","opp_player_max_mmr_max"],
+        # "group_bys":[],
+        # "filters":{"account_id":{"logic":"equal","value":'"'+self.repstats_id+'"'},
+        # "format":{"logic":"equal","value":"1v1"},
+        # "player_id":{"logic":"in","value":'"'+bn_id+'"'},
+        # "season_id":{"logic":"relative","value":"current_season"}},
+        # "order":[],
+        # "date":"season_id:current_season",
+        # "settings":{"account_id":self.repstats_id}}
+        payload={
+            "metrics":["account_matchup","games","win_loss_percentage","opp_player_mmr_avg","opp_player_max_mmr_max"],
+            "group_bys":["account_matchup"],
+            "filters":{"account_id":{"logic":"equal","value":42919},
+            "format":{"logic":"equal","value":"1v1"},
+            "player_id":{"logic":"in","value":2859519},
+            "replay_date":{"logic":"relative","value":"current_season"}},
+            "order":[{"account_matchup":""}],
+            "date":"replay_date:current_season",
+            "settings":{"account_id":42919}
+        }
         variance,worker_created,supply_blocked=0,0,0
         try:
-            res=requests.get(general_url,headers=req_header,cookies=cookie)
+            res=requests.post(general_url,headers=req_header,cookies=cookie,data=payload)
             soup = BeautifulSoup(res.text, 'lxml')
+            # print(res)
+            # print(res.request.body)
+            # print(json.loads(res.text))
+            # print(json.loads(res.text)["results"]["data"][0]["player_supply_block_time_avg"])        
             re_section=soup.find_all("section")
             re_div=re_section[2].find("div").find_all("div")
             worker_created=int(re_div[4].find("strong").text)
@@ -256,8 +293,9 @@ class API:
             for i in winrates:
                 variance+=(i-avg)**2
             variance=math.sqrt(100/(variance/3+1))
-        except:
-            pass
+        except Exception as e:
+            print(e)
+        print(worker_created,supply_blocked,variance)
         return worker_created,supply_blocked,variance
     
     def get_gamelength(self,bn_id):
@@ -283,8 +321,8 @@ class API:
                 if re_gl!="":
                     w=int(d.find("tbody").find_all("tr")[3].find_all("td")[2].text[:-1])
                     win_rates[d.find("h4").text]=w
-        except:
-            pass
+        except Exception as e:
+            print(e)
 
         exponent=0
         s=1
@@ -338,8 +376,8 @@ class API:
                         temp=map_winrates[j]
                         map_winrates[j]=map_winrates[j+1]
                         map_winrates[j+1]=temp
-        except:
-            pass
+        except Exception as e:
+            print(e)
         return map_winrates[0:5]
 
         

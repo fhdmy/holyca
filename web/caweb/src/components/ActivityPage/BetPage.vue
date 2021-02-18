@@ -171,9 +171,9 @@ export default {
       this.$http({
         method: "get",
         url: "/api/activity/bet/get_bets/?sum=-1",
-        headers: {
-          "Authorization": this.token
-        },
+        // headers: {
+        //   "Authorization": this.token
+        // },
       })
         .then(res => {
           console.log(res);

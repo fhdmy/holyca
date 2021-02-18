@@ -86,8 +86,8 @@ class TeammateViewSet(viewsets.ModelViewSet):
                         nickname=request.data['nickname'],
                     )   
                     return Response('Username already exisits', 400)
-                except:
-                    pass
+                except Exception as e:
+                    print(e)
                 user.teammate.nickname=request.data['nickname']
                 user.teammate.save()
             

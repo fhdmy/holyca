@@ -36,8 +36,8 @@ try:
                     tournament=match["match_name"],
                     match_time=match["match_time"]
                 )
-            except:
-                pass
+            except Exception as e:
+                print(e)
     
     @register_job(scheduler, 'interval', minutes=15,id='get_bets')
     def get_bets():
