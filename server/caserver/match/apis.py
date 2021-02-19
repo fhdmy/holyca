@@ -47,7 +47,7 @@ class API:
             # print("login failed")
             return -1,self.battlenet_infos
         soup = BeautifulSoup(res.text, 'lxml')
-        self.season=soup.find("input",id="seasons_id")["value"]
+        self.season=int(soup.find("input",id="seasons_id")["value"])
         re_repstats_id=re.findall(r'<a href=\"/account/display/.*\">', res.text)
         re_bn_opts=soup.find(id='account_name')
         re_bn_opts=re_bn_opts.find_all("option")

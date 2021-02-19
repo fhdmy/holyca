@@ -283,7 +283,7 @@ class MMRStatistics(views.APIView):
     permission_classes = [permissions.AllowAny, ]
 
     def get(self, request, *args, **kwargs):
-        day_long=4
+        day_long=7
         today = datetime.today()
         info=[]
         mmr_record=[]
@@ -445,7 +445,7 @@ class RaceWinrateStatistics(views.APIView):
     permission_classes = [permissions.AllowAny, ]
 
     def get(self, request, *args, **kwargs):
-        day_long=4
+        day_long=7
         today = datetime.today()
         rtn=[]
         for i in range(11,-1,-1):

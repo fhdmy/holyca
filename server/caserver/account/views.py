@@ -190,7 +190,7 @@ class TeammateViewSet(viewsets.ModelViewSet):
     @action(methods=['get'],detail=False,permission_classes=[permissions.IsAuthenticated])
     def mmr_statistics(self, request, *args, **kwargs):
         user = request.user
-        day_long=4
+        day_long=7
         today = datetime.today()
         info=[]
         mmr_record=[]
@@ -345,7 +345,7 @@ class TeammateViewSet(viewsets.ModelViewSet):
     @action(methods=['get'],detail=False,permission_classes=[permissions.IsAuthenticated])
     def racewinrate_statistics(self, request, *args, **kwargs):
         user = request.user
-        day_long=4
+        day_long=7
         today = datetime.today()
         rtn=[]
         for i in range(11,-1,-1):
