@@ -26,8 +26,16 @@ try:
     # ('scheduler',"interval", seconds=1)  #用interval方式循环，每一秒执行一次
     # @register_job(scheduler, 'interval', minutes=30,id='get_matchs')
     @register_job(scheduler, 'cron', day_of_week='0-6',hour='0',minute='0',second='0',id='get_promatches')
+    # @register_job(scheduler, 'interval', minutes=2,id='get_promatches')
     def get_promatches():
         print("get_promatches...")
+        #clear
+        # m=activity.models.Match.objects.all()
+        # for i in m:
+        #     i.delete()
+        # b=activity.models.Bet.objects.all()
+        # for i in b:
+        #     i.delete()
         tl=TL()
         matches=tl.get_upcoming_rep()
         for match in matches:
@@ -39,7 +47,7 @@ try:
             except Exception as e:
                 print(e)
     
-    @register_job(scheduler, 'interval', minutes=15,id='get_bets')
+    @register_job(scheduler, 'interval', minutes=15,id='get_bets') #15min
     def get_bets():
         print("get_bets...")
 
@@ -79,6 +87,7 @@ try:
             stop_bet=True,
             finished=False
         ).order_by("-match_time")
+        print("get_results...")
         for may_finish_bet in may_finish_bets:
             winner,score=gs.get_results(may_finish_bet.match_url)
             if winner=="" or score=="":

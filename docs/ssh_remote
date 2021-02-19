@@ -1,2 +1,0 @@
-ssh root@101.133.226.16 -i /Users/jiang/HolyCA/docs/Xnick.pem
-nohup python manage.py runserver 0.0.0.0:8000>manage.log &

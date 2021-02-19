@@ -31,7 +31,7 @@ try:
     # day_of_week='mon-fri', hour='9', minute='30', second='10'
     # ('scheduler',"interval", seconds=1)  #用interval方式循环，每一秒执行一次
     # @register_job(scheduler, 'interval', minutes=30,id='get_matchs')
-    @register_job(scheduler, 'interval', minutes=30,id='get_matchs')
+    @register_job(scheduler, 'interval', minutes=30,id='get_matchs') #30
     def match_update():
         print("match_update...")
         teammates = account.models.Teammate.objects.all()
@@ -50,10 +50,12 @@ try:
                 repstats.repstats_id=repstats_id
                 for name,nid in battlenet_info.items():
                     #如果没有BattlenetAccount则创建
+                    #可能改过battlenet_name
                     bn_acc,created=match.models.BattlenetAccount.objects.get_or_create(
-                        battlenet_name=name,
-                        battlenet_id=nid,
+                        battlenet_id=nid
                     )
+                    bn_acc.battlenet_name=name
+                    bn_acc.save()
                     repstats.battlenet_acc.add(bn_acc)
                 for bn in repstats.battlenet_acc.all():
                     if str(bn.battlenet_id) not in battlenet_info.values():
@@ -113,7 +115,7 @@ try:
             except Exception as e:
                 print(e)
 
-    @register_job(scheduler, 'interval', minutes=60,id='replay_update')
+    @register_job(scheduler, 'interval', minutes=60,id='replay_update') #60
     def replay_update():
         replays=match.models.Replay.objects.all()
         print(f"replay_update...(replays: {len(replays)})")
@@ -135,7 +137,7 @@ try:
                 print(e)
 
     #设置地图胜率和基本素养
-    @register_job(scheduler, 'interval', minutes=60,id='basic_update')
+    @register_job(scheduler, 'interval', minutes=60,id='basic_update') #60
     def basic_update():
         teammates = account.models.Teammate.objects.all()
         print(f"basic_update...(teammates: {len(teammates)})")

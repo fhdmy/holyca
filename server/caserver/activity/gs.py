@@ -34,7 +34,8 @@ class GS:
                 dt=a.find("div",class_="match-status").find("span").text.strip()
                 time=dt
                 if dt!="Live":
-                    time=datetime.strptime(dt,"%m/%d/%y, %I:%M %p")+timedelta(hours=6)
+                    dt=a.find("div",class_="match-status").find("span").find("time")["datetime"].split("+")[0]
+                    time=datetime.strptime(dt,"%Y-%m-%dT%H:%M:%S")+timedelta(hours=7)
                 match["time"]=time
                 matches.append(match)
             except:
@@ -50,10 +51,15 @@ class GS:
         res=requests.get(match_url,headers=req_header)
         soup = BeautifulSoup(res.text, 'lxml')
         try:
-            winner=soup.find("div",id="gosubetSpoiler").text.strip().split(" ")[1]
-            score=soup.find_all("div",class_="score")[0]
-            score=score.find_all("span")[0].text.strip()+":"+score.find_all("span")[1].text.strip()
-            # print(f"winner: {winner} score:{score}")
+            players_wrapper=soup.find_all("div",class_="cell match finished")[0]
+            player1=players_wrapper.find_all("h2")[0].find("a").text.strip()
+            player2=players_wrapper.find_all("h2")[1].find("a").text.strip()
+            score_wrapper=soup.find_all("div",class_="score")[0]
+            score1=score_wrapper.find_all("span")[0].text.strip()
+            score2=score_wrapper.find_all("span")[1].text.strip()
+            score=score1+":"+score2
+            winner=player1 if score1>=score2 else player2
+            print(f"winner: {winner} score:{score}")
             return winner,score
         except Exception as e:
             print(e)

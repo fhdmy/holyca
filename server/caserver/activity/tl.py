@@ -43,15 +43,17 @@ class TL:
                 # match["player2_ctryimg"]=self.url+re_span2[0].find("img")["src"]
 
                 #时间和比赛名称
-                team_more=table.find("td",class_="match-filler bgc-lighter")
-                dt=team_more.find("span",class_="match-countdown").find("span").text
+                team_more=table.find("td",class_="match-filler")
+                dt=team_more.find("span",class_="match-countdown")
+                dt=dt.find("span",class_="timer-object").text.strip()
                 try:
                     time=datetime.strptime(dt,"%b %d, %Y - %H:%M UTC")+timedelta(hours=8)
                 except:
                     time=datetime.strptime(dt,"%B %d, %Y - %H:%M UTC")+timedelta(hours=8)
                 match["match_time"]=time
-                match_name_wrapper=team_more.find("div",class_="matchticker-tournament-wrapper").find("div",class_="matchticker-tournament-name")
-                match["match_name"]=match_name_wrapper.find("a").text
+                match_name_wrapper=team_more.find("div")
+                match["match_name"]=match_name_wrapper.find("div").find("a").text.strip()
+                # print(match)
                 matches.append(match)
             except Exception as e:
                 print(e)

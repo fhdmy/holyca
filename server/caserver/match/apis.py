@@ -1,4 +1,5 @@
 import requests
+from requests_toolbelt  import MultipartEncoder #multipart/form-data request
 from bs4 import BeautifulSoup
 import re
 from datetime import datetime
@@ -9,7 +10,8 @@ import json
 
 class API:
     auth=""
-    url="http://sc2replaystats.com/"
+    url="https://sc2replaystats.com"
+    api_url="https://api.sc2replaystats.com"
     PHPSESSID=""
     sc2replayreferer=""
     season=0
@@ -24,9 +26,8 @@ class API:
         self.password=password
         self.auth=auth
     
-    #登陆账号
     def login(self):
-        login_url=f"{self.url}Account/signin"
+        login_url=f"{self.url}/Account/signin"
         req_data={
             "email":self.email,
             "password":self.password
@@ -40,7 +41,10 @@ class API:
         }
         session = requests.Session()
         res=session.post(login_url,data=req_data,headers=req_header)
+        # with open('./test.html', 'w') as f:
+        #     f.write(res.text)
         if "Failed to login, please try your email and password again." in res.text:
+            # print("login failed")
             return -1,self.battlenet_infos
         soup = BeautifulSoup(res.text, 'lxml')
         self.season=soup.find("input",id="seasons_id")["value"]
@@ -53,6 +57,7 @@ class API:
         self.repstats_id=re_repstats_id[0][26:-2]
         self.PHPSESSID=session.cookies.get_dict()['PHPSESSID']
         self.sc2replayreferer=session.cookies.get_dict()['sc2replayreferer']
+        # print(self.season,self.PHPSESSID,self.repstats_id,self.battlenet_infos)
         return self.repstats_id,self.battlenet_infos
     
     #获得近期rep
@@ -62,7 +67,7 @@ class API:
         for name,nid in self.battlenet_infos.items():
             bn_ids+=(str(nid)+"-")
         bn_ids=bn_ids[:-1]
-        rep_url=f"{self.url}account/replays/{self.repstats_id}/0/{bn_ids}/1v1/{game_type}/{self.season}/"
+        rep_url=f"{self.url}/account/replays/{self.repstats_id}/0/{bn_ids}/1v1/{game_type}/{self.season}/"
         req_header={
             "Authorization":self.auth,
             "user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36",
@@ -133,12 +138,13 @@ class API:
                 "player2_mmr":player2_mmr,
                 "winner":winner
             })
+        # print(self.reps)
         return self.reps
         # with open('./test.html', 'w') as f:
         #     f.write(res.text)
 
     def get_repinfo(self,rep_id):
-        rep_url=f"{self.url}replay/{rep_id}"
+        rep_url=f"{self.url}/replay/{rep_id}"
         req_header={
             "Authorization":self.auth,
             "user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36",
@@ -166,6 +172,7 @@ class API:
             player2=re_tbody.find_all("tr")[1].find_all("td")[0].find("strong").text
             players_info[player1]=kill1
             players_info[player2]=kill2
+            # print(players_info)
             return players_info
         except Exception as e:
             print(e)
@@ -173,7 +180,7 @@ class API:
         
     
     def get_attack(self,bn_id):
-        attack_url=f"{self.url}account/ability/{self.repstats_id}/0/{bn_id}/1v1/All/{self.season}/"
+        attack_url=f"{self.url}/account/ability/{self.repstats_id}/0/{bn_id}/1v1/All/{self.season}/"
         req_header={
             "Authorization":self.auth,
             "user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36",
@@ -199,15 +206,16 @@ class API:
                         break
                 except Exception as e:
                     pass
-            # print(attack)
+            # print("attack: ",attack)
             return attack
         except Exception as e:
             print(e)
             return 0
     
     def get_general(self,bn_id):
-        general_url=f"{self.url}stats/runReport"
-        # general_url=f"{self.url}account/display/{self.repstats_id}/0/{bn_id}/1v1/All/{self.season}/"
+        general_url=f"{self.url}/stats/runReport"
+        # print(general_url)
+        # general_url=f"{self.url}/account/display/{self.repstats_id}/0/{bn_id}/1v1/All/{self.season}/"
         req_header={
             "Authorization":self.auth,
             "user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36",
@@ -217,69 +225,103 @@ class API:
         }
         cookie={
             "sc2replayreferer":self.sc2replayreferer,
-            "PHPSESSID":self.PHPSESSID
+            "PHPSESSID":self.PHPSESSID,
+            "referer":f"{self.url}/account/display/{self.repstats_id}/0/{bn_id}/1v1/All/{self.season}/"
         }
-        # payload={"metrics":["null","games","player_wins","player_losses","player_spending_quotient_avg","player_workers_avg","player_supply_block_time_avg","player_mmr_avg","player_max_mmr_min","player_max_mmr_max","opp_player_mmr_avg","opp_player_max_mmr_max"],
-        # "group_bys":[],
-        # "filters":{"account_id":{"logic":"equal","value":"42919"},
-        # "format":{"logic":"equal","value":"1v1"},
-        # "player_id":{"logic":"in","value":"2859519"},
-        # "season_id":{"logic":"relative","value":"current_season"}},
-        # "order":[],
-        # "date":"season_id:current_season",
-        # "settings":{"account_id":42919}}
-        # payload={"metrics":["games","player_wins","player_losses","player_spending_quotient_avg","player_workers_avg","player_supply_block_time_avg","player_mmr_avg","player_max_mmr_min","player_max_mmr_max","opp_player_mmr_avg","opp_player_max_mmr_max"],
-        # "group_bys":[],
-        # "filters":{"account_id":{"logic":"equal","value":'"'+self.repstats_id+'"'},
-        # "format":{"logic":"equal","value":"1v1"},
-        # "player_id":{"logic":"in","value":'"'+bn_id+'"'},
-        # "season_id":{"logic":"relative","value":"current_season"}},
-        # "order":[],
-        # "date":"season_id:current_season",
-        # "settings":{"account_id":self.repstats_id}}
+        # payload={
+        #     "request":json.dumps({
+        #         "metrics":["games","player_workers_avg","player_supply_block_time_avg"],
+        #         "group_bys":[],
+        #         "filters":{
+        #             "account_id":{"logic":"equal","value":42919},
+        #             "format":{"logic":"equal","value":"1v1"},
+        #             "player_id":{"logic":"in","value":2633556},
+        #             "season_id":{"logic":"relative","value":"current_season"}
+        #         },
+        #         "order":[],
+        #         "date":"season_id:current_season",
+        #         "settings":{"account_id":42919}
+        #     })
+        # }
         payload={
-            "metrics":["account_matchup","games","win_loss_percentage","opp_player_mmr_avg","opp_player_max_mmr_max"],
-            "group_bys":["account_matchup"],
-            "filters":{"account_id":{"logic":"equal","value":42919},
-            "format":{"logic":"equal","value":"1v1"},
-            "player_id":{"logic":"in","value":2859519},
-            "replay_date":{"logic":"relative","value":"current_season"}},
-            "order":[{"account_matchup":""}],
-            "date":"replay_date:current_season",
-            "settings":{"account_id":42919}
+            "request":json.dumps({
+                "metrics":["player_workers_avg","player_supply_block_time_avg"],
+                "group_bys":[],
+                "filters":{
+                    "account_id":{"logic":"equal","value":self.repstats_id},
+                    "format":{"logic":"equal","value":"1v1"},
+                    "player_id":{"logic":"in","value":bn_id},
+                    "season_id":{"logic":"relative","value":"current_season"}
+                },
+                "order":[],
+                "date":"season_id:current_season",
+                "settings":{"account_id":self.repstats_id}
+            })
         }
+        m=MultipartEncoder(payload)
+        req_header['Content-Type'] = m.content_type
         variance,worker_created,supply_blocked=0,0,0
         try:
-            res=requests.post(general_url,headers=req_header,cookies=cookie,data=payload)
+            res=requests.post(general_url,headers=req_header,cookies=cookie,data=m)
             soup = BeautifulSoup(res.text, 'lxml')
-            # print(res)
+            # with open('./test.html', 'w') as f:
+            #     f.write(res.text)
             # print(res.request.body)
             # print(json.loads(res.text))
-            # print(json.loads(res.text)["results"]["data"][0]["player_supply_block_time_avg"])        
-            re_section=soup.find_all("section")
-            re_div=re_section[2].find("div").find_all("div")
-            worker_created=int(re_div[4].find("strong").text)
-            supply_blocked=int(re_div[5].find("strong").text[:-1])
+            # print(json.loads(res.text)["results"]["data"])
+            worker_created=int(json.loads(res.text)["results"]["data"][0]["player_workers_avg"])
+            supply_blocked=int(json.loads(res.text)["results"]["data"][0]["player_supply_block_time_avg"])
 
-            re_race=re_section[2].find_all("div")[7]
-            race_sum=[]
-            for race in re_race.find_all("div"):
-                race_sum.append(race.find("strong").text)
-            for index,i in enumerate(race_sum):
-                for j in range(0,index):
-                    sum1=int(race_sum[j].split(" - ")[0])+int(race_sum[j].split(" - ")[1])
-                    sum2=int(race_sum[j+1].split(" - ")[0])+int(race_sum[j+1].split(" - ")[1])
-                    if sum1<sum2:
-                        temp=race_sum[j]
-                        race_sum[j]=race_sum[j+1]
-                        race_sum[j+1]=temp
+        except Exception as e:
+            print(e)
+
+        payload={
+            "request":json.dumps({
+                "metrics":["account_matchup","games","win_loss_percentage"],
+                "group_bys":["account_matchup"],
+                "filters":{
+                    "account_id":{"logic":"equal","value":self.repstats_id},
+                    "format":{"logic":"equal","value":"1v1"},
+                    "player_id":{"logic":"in","value":bn_id},
+                    "replay_date":{"logic":"relative","value":"last_30_days"}
+                },
+                "order":[{"account_matchup":""}],
+                "date":"replay_date:last_30_days",
+                "settings":{"account_id":self.repstats_id}
+            })
+        }
+        m=MultipartEncoder(payload)
+        req_header['Content-Type'] = m.content_type
+
+        try:
+            res=requests.post(general_url,headers=req_header,cookies=cookie,data=m)
+            soup = BeautifulSoup(res.text, 'lxml')
+            with open('./test.html', 'w') as f:
+                f.write(res.text)
+            res_data=json.loads(res.text)["results"]["data"]
+            race_sum=[[],[],[]] #p,t,z
+            # print(res_data)
+            for race_vs in res_data:
+                if race_vs["account_matchup"].split("v")[0]=="P":
+                    race_sum[0].append(race_vs["win_loss_percentage"].split(" ")[0])
+                elif race_vs["account_matchup"].split("v")[0]=="T":
+                    race_sum[1].append(race_vs["win_loss_percentage"].split(" ")[0])
+                elif race_vs["account_matchup"].split("v")[0]=="Z":
+                    race_sum[2].append(race_vs["win_loss_percentage"].split(" ")[0])
             top_race=[]
-            for i in range(0,3):
-                top_race.append(race_sum[i])
+            sum_max=0
+            for r in race_sum:
+                temp_sum=0
+                for i in r:
+                    temp_sum+=(int(i.split("-")[0])+int(i.split("-")[1]))
+                if temp_sum>sum_max:
+                    sum_max=temp_sum
+                    top_race=r
+            
             winrates=[]
             for i in top_race:
-                wins=int(i.split(" - ")[0])
-                loses=int(i.split(" - ")[1])
+                wins=int(i.split("-")[0])
+                loses=int(i.split("-")[1])
                 s=wins+loses
                 if s==0:
                     winrates.append(50)
@@ -293,13 +335,15 @@ class API:
             for i in winrates:
                 variance+=(i-avg)**2
             variance=math.sqrt(100/(variance/3+1))
+
         except Exception as e:
             print(e)
-        print(worker_created,supply_blocked,variance)
+
+        # print("general: ",worker_created,supply_blocked,variance)
         return worker_created,supply_blocked,variance
     
     def get_gamelength(self,bn_id):
-        general_url=f"{self.url}account/gamelength/{self.repstats_id}/0/{bn_id}/1v1/All/{self.season}/"
+        general_url=f"{self.url}/account/gamelength/{self.repstats_id}/0/{bn_id}/1v1/All/{self.season}/"
         req_header={
             "Authorization":self.auth,
             "user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36",
@@ -313,14 +357,19 @@ class API:
         }
         try:
             res=requests.get(general_url,headers=req_header,cookies=cookie)
+            # with open('./test.html', 'w') as f:
+            #     f.write(res.text)
             soup = BeautifulSoup(res.text, 'lxml')
             re_div=soup.find_all("div",{'class':'col-xs-6 col-sm-3 col-md-3'})
             win_rates=defaultdict(lambda:0)
             for d in re_div:
                 re_gl=re.findall(r'<th>Wins/Losses</th>', str(d))
                 if re_gl!="":
-                    w=int(d.find("tbody").find_all("tr")[3].find_all("td")[2].text[:-1])
-                    win_rates[d.find("h4").text]=w
+                    try:
+                        w=int(d.find("tbody").find_all("tr")[3].find_all("td")[2].text[:-1])
+                        win_rates[d.find("h4").text]=w
+                    except:
+                        pass
         except Exception as e:
             print(e)
 
@@ -332,6 +381,7 @@ class API:
                 text=50
             exponent+=t*text
             s+=1
+        # print("game_length: ",round(math.sqrt(exponent/s),1))
         return round(math.sqrt(exponent/s),1)
     
     def get_style(self,bn_id):
@@ -342,7 +392,7 @@ class API:
         return attack,operation,game_length,variance
     
     def get_map_winrate(self,bn_id):
-        general_url=f"{self.url}account/maps/{self.repstats_id}/0/{bn_id}/1v1/All/{self.season}/"
+        general_url=f"{self.url}/account/maps/{self.repstats_id}/0/{bn_id}/1v1/All/{self.season}/"
         req_header={
             "Authorization":self.auth,
             "user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36",
@@ -378,6 +428,7 @@ class API:
                         map_winrates[j+1]=temp
         except Exception as e:
             print(e)
+        # print("win_rates: ",map_winrates[0:5])
         return map_winrates[0:5]
 
         

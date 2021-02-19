@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+#abandon api
 
 class API:
     auth=""

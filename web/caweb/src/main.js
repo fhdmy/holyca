@@ -16,8 +16,8 @@ locale(navigator.language);
 
 Vue.config.productionTip = false
 
-// axios.defaults.baseURL="http://101.133.226.16:8000"
-axios.defaults.baseURL="http://127.0.0.1:8000"
+axios.defaults.baseURL="http://101.133.226.16:8000"
+// axios.defaults.baseURL="http://127.0.0.1:8000"
 Vue.prototype.$http = axios
 
 Vue.prototype.Base64 = require('js-base64').Base64;
